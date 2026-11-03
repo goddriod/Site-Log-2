@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0f2a47">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<title>Daily Site Log 30</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#eceff4;--surface:#fff;--field:#fff;--ink:#1b2735;--muted:#5a6b7d;--line:#d2d9e2;--grid:#dfe5ec;
+--th:#e6ebf2;--thtext:#2a3b4f;--alt:#f5f8fb;--hover:#e3eefb;--steel:#1560a8;--hi:#e8a200;--bad:#c4352b;--ok:#2a7d4f;
+--nav:#0f2a47;--navtext:#cfdcec;--shadow:0 1px 2px rgba(15,35,60,.10);
+box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1520;--surface:#152131;--field:#0f1a28;--ink:#e3e9f1;--muted:#8fa1b4;--line:#2a3b50;--grid:#263649;
+--th:#1d2d43;--thtext:#c9d6e5;--alt:#192738;--hover:#22364f;--steel:#5aa6ea;--hi:#f0b429;--bad:#f27c70;--ok:#5cc48a;--nav:#08111c;--navtext:#9fb3c9;--shadow:0 1px 2px rgba(0,0,0,.4);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1520;--surface:#152131;--field:#0f1a28;--ink:#e3e9f1;--muted:#8fa1b4;--line:#2a3b50;--grid:#263649;
+--th:#1d2d43;--thtext:#c9d6e5;--alt:#192738;--hover:#22364f;--steel:#5aa6ea;--hi:#f0b429;--bad:#f27c70;--ok:#5cc48a;--nav:#08111c;--navtext:#9fb3c9;--shadow:0 1px 2px rgba(0,0,0,.4);color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 96px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Inter,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;font-feature-settings:"tnum";-webkit-text-size-adjust:100%}
+.appbar{position:sticky;top:0;z-index:20;background:var(--nav);color:#fff;display:flex;align-items:center;flex-wrap:wrap;gap:4px 14px;padding:env(safe-area-inset-top,0px) 14px 0;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.brand{display:flex;align-items:center;gap:10px;padding:8px 0}
+.brand b{display:block;font-size:16px;letter-spacing:.02em;line-height:1.1}
+.brand small{display:block;font-size:11px;color:var(--navtext);line-height:1.1}
+.logo{width:28px;height:28px;fill:var(--hi);flex:none}
+.views{display:flex;gap:2px;margin-left:8px;flex:1}
+.views button{background:transparent;color:var(--navtext);border:0;border-bottom:3px solid transparent;padding:14px 14px 11px;font:600 14px Inter,system-ui,sans-serif;cursor:pointer;white-space:nowrap}
+.views button:hover{color:#fff}
+.views button[aria-pressed="true"]{color:#fff;border-bottom-color:var(--hi)}
+.themebtn{margin-left:auto;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:4px;padding:6px 12px;font:600 13px Inter,system-ui,sans-serif;cursor:pointer;min-width:64px}
+.wrap{max-width:1180px;margin:0 auto;padding:16px 14px 48px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+h1{font:700 22px/1.15 Inter,system-ui,sans-serif;margin:0;letter-spacing:-.01em}
+.top small{color:var(--muted)}
+#msg{font-size:13px}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--steel);border-radius:4px;padding:10px 12px;box-shadow:var(--shadow)}
+label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:3px}
+input,select,textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:3px;padding:7px 8px;min-height:38px}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--steel);outline-offset:1px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:12px 0}
+.stat{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--steel);border-radius:4px;padding:8px 10px;box-shadow:var(--shadow)}
+.stat b{display:block;font:700 21px/1.15 Inter,system-ui,sans-serif;overflow-wrap:anywhere}
+.stat span{font-size:12px;color:var(--muted)}
+.tabs{display:flex;overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-bottom:0;border-radius:4px 4px 0 0;margin-top:12px;-webkit-overflow-scrolling:touch}
+.tabs button{flex:0 0 auto;font:600 14px Inter,system-ui,sans-serif;padding:11px 16px 9px;border:0;border-bottom:3px solid transparent;background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap}
+.tabs button:hover{color:var(--ink);background:var(--alt)}
+.tabs button[aria-selected="true"]{color:var(--steel);border-bottom-color:var(--steel);background:var(--surface)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:0 0 4px 4px;padding:14px;box-shadow:var(--shadow)}
+.scroll{overflow:auto;max-height:68vh;max-height:70dvh;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;border:1px solid var(--grid);border-radius:3px;background:var(--surface)}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
+th{background:var(--th);color:var(--thtext);font-weight:600;font-size:12px;line-height:1.2;text-align:left;vertical-align:bottom;padding:8px 8px;border-bottom:2px solid var(--steel);border-right:1px solid var(--grid);min-width:62px}
+.scroll th{position:sticky;top:0;z-index:2}
+td{padding:0 2px;border-bottom:1px solid var(--grid);border-right:1px solid var(--grid);vertical-align:middle;background:var(--surface)}
+tbody tr:nth-child(even) td{background:var(--alt)}
+tbody tr:hover td{background:var(--hover)}
+td.calc{padding:6px 8px;font-weight:500;white-space:nowrap}
+td input,td select{border:1px solid transparent;background:transparent;border-radius:0;min-width:70px;padding:5px 6px;min-height:36px}
+td input[type=number]{text-align:right}
+td input:hover,td select:hover{border-color:var(--line)}
+td input:focus,td select:focus{background:var(--field);border-color:var(--steel);outline-offset:-2px}
+td input[data-ov]::placeholder{color:var(--muted);opacity:.85}
+[data-fz]{position:sticky;z-index:1}th[data-fz]{z-index:3}td[data-fz]{box-shadow:1px 0 0 var(--line)}
+tfoot td,tr.tot td{background:var(--th);font-weight:600;border-top:2px solid var(--ink);padding:7px 8px}
+tfoot tr+tr td{border-top:1px solid var(--grid)}tfoot .tot td{border-top:2px solid var(--ink)}
+.x{background:none;border:0;color:var(--bad);font-size:20px;cursor:pointer;min-width:34px;min-height:36px}
+.btn{font:600 14px Inter,system-ui,sans-serif;padding:9px 16px;border:1px solid var(--steel);background:var(--steel);color:#fff;border-radius:3px;cursor:pointer}
+:root[data-theme="dark"] .btn:not(.alt){color:#08111c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn:not(.alt){color:#08111c}}
+.btn.alt{background:transparent;color:var(--steel)}
+.btn:hover{filter:brightness(1.08)}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.empty{color:var(--muted);padding:14px 4px}
+.warn{color:var(--bad);font-weight:700}
+.hint{color:var(--muted);font-size:13px;margin:0 0 10px}
+.notes{margin-top:14px}
+textarea{min-height:84px;resize:vertical}
+#panel textarea{min-height:110px}
+h2.sec{font:600 12px Inter,system-ui,sans-serif;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:5px;margin:20px 0 10px}
+.sm{width:64px;min-height:30px;padding:3px 6px;display:inline-block}
+.ck{display:flex;gap:8px;align-items:center;margin:6px 0 10px;font-size:13px;text-transform:none;letter-spacing:0;color:var(--ink);font-weight:500}
+.ck input{width:auto;min-height:0;min-width:0}
+.kpis,.pcs,.cat{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:14px}
+.cat{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.kpi,.pc,.card{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--steel);border-radius:4px;padding:9px 12px;min-width:0;box-shadow:var(--shadow)}
+.kpi{display:flex;flex-direction:column-reverse}
+.pc.bad{border-left-color:var(--bad)}.pc.bad b{color:var(--bad)}
+.pl,.kpi span{display:block;font:600 11px Inter,system-ui,sans-serif;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.pc b,.kpi b{display:block;font:700 24px/1.2 Inter,system-ui,sans-serif;overflow-wrap:anywhere;color:var(--ink)}
+.pc small,.card small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.card h3{margin:0 0 6px;font:600 13px Inter,system-ui,sans-serif}
+.meter{height:7px;background:var(--grid);border-radius:4px;overflow:hidden;margin:5px 0 3px}.meter i{display:block;height:100%;background:var(--steel);border-radius:4px}.meter i.over{background:var(--bad)}
+.banner{padding:10px 14px;border:1px solid var(--line);border-left:5px solid var(--ok);background:var(--surface);border-radius:4px;margin-bottom:12px;font-weight:600;box-shadow:var(--shadow)}.banner.bad{border-left-color:var(--bad)}
+.heat{display:grid;grid-template-columns:96px repeat(5,minmax(44px,1fr));gap:3px;max-width:540px;margin-bottom:8px}
+.ax{font-size:12px;color:var(--muted);display:flex;align-items:center}
+.hm{min-height:42px;display:flex;align-items:center;justify-content:center;font:700 16px Inter,sans-serif;border-radius:3px}
+.hm.l{background:rgba(42,125,79,.35)}.hm.m{background:rgba(232,162,0,.45)}.hm.h{background:rgba(230,126,34,.55)}.hm.x{background:rgba(196,53,43,.6)}
+body[data-view="mgmt"] #stats,body[data-view="ctrl"] #stats,body[data-view="mgmt"] .notes,body[data-view="ctrl"] .notes,body[data-view="mgmt"] .wrap>.bar,body[data-view="ctrl"] .wrap>.bar{display:none}
+@media (pointer:fine){input,select,textarea{font-size:14px}}
+@media (max-width:640px){
+ .appbar{padding-left:10px;padding-right:10px;gap:0 8px}.brand small{display:none}.brand{padding:6px 0}
+ .views{order:3;width:100%;margin:0;flex:none;overflow-x:auto}.views button{flex:1;padding:10px 6px 8px;font-size:13px}
+ .wrap{padding:10px 8px 40px}.panel{padding:8px 6px}.scroll{max-height:62vh;max-height:62dvh}
+ th{font-size:11px;min-width:56px;padding:6px}td input,td select{min-width:62px;padding:4px 5px}
+ .pcs,.kpis{grid-template-columns:repeat(2,1fr)}.pc b,.kpi b{font-size:20px}h1{font-size:19px}}
+@media print{.appbar,.tabs,.bar,.x,.addrow,.themebtn{display:none}.panel{border:0;box-shadow:none}.scroll{max-height:none;overflow:visible}body{background:#fff;color:#000}}
+body[data-view="rep"] #stats,body[data-view="rep"] .notes,body[data-view="rep"] .wrap>.bar{display:none}
+.rtools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.rsign{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:14px}
+.paper{--ink:#14202c;--muted:#5a6b7d;--line:#cfd7e0;--grid:#d9e0e8;--th:#e8edf3;--thtext:#22324a;--alt:#f6f8fb;--hover:#f6f8fb;--steel:#1560a8;--bad:#c4352b;--ok:#2a7d4f;--hi:#e8a200;--surface:#fff;--bg:#fff;
+ background:#fff;color:#14202c;max-width:860px;margin:0 auto;padding:28px 32px;border:1px solid #cfd7e0;box-shadow:0 2px 12px rgba(0,0,0,.2);font-size:12.5px;line-height:1.45}
+.paper table{min-width:0;font-size:12px}.paper th{position:static;padding:5px 6px;border-bottom:1px solid #98a8ba;border-right:0;min-width:0;font-size:11px}
+.paper td{padding:4px 6px;border-right:0;font-weight:400}.paper td.n,.paper th.n{text-align:right;font-variant-numeric:tabular-nums}
+.paper tr.ft td{background:#e8edf3;font-weight:700;border-top:1px solid #14202c}
+.paper .scroll{max-height:none;border:0;overflow:visible}
+.rh{display:flex;justify-content:space-between;gap:16px;border-bottom:3px solid #0f2a47;padding-bottom:10px;margin-bottom:12px}
+.rh h2{margin:0;font:700 20px/1.15 Inter,system-ui,sans-serif;letter-spacing:.05em;color:#0f2a47;text-transform:uppercase}.rh p{margin:2px 0;color:#5a6b7d}
+.kv{width:auto;flex:none}.kv th{background:none;border:0;width:90px;text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#5a6b7d;padding:2px 8px 2px 0}.kv td{border:0;padding:2px 0;font-weight:600}.kv th,.kv td,.paper .kv tr td{background:none!important}
+.rk{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}.rk>div{border:1px solid #cfd7e0;border-top:3px solid #1560a8;padding:6px 8px}.rk b{display:block;font-size:15px;overflow-wrap:anywhere}.rk span{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#5a6b7d}
+.paper h3{font:700 12px Inter,system-ui,sans-serif;text-transform:uppercase;letter-spacing:.08em;color:#0f2a47;border-bottom:1px solid #98a8ba;padding-bottom:3px;margin:16px 0 6px}
+.paper p{margin:0 0 6px}.none{color:#5a6b7d;font-style:italic}.paper pre{white-space:pre-wrap;font:inherit;margin:0}
+.paper svg{width:100%;max-height:230px}
+.sign{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:30px;break-inside:avoid}
+.sign .nm{border-bottom:1px solid #14202c;min-height:40px;display:flex;align-items:flex-end;font-weight:600;padding-bottom:2px}.sign span{display:block;margin-top:3px;font-size:10.5px;color:#5a6b7d}
+.rf{margin-top:18px;font-size:10.5px;color:#5a6b7d;border-top:1px solid #cfd7e0;padding-top:6px}
+@page{size:A4;margin:12mm}
+@media print{body[data-view="rep"] .meta,body[data-view="rep"] .top,.rtools,.rsign,body[data-view="rep"] .hint{display:none}
+ body[data-view="rep"] .panel{padding:0;border:0;box-shadow:none}.paper{border:0;box-shadow:none;padding:0;max-width:none}
+ .paper h3{break-after:avoid}.paper tr{break-inside:avoid}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+@media (max-width:640px){.paper{padding:14px 12px}.rk{grid-template-columns:repeat(2,1fr)}.rh{flex-direction:column}.sign{grid-template-columns:1fr}}
+
+.hf{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:12px}
+.paper.land{max-width:1120px;page:land}.paper.land table{font-size:11px}
+@page land{size:A4 landscape;margin:12mm}
+.adh{font:600 12px Inter,system-ui,sans-serif;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 6px}
+.subtabs{display:flex;gap:2px;border-bottom:2px solid var(--line);margin:0 0 12px;overflow-x:auto}
+.subtabs button{background:transparent;border:1px solid transparent;border-bottom:0;padding:8px 14px;font:600 13px Inter,system-ui,sans-serif;color:var(--muted);cursor:pointer;border-radius:4px 4px 0 0;white-space:nowrap;margin-bottom:-2px}
+.subtabs button:hover{color:var(--ink)}
+.subtabs button[aria-selected="true"]{background:var(--surface);color:var(--steel);border-color:var(--line);border-bottom:2px solid var(--surface)}
+tbody tr.sel td{background:var(--hover)}
+#selbar b{margin:0 2px}
+
+.apick{border:1px solid var(--line);border-radius:4px;background:var(--bg);padding:8px 10px;margin-bottom:12px}
+.aph{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;font:600 12px Inter,system-ui,sans-serif;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.aph .aps{margin-right:auto;text-transform:none;letter-spacing:0;font-weight:500}
+.chips{display:flex;gap:6px;flex-wrap:wrap;max-height:118px;overflow:auto}
+.chip{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:5px 12px;font:500 13px Inter,system-ui,sans-serif;color:var(--ink);cursor:pointer;user-select:none}
+.chip:hover{border-color:var(--steel)}
+.chip[aria-pressed="true"]{background:var(--steel);border-color:var(--steel);color:#fff}
+:root[data-theme="dark"] .chip[aria-pressed="true"],:root[data-theme="dark"] .chipb[aria-pressed="true"]{color:#08111c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .chip[aria-pressed="true"],:root:not([data-theme="light"]) .chipb[aria-pressed="true"]{color:#08111c}}
+.chipb{background:transparent;border:1px solid var(--line);border-radius:3px;padding:4px 10px;font:600 12px Inter,system-ui,sans-serif;color:var(--steel);cursor:pointer;text-transform:none;letter-spacing:0}
+.chipb[aria-pressed="true"]{background:var(--steel);color:#fff;border-color:var(--steel)}
+.flt{margin:0 0 10px;gap:14px}.flt .ck{margin:0}
+#selbar{gap:8px}.sbl{color:var(--muted);font-size:13px}.sbsp{flex:1}
+.actl{display:block;padding:6px 8px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px}
+tbody tr[aria-selected="true"] td{background:var(--hover)}
+body:not([data-view="rep"]) td.calc{user-select:none}
+.colbox{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:2px 16px}
+.colrow{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}
+.colrow .ck{margin:4px 0;min-width:0}
+.colrow button:disabled{opacity:.35;cursor:default}
+th[data-dcol]{cursor:grab}
+.dw{position:relative;display:block}
+.dw .dt{display:flex;align-items:center;min-height:38px;padding:7px 8px;border:1px solid var(--line);border-radius:3px;background:var(--field);color:var(--ink);font:inherit;font-size:16px;white-space:nowrap}
+@media (pointer:fine){.dw .dt{font-size:14px}}
+.dw input[type=date]{position:absolute;inset:0;width:100%;height:100%;min-height:0;opacity:0;cursor:pointer;padding:0}
+.dw:focus-within .dt{outline:2px solid var(--steel);outline-offset:1px}
+td .dw .dt{border-color:transparent;background:transparent;padding:5px 6px;min-height:36px;min-width:104px}
+td .dw:hover .dt{border-color:var(--line)}
+.lim{margin-top:6px;font-size:12px;text-align:left}
+.lim summary{cursor:pointer;color:var(--steel);font-weight:600;padding:2px 0}
+.lim ul{margin:6px 0 0;padding:0;list-style:none;max-height:200px;overflow:auto}
+.lim li{padding:5px 0;border-top:1px solid var(--grid);overflow-wrap:anywhere}
+.lim li b{display:block;font:600 12px Inter,system-ui,sans-serif;color:var(--ink)}
+.lim li span{display:block;color:var(--muted)}
+.lim li span.warn{color:var(--bad)}
+dialog{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-top:3px solid var(--steel);border-radius:4px;padding:16px;width:min(560px,92vw);box-shadow:0 8px 30px rgba(0,0,0,.35)}dialog::backdrop{background:rgba(0,0,0,.45)}dialog h2{margin:0 0 6px;font:700 18px Inter,system-ui,sans-serif}dialog textarea{min-height:90px;margin:6px 0}dialog .bar{margin:8px 0}
+</style>
+</head>
+<body data-view="log">
+<header class="appbar">
+  <div class="brand"><svg class="logo" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="11" height="3.5" rx="1"/><rect x="7" y="10.25" width="14" height="3.5" rx="1"/><rect x="4" y="16.5" width="10" height="3.5" rx="1"/></svg><div><b>Site Control</b><small>Cost, resources and progress</small></div></div>
+  <nav class="views" id="views" aria-label="Pages"><button data-v="log" aria-pressed="true">Site Log</button><button data-v="mgmt" aria-pressed="false">Management</button><button data-v="ctrl" aria-pressed="false">Cost Control</button><button data-v="rep" aria-pressed="false">Reports</button></nav>
+  <button class="themebtn" id="theme" type="button">Auto</button>
+</header>
+<div class="wrap">
+  <div class="top">
+    <div><h1>Daily Site Log</h1><small>Resources, budgets and daily usage for one site</small></div>
+    <small id="msg" role="status"></small>
+  </div>
+
+  <div class="meta">
+    <div><label for="date">Date</label><span class="dw"><span class="dt" aria-hidden="true"></span><input type="date" id="date"></span></div>
+    <div><label for="project">Project</label><input id="project" data-h="project" placeholder="Project name"></div>
+    <div><label for="sup">Site supervisor</label><input id="sup" data-h="sup" placeholder="Name"></div>
+    <div><label for="weather">Weather</label>
+      <select id="weather" data-h="weather"><option>Clear</option><option>Cloudy</option><option>Light rain</option><option>Heavy rain</option><option>Windy</option><option>Extreme heat</option></select></div>
+    <div><label for="wh">Work hours lost to weather</label><input type="number" min="0" step="0.5" id="wh" data-h="lost" placeholder="0"></div>
+  </div>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <div class="panel" id="panel"></div>
+
+  <div class="notes">
+    <label for="notes">Issues, delays, safety notes</label>
+    <textarea id="notes" data-h="notes" placeholder="Anything that affected progress or safety today"></textarea>
+  </div>
+  <div class="bar">
+    <button class="btn" id="copy">Copy day summary</button>
+    <button class="btn alt" id="print">Print</button>
+    <button class="btn alt" id="clear">Clear this day</button>
+    <button class="btn alt" id="backup">Backup / Restore</button>
+  </div>
+</div>
+<dialog id="bkd" aria-label="Backup and restore">
+  <h2>Backup and restore</h2>
+  <p class="hint" style="margin:0 0 6px">A backup holds everything saved on this device: activities, resources, budgets, daily logs, history and imported schedules. Use it to move your data to another phone or browser.</p>
+  <div class="bar"><button class="btn" id="bkfile">Save backup file</button><button class="btn alt" id="bkcopy">Copy backup text</button></div>
+  <label for="bkin">Restore from a backup file</label><input type="file" id="bkin" accept=".json,application/json,text/plain">
+  <label for="bkta">Or paste backup text</label><textarea id="bkta" placeholder="Paste backup text here"></textarea>
+  <p id="bkmsg" class="hint" style="margin:4px 0" aria-live="polite"></p>
+  <div class="bar"><button class="btn alt" id="bkrestore">Restore</button><button class="btn alt" id="bkclose">Close</button></div>
+</dialog>
+
+<script>
+const UOM=['h','d','wk','ea','no','set','ls','m','m²','m³','kg','t','L','bag','sheet','trip'];
+const TYPES=['Labour','Equipment','Non-labour'];
+const STATUS=['Working','Idle','Breakdown'];const PER=['Hours','Days','Weeks','Months'];const EXC=['Transport','Fuel','Permits and fees','Site overhead','Subcontract','Equipment hire','Utilities','Other'];const DEF={status:'Working',per:'Hours',ot:'No',sp:'Fill 8h'};
+const USE=['labour','equipment','nonlabour'];
+const $=id=>document.getElementById(id);
+const num=v=>parseFloat(v)||0;
+function fd(v){const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(v||'');return m?m[3]+'-'+m[2]+'-'+m[1]:(v||'')}
+function syncDates(){document.querySelectorAll('.dw').forEach(w=>{const i=w.querySelector('input'),t=w.querySelector('.dt');if(i&&t)t.textContent=i.value?fd(i.value):'dd-mm-yyyy'})}
+const fmt=n=>(Math.round(n*100)/100).toLocaleString();
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+let _n=0;const uid=()=>'r'+Date.now().toString(36)+(_n++).toString(36)+Math.random().toString(36).slice(2,5);
+const SEED=[{"id": "GEN LAB", "name": "General Labour", "role": "", "type": "Labour", "uom": "h", "price": 875.0, "max": 120, "budget": ""}, {"id": "Engr Fidelis", "name": "Site Engr", "role": "Site Engineer", "type": "Labour", "uom": "h", "price": 2500.0, "max": 8, "budget": ""}, {"id": "Musa", "name": "Manson", "role": "", "type": "Labour", "uom": "h", "price": 1250.0, "max": 32, "budget": ""}, {"id": "Akeen", "name": "Iron", "role": "Iron Bender", "type": "Labour", "uom": "h", "price": 1875.0, "max": 8, "budget": ""}, {"id": "Nsikak", "name": "Electician", "role": "Elect", "type": "Labour", "uom": "h", "price": 1875.0, "max": 8, "budget": ""}, {"id": "Uduak", "name": "Painter", "role": "Painting", "type": "Labour", "uom": "h", "price": 1875.0, "max": 8, "budget": ""}, {"id": "KC", "name": "Windows", "role": "Subframes", "type": "Labour", "uom": "h", "price": 1875.0, "max": 8, "budget": ""}, {"id": "Okon", "name": "Plumber", "role": "Plumbing", "type": "Labour", "uom": "h", "price": 1250.0, "max": 8, "budget": ""}, {"id": "Oliver", "name": "Mechanical", "role": "Mech", "type": "Labour", "uom": "h", "price": 1250.0, "max": 8, "budget": ""}, {"id": "Ini", "name": "Tiller", "role": "", "type": "Labour", "uom": "h", "price": 1875.0, "max": 8, "budget": ""}, {"id": "Sylver", "name": "Ceilng", "role": "", "type": "Labour", "uom": "h", "price": 1875.0, "max": 8, "budget": ""}, {"id": "Shagari", "name": "Carpenter", "role": "", "type": "Labour", "uom": "h", "price": 1250.0, "max": 32, "budget": ""}, {"id": "Duada", "name": "Casting", "role": "", "type": "Labour", "uom": "h", "price": 1875.0, "max": 8, "budget": ""}, {"id": "Sow", "name": "HVAC", "role": "", "type": "Labour", "uom": "h", "price": 1875.0, "max": 8, "budget": ""}, {"id": "Labour", "name": "Helper", "role": "", "type": "Labour", "uom": "h", "price": 1000.0, "max": 24, "budget": ""}, {"id": "EQ.CUT", "name": "Bar cutter/bender [day]", "role": "", "type": "Equipment", "uom": "h", "price": 2500.0, "max": 8, "budget": ""}, {"id": "EQ.MIXER", "name": "Concrete mixer [day]", "role": "", "type": "Equipment", "uom": "h", "price": 10000.0, "max": 8, "budget": ""}, {"id": "EQ.CRANE", "name": "Crane/hiab [lot]", "role": "", "type": "Equipment", "uom": "h", "price": 10250.0, "max": 8, "budget": ""}, {"id": "EQ.EXC", "name": "Excavator with operator [day]", "role": "", "type": "Equipment", "uom": "h", "price": 12500.0, "max": 8, "budget": ""}, {"id": "EQ.PROP", "name": "Formwork prop [prop-day]", "role": "", "type": "Equipment", "uom": "h", "price": 75.0, "max": 8, "budget": ""}, {"id": "EQ.GEN", "name": "Generator/welding set [day]", "role": "", "type": "Equipment", "uom": "h", "price": 1875.0, "max": 8, "budget": ""}, {"id": "EQ.PLATE", "name": "Plate compactor [day]", "role": "", "type": "Equipment", "uom": "h", "price": 3125.0, "max": 8, "budget": ""}, {"id": "EQ.ROLL", "name": "Roller [day]", "role": "", "type": "Equipment", "uom": "h", "price": 4375.0, "max": 8, "budget": ""}, {"id": "EQ.SURV", "name": "Survey instrument [day]", "role": "", "type": "Equipment", "uom": "h", "price": 3125.0, "max": 8, "budget": ""}, {"id": "EQ.TIP", "name": "Tipper haul-away [trip]", "role": "", "type": "Equipment", "uom": "h", "price": 10625.0, "max": 8, "budget": ""}, {"id": "MT.WIN", "name": "Aluminium window [m2]", "role": "", "type": "Non-labour", "uom": "m²", "price": 20000, "max": 1500, "budget": ""}, {"id": "MT.MESH", "name": "BRC A142 mesh [m2]", "role": "", "type": "Non-labour", "uom": "m²", "price": 750, "max": 2000, "budget": ""}, {"id": "MT.BIT", "name": "Bitumen + DPC [m2]", "role": "", "type": "Non-labour", "uom": "m²", "price": 22000, "max": 500, "budget": ""}, {"id": "MT.BLIND", "name": "Blinding 1:3:6 materials (composite) [m3]", "role": "", "type": "Non-labour", "uom": "m³", "price": 96000, "max": 8, "budget": ""}, {"id": "MT.C25", "name": "C25 concrete materials (composite) [m3]", "role": "", "type": "Non-labour", "uom": "m³", "price": 170000, "max": 500, "budget": ""}, {"id": "MT.CABLE", "name": "Cable [coil]", "role": "", "type": "Non-labour", "uom": "m", "price": 2300, "max": 2000, "budget": ""}, {"id": "MT.CURE", "name": "Curing cover [m3 cast]", "role": "", "type": "Non-labour", "uom": "m³", "price": 200, "max": 1000, "budget": ""}, {"id": "MT.IRON", "name": "Door ironmongery [set]", "role": "", "type": "Non-labour", "uom": "m²", "price": 85000, "max": 500, "budget": ""}, {"id": "MT.EPNT", "name": "Exterior paint system [m2]", "role": "", "type": "Non-labour", "uom": "m²", "price": 2100, "max": 2000, "budget": ""}, {"id": "MT.EDOOR", "name": "External door [each]", "role": "", "type": "Non-labour", "uom": "ea", "price": 250000, "max": 8, "budget": ""}, {"id": "MT.SCRD", "name": "Floor screed [m2]", "role": "", "type": "Non-labour", "uom": "m²", "price": 2000, "max": 1000, "budget": ""}, {"id": "MT.FTILE", "name": "Floor tiles incl. adhesive/grout [m2]", "role": "", "type": "Non-labour", "uom": "m²", "price": 5000, "max": 1000, "budget": ""}, {"id": "MT.FORM", "name": "Formwork (plywood, timber, nails) [m2]", "role": "", "type": "Non-labour", "uom": "m²", "price": 5000, "max": 1000, "budget": ""}, {"id": "MT.GYP", "name": "Gypsum ceiling [m2]", "role": "", "type": "Non-labour", "uom": "m²", "price": 15200, "max": 1000, "budget": ""}, {"id": "MT.HARD", "name": "Hardcore [m3]", "role": "", "type": "Non-labour", "uom": "m³", "price": 20000, "max": 8, "budget": ""}, {"id": "MT.IPNT", "name": "Interior paint system [m2]", "role": "", "type": "Non-labour", "uom": "m²", "price": 1500, "max": 8, "budget": ""}, {"id": "MT.PAV", "name": "Interlock paving [m2]", "role": "", "type": "Non-labour", "uom": "m²", "price": 2000, "max": 2000, "budget": ""}, {"id": "MT.IDOOR", "name": "Internal door [each]", "role": "", "type": "Non-labour", "uom": "ea", "price": 150000, "max": 20, "budget": ""}, {"id": "MT.LAT", "name": "Laterite fill [m3]", "role": "", "type": "Non-labour", "uom": "m³", "price": 5200, "max": 8, "budget": ""}, {"id": "MT.COP", "name": "Parapet coping [m]", "role": "", "type": "Non-labour", "uom": "m", "price": 5000, "max": 8, "budget": ""}, {"id": "MT.PLAS", "name": "Plaster (internal/external) [m2]", "role": "", "type": "Non-labour", "uom": "m²", "price": 1500, "max": 8, "budget": ""}, {"id": "MT.POLY", "name": "Polythene sheet [m2]", "role": "", "type": "Non-labour", "uom": "m²", "price": 1200, "max": 8, "budget": ""}, {"id": "MT.REBAR", "name": "Rebar incl. binding wire [tonne]", "role": "", "type": "Non-labour", "uom": "t", "price": 270000, "max": 8, "budget": ""}, {"id": "MT.RSCRD", "name": "Roof screed to falls [m2]", "role": "", "type": "Non-labour", "uom": "m²", "price": 12000, "max": 8, "budget": ""}, {"id": "MT.ROOFWP", "name": "Roof waterproofing membrane [m2]", "role": "", "type": "Non-labour", "uom": "m²", "price": 32000, "max": 8, "budget": ""}, {"id": "MT.BLK", "name": "Sandcrete block wall incl. mortar [m2]", "role": "", "type": "Non-labour", "uom": "m²", "price": 10000, "max": 40, "budget": ""}, {"id": "MT.AC", "name": "Split AC unit incl. mounting kit [each]", "role": "", "type": "Non-labour", "uom": "ea", "price": 500000, "max": 8, "budget": ""}, {"id": "MT.TERM", "name": "Termiticide [m2]", "role": "", "type": "Non-labour", "uom": "m²", "price": 2100, "max": 8, "budget": ""}, {"id": "MT.WTILE", "name": "Wall tiles [m2]", "role": "", "type": "Non-labour", "uom": "m²", "price": 21000, "max": 1000, "budget": ""}, {"id": "MT.WETWP", "name": "Wet-area waterproofing membrane [m2]", "role": "", "type": "Non-labour", "uom": "m²", "price": 47000, "max": 10000, "budget": ""}];
+
+const mk=(id,name,type,uom,price,max,budget)=>({uid:uid(),id,name,type,uom,price,max,budget});
+const blank=()=>({project:'',sup:'',weather:'Clear',lost:'',notes:'',acts:[],rows:{activities:[],labour:[],equipment:[],nonlabour:[],expense:[]}});
+let SCH=[],SCHSEL=0,SCHQ='',SCHALL=false,COLS={},CHOOSE=false,DRAG=null;let tab='activities',D=null,R=[],INV=[],RISK=[],BUD=[],ACT=[],ROLES=[],prior={},priorC={},meta={project:'',sup:''};
+let selAct='',AM=null,PF=null,REP={checked:'',approved:''},HF={range:'7',from:'',to:'',act:'',view:'daily'},HD=null;
+let SEL=[],ANCH='',MULTI=false,ALLACT=false,CLR=false;const LOGT=['labour','nonlabour','equipment','expense'];
+const dayIds=()=>{const s=new Set((D&&D.acts)||[]);if(D)LOGT.forEach(t=>((D.rows||{})[t]||[]).forEach(r=>{const i=aid(r.act);if(i)s.add(i)}));return s};
+const VA=()=>{const s=dayIds();return ACT.filter(a=>s.has(a.id))};
+const curAct=()=>{const V=VA();return V.find(a=>a.id===selAct)||V.find(a=>SEL.includes(a.id))||V[0]||null};
+const inScope=r=>ALLACT||!SEL.length||SEL.includes(aid(r.act));
+const live=(t,r)=>t==='labour'?(num(r.n)>0||ovr(r.cost)):t==='nonlabour'?(units('nonlabour',r)>0||ovr(r.cost)):t==='equipment'?(eqH(r)>0||ovr(r.cost)):num(r.amt)>0;
+function ensureSel(){SEL=SEL.filter(id=>VA().some(a=>a.id===id));if(!SEL.length&&VA().length&&!CLR){SEL=[VA()[0].id];selAct=SEL[0];ANCH=SEL[0]}if(SEL.length&&!SEL.includes(selAct))selAct=SEL[0]}
+function selectAct(id,e){const ctrl=(e&&(e.ctrlKey||e.metaKey))||MULTI,shift=e&&e.shiftKey,ids=VA().map(a=>a.id);CLR=false;
+  if(shift&&ANCH&&ids.includes(ANCH)){const a=ids.indexOf(ANCH),b=ids.indexOf(id),rg=ids.slice(Math.min(a,b),Math.max(a,b)+1);SEL=ctrl?SEL.concat(rg):rg;selAct=id}
+  else if(ctrl){if(SEL.includes(id)){SEL=SEL.filter(x=>x!==id);if(selAct===id)selAct=SEL[0]||''}else{SEL=SEL.concat(id);selAct=id}ANCH=id}
+  else{SEL=[id];selAct=id;ANCH=id}
+  SEL=ids.filter(x=>SEL.includes(x));if(!SEL.length)CLR=true}
+const TT={Labour:'labour',Equipment:'equipment','Non-labour':'nonlabour'};
+const bq=(a,s)=>{let b=num(s.units);if(!b&&num(a.bq))b=num(a.bq);return Math.max(0,Math.round((b-asgEff(a,s).u)*100)/100)};
+const r4=v=>String(Math.round(v*10000)/10000);
+function labApply(r,q,t){t=t||'labour';const nl=t==='nonlabour',F=nl?'qty':'hrs',h=nl?num((res(r.res)||{}).max):(SET.hd||8),L=D.rows[t],CAP=nl?60:1e9;r.bud=q;if(!nl)r.per='Hours';r.gid=r.gid||uid();
+  for(let i=L.length-1;i>=0;i--)if(L[i].of===r.gid)L.splice(i,1);
+  if(r.ot==='Yes'){const n=num(r.n)>0?num(r.n):1;r.n=String(n);r[F]=r4(q/n);return}
+  if(r.sp==='Even'){const n=h>0?Math.max(1,Math.min(CAP,Math.ceil(q/h-1e-9))):1;r.n=String(n);r[F]=r4(q/n);return}
+  if(!(h>0)||q<=h+1e-9){r.n='1';r[F]=r4(q);return}
+  const full=Math.floor(q/h+1e-9),rem=Math.round((q-full*h)*10000)/10000;
+  if(full+(rem>0.0001?1:0)>CAP){r.n=String(CAP);r[F]=r4(q/CAP);return}
+  r.n=String(full);r[F]=String(h);
+  if(rem>0.0001){const o={act:r.act,res:r.res,uom:r.uom||'',src:'auto',ot:'No',sp:r.sp||(nl?'Fill max':'Fill 8h'),n:'1',of:r.gid};o[F]=r4(rem);if(!nl)o.per='Hours';if(t==='equipment')o.status=r.status||'Working';if(nl&&r.ref)o.ref=r.ref;L.splice(L.indexOf(r)+1,0,o)}}
+const labQ=(r,t)=>{t=t||'labour';let q=num(r.bud);if(q>0)return q;const a=ACT.find(x=>x.id===aid(r.act)),s=a&&(a.res||[]).find(z=>z.uid===r.res);if(!s)return 0;AM=null;const own=D.rows[t].filter(x=>aid(x.act)===a.id&&x.res===r.res).reduce((c,x)=>c+units(t,x),0),b=num(s.units)||num(a.bq);return Math.max(0,b-(asgEff(a,s).u-own))};
+const labBal=(r,t)=>{t=t||'labour';if(!r.res)return null;const g=D.rows[t].filter(x=>aid(x.act)===aid(r.act)&&x.res===r.res),m=g.find(x=>num(x.bud)>0);return m?num(m.bud)-g.reduce((c,x)=>c+units(t,x),0):null};
+function autoPull(force){if(!force&&SET.autopull===0)return false;D.skip=D.skip||[];AM=null;let ch=false;
+  const actOf=r=>ACT.find(x=>x.id===aid(r.act));
+  ['labour','nonlabour','equipment'].forEach(t=>{const L=D.rows[t],dead=new Set();
+    L.forEach(r=>{if(r.of||r.src!=='auto'||r.qset||ovr(r.cost)||ovr(r.bc))return;if(r.bud===undefined&&String(r.n??'')!=='')return;
+      const a=actOf(r);if(!a||!(a.res||[]).some(s=>s.uid===r.res))dead.add(r)});
+    if(dead.size){const gids=new Set([...dead].map(r=>r.gid).filter(Boolean));D.rows[t]=L.filter(r=>!dead.has(r)&&!(r.of&&gids.has(r.of)));ch=true}});
+  {const L=D.rows.expense,n0=L.length;D.rows.expense=L.filter(r=>{if(r.src!=='auto'||ovr(r.amt)||ovr(r.bc))return true;const a=actOf(r);return !!a&&(a.exp||[]).some(e=>e.cat===r.cat&&(e.desc||'')===(r.desc||''))});if(D.rows.expense.length!==n0)ch=true}
+  ACT.filter(a=>SEL.includes(a.id)).forEach(a=>{
+    (a.res||[]).forEach(s=>{const x=res(s.uid);if(!x)return;const t=TT[x.type];if(!t)return;
+      const k=t+'|'+a.id+'|'+s.uid,f=t==='nonlabour'?'qty':t==='equipment'?'hrs':'',
+        ex=D.rows[t].filter(r=>aid(r.act)===a.id&&r.res===s.uid),e=asgEff(a,s),own=ex.reduce((n,r)=>n+units(t,r),0),
+        b=num(s.units)||num(a.bq),q=Math.max(0,Math.round((b-(e.u-(ovr(s.au)?0:own)))*100)/100);
+      if(ex.length){
+        {ex.forEach(r=>{if(r.of||r.qset||!(r.src==='auto'||force))return;
+          if(q>0){if(String(r.n??'')===''||(r.bud!==undefined&&Math.abs(num(r.bud)-q)>1e-6)){if(!r.uom)r.uom=x.uom||a.bu||'';labApply(r,q,t);ch=true}}
+          else if(r.src==='auto'&&r.bud!==undefined&&String(r.n??'')!==''){const L=D.rows[t];for(let i=L.length-1;i>=0;i--)if(r.gid&&L[i].of===r.gid)L.splice(i,1);r.n='';if(t==='labour')r.hrs='8';else if(t==='equipment')r.hrs='';else r.qty='';delete r.bud;ch=true}});return}
+        const r=ex[0];if(!r.of&&!r.qset){const cur=String(r[f]??''),empty=cur==='';
+          if(r.src==='auto'||(force&&empty)){
+            if(q>0&&cur!==String(q)){r[f]=String(q);if(!r.uom)r.uom=x.uom||a.bu||'';ch=true}
+            else if(q<=0&&!empty&&r.src==='auto'){r[f]='';ch=true}}}
+        return}
+      if(D.skip.includes(k))return;
+      const r={act:a.id,res:s.uid,uom:x.uom||a.bu||'',src:'auto'};if(t==='labour'){r.hrs='8';r.per='Hours'}if(t==='equipment'){r.status='Working';r.per='Hours'}D.rows[t].push(r);if(q>0)labApply(r,q,t);ch=true});
+    (a.exp||[]).forEach(e=>{const k='expense|'+a.id+'|'+e.cat+'|'+(e.desc||'');if(D.skip.includes(k)||D.rows.expense.some(r=>aid(r.act)===a.id&&r.cat===e.cat&&(r.desc||'')===(e.desc||'')))return;
+      D.rows.expense.push({act:a.id,cat:e.cat,desc:e.desc||'',bc:'',amt:'',src:'auto'});ch=true})});
+  if(ch){AM=null;save()}return ch}
+function purgeAct(a){const id=a.id,nm=a.name,hit=v=>!!v&&(v===id||v===nm);
+  const clean=d=>{if(!d)return;if(d.rows)['labour','equipment','nonlabour','expense'].forEach(t=>{if(Array.isArray(d.rows[t]))d.rows[t]=d.rows[t].filter(r=>!hit(r.act))});if(Array.isArray(d.skip))d.skip=d.skip.filter(k=>!String(k).includes('|'+id+'|'));if(Array.isArray(d.acts))d.acts=d.acts.filter(x=>x!==id)};
+  clean(D);const cur='sitelog5:'+$('date').value,ks=[];
+  try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(/^sitelog5:\d{4}-\d{2}-\d{2}$/.test(k)&&k!==cur)ks.push(k)}
+    ks.forEach(k=>{try{const d=JSON.parse(localStorage.getItem(k));clean(d);localStorage.setItem(k,JSON.stringify(d))}catch(e){}})}catch(e){}
+  for(let i=BUD.length-1;i>=0;i--)if(hit(BUD[i].act))BUD.splice(i,1);
+  const ix=ACT.indexOf(a);if(ix>=0)ACT.splice(ix,1);
+  SEL=SEL.filter(x=>x!==id);if(selAct===id)selAct=SEL[0]||'';if(ANCH===id)ANCH=SEL[0]||'';
+  calcPrior($('date').value);AM=null;save();render();$('msg').textContent='Removed '+id+' with its resources, logged lines and costs on every day'}
+function addToDay(ids,pick){D.acts=D.acts||[];ids.forEach(id=>{if(!D.acts.includes(id))D.acts.push(id)});if(pick&&ids.length){selAct=ids[0];SEL=ids.slice();ANCH=ids[0];CLR=false}save();render();$('msg').textContent=ids.length+' activit'+(ids.length>1?'ies':'y')+' added to '+fd($('date').value)}
+function copyPrev(){const cur=$('date').value;let best='',ids=[];
+  days().forEach(d=>{if(d.date<cur&&d.date>best){const s=new Set(d.acts||[]);LOGT.forEach(t=>((d.rows||{})[t]||[]).forEach(r=>{const i=aid(r.act);if(i)s.add(i)}));const l=[...s].filter(i=>ACT.some(a=>a.id===i));if(l.length){best=d.date;ids=l}}});
+  if(!ids.length){$('msg').textContent='No earlier day has activities';return}
+  const have=dayIds(),add=ids.filter(i=>!have.has(i));if(!add.length){$('msg').textContent='Those activities are already on this date';return}
+  addToDay(add,false);$('msg').textContent=add.length+' activities copied from '+fd(best)}
+function delAct(d,a){if(!a)return;
+  if(!d.dataset.arm){d.dataset.arm=1;d.textContent='Delete?';d.style.cssText='font-size:13px;font-weight:700';$('msg').textContent='Tap again to delete '+a.id+' with its resources, logged lines and cost on every day';
+    setTimeout(()=>{if(d.isConnected){delete d.dataset.arm;d.textContent='×';d.style.cssText=''}},3500);return}
+  purgeAct(a)}
+const asg=k=>{const a=curAct();return a?(a[k]=a[k]||[]):[]};
+const aid=v=>{const a=ACT.find(x=>x.id===v||x.name===v);return a?a.id:v};
+const actName=v=>{const a=ACT.find(x=>x.id===aid(v));return a?a.name:(v||'(no activity)')};
+const nextId=()=>{let n=1000+10*(ACT.length+1);while(ACT.some(a=>a.id==='A'+n))n+=10;return 'A'+n};
+const SET0={hd:8,dw:6,dm:26,pull:1,autopull:1};let SET=Object.assign({},SET0);
+const perF=p=>p==='Days'?SET.hd:p==='Weeks'?SET.hd*SET.dw:p==='Months'?SET.hd*SET.dm:1;
+
+const res=u=>R.find(x=>x.uid===u);
+const nEff=(t,r)=>t==='labour'?num(r.n):(String(r.n??'')===''?1:num(r.n));
+const eqH=r=>nEff('equipment',r)*num(r.hrs)*perF(r.per||'Hours');
+const units=(t,r)=>t==='labour'?num(r.n)*num(r.hrs)*perF(r.per):t==='nonlabour'?nEff('nonlabour',r)*num(r.qty):((r.status||'Working')==='Working'?eqH(r):0);
+const costAuto=(t,r)=>{const x=res(r.res);return x?units(t,r)*num(x.price):0};
+const ovr=v=>v!==undefined&&v!==null&&v!=='';
+const cost=(t,r)=>t==='expense'?num(r.amt):ovr(r.cost)?num(r.cost):costAuto(t,r);
+const bcAuto=r=>{const x=res(r.res);return x?bcost(x):0};
+const bcEff=(t,r)=>ovr(r.bc)?num(r.bc):(t==='expense'?num(r.amt):costAuto(t,r));
+const KEY={Labour:'labour',Equipment:'equipment','Non-labour':'nonlabour',Expense:'expense'};
+const bcost=x=>num(x.budget)*num(x.price);
+const BK={Labour:'lab','Non-labour':'mat',Equipment:'non',Expense:'exp'};
+const btot=r=>num(r.lab)+num(r.mat)+num(r.non)+num(r.exp);
+function days(){const cur=$('date').value,L=[{date:cur,rows:D.rows,w:D.weather,notes:D.notes,sup:D.sup,lost:D.lost,acts:D.acts}];try{for(let i=0;i<localStorage.length;i++){const m=/^sitelog5:(\d{4}-\d{2}-\d{2})$/.exec(localStorage.key(i));if(m&&m[1]!==cur){const d=JSON.parse(localStorage.getItem(m[0]));L.push({date:m[1],rows:d.rows||{},w:d.weather,notes:d.notes,sup:d.sup,lost:d.lost,acts:d.acts})}}}catch(e){}return L}
+function siteLines(){const m={},F={labour:'lab',nonlabour:'mat',equipment:'non',expense:'exp'};
+  days().forEach(d=>Object.keys(F).forEach(t=>(d.rows[t]||[]).forEach(r=>{const a=actName(r.act),k=d.date+'|'+a;const o=m[k]=m[k]||{act:a,date:d.date,lab:0,mat:0,non:0,exp:0};o[F[t]]+=bcEff(t,r)})));
+  return Object.values(m).filter(r=>btot(r)).sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:a.act<b.act?-1:1)}
+function lines(){const L=BUD.map(r=>Object.assign({src:'Manual'},r));if(SET.pull)siteLines().forEach(r=>L.push(Object.assign({src:'Site log'},r)));return L}
+function bud(date){const o={lab:0,mat:0,non:0,exp:0};lines().forEach(r=>{if(!date||(r.date&&r.date<=date)){o.lab+=num(r.lab);o.mat+=num(r.mat);o.non+=num(r.non);o.exp+=num(r.exp)}});return o}
+const catBudget=ty=>{const A=assignTotals();return A.any?A[BK[ty]]:(bud()[BK[ty]]||R.filter(x=>x.type===ty).reduce((a,x)=>a+bcost(x),0))};
+const tb=(h,rows)=>'<div class="scroll"><table><thead><tr>'+h.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>'+rows+'</tbody></table></div>';
+const tr=(c,cls)=>'<tr'+(cls?' class="'+cls+'"':'')+'>'+c.map(x=>'<td>'+x+'</td>').join('')+'</tr>';
+const W=(t,f)=>f?'<span class="warn">'+t+'</span>':t;
+const bcAsg=s=>num(s.units)*num((res(s.uid)||{}).price);
+const bcAssign=s=>ovr(s.bc)?num(s.bc):bcAsg(s);
+const actBudget=a=>(a.roles||[]).reduce((x,t)=>x+bcRole(t),0)+(a.res||[]).reduce((x,s)=>x+(res(s.uid)?bcAssign(s):0),0)+(a.exp||[]).reduce((x,e)=>x+num(e.bc),0);
+const actBreak=a=>{const o={lab:0,mat:0,eq:0,exp:0};(a.res||[]).forEach(s=>{const x=res(s.uid);if(!x)return;const v=bcAssign(s);if(x.type==='Labour')o.lab+=v;else if(x.type==='Non-labour')o.mat+=v;else o.eq+=v});(a.exp||[]).forEach(e=>o.exp+=num(e.bc));(a.roles||[]).forEach(t=>o.lab+=bcRole(t));o.nl=o.mat+o.eq;o.tot=o.lab+o.mat+o.eq+o.exp;return o};
+const BS=f=>rows=>fmt(rows.reduce((x,a)=>x+f(a),0));
+function assignLines(){return ACT.map(a=>{const o={id:a.id,name:a.name,lab:0,mat:0,non:0,exp:0};(a.res||[]).forEach(s=>{const x=res(s.uid);if(x)o[BK[x.type]]+=bcAssign(s)});(a.exp||[]).forEach(e=>o.exp+=num(e.bc));(a.roles||[]).forEach(t=>o.lab+=bcRole(t));return o}).filter(o=>btot(o))}
+function assignTotals(){const t={lab:0,mat:0,non:0,exp:0,any:false};assignLines().forEach(o=>{['lab','mat','non','exp'].forEach(k=>t[k]+=o[k]);t.any=true});return t}
+const roleOf=v=>ROLES.find(r=>r.uid===v||r.id===v||r.name===v);
+const bcRoleAuto=t=>{const r=roleOf(t.rid);return r?num(t.units)*num(r.price):0};
+const bcRole=t=>ovr(t.bc)?num(t.bc):bcRoleAuto(t);
+const roleEff=(a,t)=>{const r=getAM().ro[a.id+'|'+t.rid]||{u:0,c:0};return {u:ovr(t.au)?num(t.au):r.u,c:ovr(t.ac)?num(t.ac):r.c,ru:r.u,rc:r.c}};
+const roleActual=t=>{const a=curAct();return a?roleEff(a,t):{u:0,c:0,ru:0,rc:0}};
+function migrateRoles(){if(ROLES.length||gl('roles'))return;const m={};R.forEach(x=>{const t=(x.role||'').trim();if(t)(m[t]=m[t]||[]).push(x)});
+  Object.keys(m).forEach(t=>{const L=m[t],avg=Math.round(L.reduce((a,x)=>a+num(x.price),0)/L.length),r={uid:uid(),id:t,name:t,uom:'h',price:avg};ROLES.push(r);L.forEach(x=>x.role=r.uid)});if(ROLES.length)save()}
+function getAM(){if(AM)return AM;const cur=$('date').value,M={r:{},x:{},a:{},ro:{}};
+  days().forEach(d=>{if(d.date>cur)return;['labour','equipment','nonlabour'].forEach(t=>(d.rows[t]||[]).forEach(r=>{const a=aid(r.act),c=cost(t,r);if(!a)return;M.a[a]=(M.a[a]||0)+c;if(r.res){const o=M.r[a+'|'+r.res]=M.r[a+'|'+r.res]||{u:0,c:0};o.u+=units(t,r);o.c+=c;const x=res(r.res),ro=x&&x.role?(roleOf(x.role)||{}).uid:null;if(ro){const q=M.ro[a+'|'+ro]=M.ro[a+'|'+ro]||{u:0,c:0};q.u+=units(t,r);q.c+=c}}}));
+    (d.rows.expense||[]).forEach(r=>{const a=aid(r.act);if(!a)return;M.a[a]=(M.a[a]||0)+num(r.amt);(M.x[a]=M.x[a]||[]).push(r)})});
+  return AM=M}
+const asgEff=(a,s)=>{const r=getAM().r[a.id+'|'+s.uid]||{u:0,c:0};return {u:ovr(s.au)?num(s.au):r.u,c:ovr(s.ac)?num(s.ac):r.c,ru:r.u,rc:r.c}};
+const asgActual=s=>{const a=curAct();return a?asgEff(a,s):{u:0,c:0,ru:0,rc:0}};
+const expRawA=(a,e)=>(getAM().x[a.id]||[]).filter(r=>r.cat===e.cat&&(!e.desc||(r.desc||'').toLowerCase()===e.desc.toLowerCase())).reduce((t,r)=>t+num(r.amt),0);
+const expEff=(a,e)=>ovr(e.ac)?num(e.ac):expRawA(a,e);
+const expRaw=e=>{const a=curAct();return a?expRawA(a,e):0};
+const expActual=e=>{const a=curAct();return a?expEff(a,e):0};
+function getADJ(){const M=getAM();if(M.adj)return M.adj;const o={cat:{},byAct:{}},add=(a,ty,v)=>{o.cat[ty]=(o.cat[ty]||0)+v;o.byAct[a.id]=(o.byAct[a.id]||0)+v};
+  ACT.forEach(a=>{(a.res||[]).forEach(s=>{const x=res(s.uid);if(x&&ovr(s.ac)){const e=asgEff(a,s);add(a,x.type,e.c-e.rc)}});(a.roles||[]).forEach(t=>{if(ovr(t.ac)){const e=roleEff(a,t);add(a,'Labour',e.c-e.rc)}});(a.exp||[]).forEach(e=>{if(ovr(e.ac))add(a,'Expense',num(e.ac)-expRawA(a,e))})});
+  return M.adj=o}
+const aact=id=>(getAM().a[id]||0)+(getADJ().byAct[id]||0);
+const catToDate=ty=>(priorC[KEY[ty]]||0)+D.rows[KEY[ty]].reduce((a,r)=>a+cost(KEY[ty],r),0)+(getADJ().cat[ty]||0);
+const rowsOf=t=>t==='assignrole'?asg('roles'):t==='roles'?ROLES:t==='history'?getHR():t==='activities'?VA():t==='control'?ACT:t==='assignres'?asg('res'):t==='assignexp'?asg('exp'):t==='resources'?R:t==='inventory'?INV:t==='risks'?RISK:t==='summary'||t==='schedule'||t==='cdash'||t==='calerts'||t==='rdaily'||t==='rcost'||t==='rhist'?[]:t==='budget'?BUD:LOGT.includes(t)?D.rows[t].filter(inScope):D.rows[t];
+function todayU(u){let s=0;USE.forEach(t=>D.rows[t].forEach(r=>{if(r.res===u)s+=units(t,r)}));return s}
+const toDate=u=>(prior[u]||0)+todayU(u);
+const overMax=x=>num(x.max)>0&&todayU(x.uid)>num(x.max);
+const overBud=x=>num(x.budget)>0&&toDate(x.uid)>num(x.budget);
+const score=r=>num(r.lik)*num(r.imp);
+const rating=r=>{const v=score(r);return v>=15?'Extreme':v>=10?'High':v>=5?'Medium':v>0?'Low':'–'};
+const hot=r=>r.status!=='Closed'&&(rating(r)==='High'||rating(r)==='Extreme');
+const bal=r=>num(r.open)+num(r.rec)-toDate(r.res);
+const stk=r=>{if(!r.res)return '–';const b=bal(r);return b<=0?'Out of stock':(num(r.re)>0&&b<=num(r.re)?'Reorder':'OK')};
+const needs=r=>stk(r)==='Reorder'||stk(r)==='Out of stock';
+
+function calcPrior(date){prior={};priorC={};
+  try{for(let i=0;i<localStorage.length;i++){const m=/^sitelog5:(\d{4}-\d{2}-\d{2})$/.exec(localStorage.key(i));
+    if(!m||m[1]>=date)continue;const d=JSON.parse(localStorage.getItem(m[0]));
+    USE.forEach(t=>(d.rows[t]||[]).forEach(r=>{priorC[t]=(priorC[t]||0)+cost(t,r);if(r.res)prior[r.res]=(prior[r.res]||0)+units(t,r)}));(d.rows.expense||[]).forEach(r=>{priorC.expense=(priorC.expense||0)+num(r.amt)})}}catch(e){}}
+function gl(k){try{const v=localStorage.getItem('sitelog5:'+k)||(k==='res'||k==='inv'||k==='risk'?localStorage.getItem('sitelog4:'+k):null);return v?JSON.parse(v):null}catch(e){return null}}
+function loadRes(){REP=Object.assign({checked:'',approved:''},gl('rep')||{});COLS=gl('cols')||{};SCH=gl('sch')||[];if(!Array.isArray(SCH))SCH=[];SET=Object.assign({},SET0,gl('set')||{});R.length=0;INV.length=0;RISK.length=0;BUD.length=0;ACT.length=0;ROLES.length=0;
+  (gl('res')||SEED.map(x=>Object.assign({uid:uid()},x))).forEach(x=>R.push(x));
+  (gl('inv')||[]).forEach(x=>INV.push(x));(gl('risk')||[]).forEach(x=>RISK.push(x));(gl('bud')||[]).forEach(x=>BUD.push(x));(gl('act')||[]).forEach(x=>ACT.push(x));(gl('roles')||[]).forEach(x=>ROLES.push(x))}
+let LD='';
+function load(date){LD=date;let s=null;try{s=localStorage.getItem('sitelog5:'+date)}catch(e){}
+  try{D=s?JSON.parse(s):blank()}catch(e){D=blank()}
+  D.rows=Object.assign({activities:[],labour:[],equipment:[],nonlabour:[],expense:[]},D.rows);if(!Array.isArray(D.acts))D.acts=[];
+  if(!s){D.project=meta.project;D.sup=meta.sup}
+  calcPrior(date);
+  document.querySelectorAll('[data-h]').forEach(el=>el.value=D[el.dataset.h]||'')}
+let tm;function save(){
+  try{localStorage.setItem('sitelog5:'+$('date').value,JSON.stringify(D));localStorage.setItem('sitelog5:res',JSON.stringify(R));localStorage.setItem('sitelog5:inv',JSON.stringify(INV));localStorage.setItem('sitelog5:set',JSON.stringify(SET));localStorage.setItem('sitelog5:bud',JSON.stringify(BUD));localStorage.setItem('sitelog5:act',JSON.stringify(ACT));localStorage.setItem('sitelog5:roles',JSON.stringify(ROLES));localStorage.setItem('sitelog5:rep',JSON.stringify(REP));localStorage.setItem('sitelog5:risk',JSON.stringify(RISK));localStorage.setItem('sitelog5:cols',JSON.stringify(COLS));try{localStorage.setItem('sitelog5:sch',JSON.stringify(SCH))}catch(x){}
+    localStorage.setItem('sitelog5:meta',JSON.stringify({project:D.project,sup:D.sup}));$('msg').textContent='Saved on this device'}
+  catch(e){$('msg').textContent='Could not save here; copy the summary before leaving'}}
+const later=()=>{clearTimeout(tm);tm=setTimeout(save,300)};
+
+const optsRes=type=>r=>{const a=r&&r.act?ACT.find(x=>x.id===aid(r.act)):null,as=new Set(a?(a.res||[]).map(s=>s.uid):[]);return [['','Select resource']].concat(R.filter(x=>x.type===type).sort((p,q)=>(as.has(q.uid)?1:0)-(as.has(p.uid)?1:0)).map(x=>[x.uid,(as.has(x.uid)?'★ ':'')+x.id+' – '+x.name]))};
+const optsAct=()=>[['','–']].concat(VA().map(a=>[a.id,a.id+' – '+a.name]));
+const optsOf=a=>()=>a.map(v=>[v,v]);
+const optsU=()=>[['','Unit']].concat(UOM.map(u=>[u,u]));
+const BC=['bc','Budget cost','calc',r=>{const x=res(r.res);return x?fmt(bcost(x)):'–'}];
+const SP={
+ activities:{name:'Activities',noun:'activity',cols:[['id','Activity ID','calc',a=>a.id],['name','Activity name','text'],['loc','Location / zone','text'],['bq','Budget qty','number'],['bu','Budget unit','sel',optsU],['bcost','Budgeted cost','calc',a=>fmt(actBudget(a)),null,BS(a=>actBudget(a))],['acost','Actual cost to date','calc',a=>fmt(aact(a.id)),a=>actBudget(a)>0&&(aact(a.id))>actBudget(a),BS(a=>aact(a.id))],['abt','Total budgeted cost','calc',a=>fmt(actBreak(a).tot),null,BS(a=>actBreak(a).tot)],['abl','Budgeted labour cost','calc',a=>fmt(actBreak(a).lab),null,BS(a=>actBreak(a).lab)],['abn','Budgeted non-labour cost','calc',a=>fmt(actBreak(a).nl),null,BS(a=>actBreak(a).nl)],['abm','Budgeted material cost','calc',a=>fmt(actBreak(a).mat),null,BS(a=>actBreak(a).mat)],['abe','Budgeted equipment cost','calc',a=>fmt(actBreak(a).eq),null,BS(a=>actBreak(a).eq)],['abx','Budgeted expenses cost','calc',a=>fmt(actBreak(a).exp),null,BS(a=>actBreak(a).exp)]]},
+ schedule:{name:'Schedule',custom:()=>schedPanel(),noCount:true,cols:[]},
+ assignres:{name:'Assign resources',noun:'resource',cols:[['uid','Resource','sel',()=>[['','Select resource']].concat(R.map(x=>[x.uid,x.id+' – '+x.name]))],['ty','Type','calc',s=>(res(s.uid)||{}).type||'–'],['um','Unit','calc',s=>(res(s.uid)||{}).uom||'–'],['units','Budgeted units','number'],['pr','Price / unit','calc',s=>res(s.uid)?fmt(num(res(s.uid).price)):'–'],['bc','Budgeted cost','ov',bcAsg],['au','Actual units','ov',s=>asgActual(s).ru],['ac','Actual cost','ov',s=>asgActual(s).rc],['ru','Remaining units','calc',s=>fmt(num(s.units)-asgActual(s).u),s=>num(s.units)>0&&asgActual(s).u>num(s.units)]]},
+ assignexp:{name:'Assign expenses',noun:'expense',cols:[['cat','Expense type','sel',optsOf(EXC)],['desc','Description','text'],['bc','Budgeted cost','number'],['ac','Actual cost','ov',e=>expRaw(e)],['rem','Remaining','calc',e=>fmt(num(e.bc)-expActual(e)),e=>num(e.bc)>0&&expActual(e)>num(e.bc)]]},
+ labour:{name:'Labour',noun:'crew',type:'Labour',cols:[['act','Activity','actc',optsAct],['res','Labour resource','sel',optsRes('Labour')],['n','Workers','number'],['hrs','Duration each','number'],['per','Per','sel',optsOf(PER)],['ot','Overtime','sel',optsOf(['No','Yes'])],['sp','Split','sel',optsOf(['Fill 8h','Even'])],['uom','Unit','sel',optsU],['u','Units (h)','calc',r=>fmt(units('labour',r))],['bal','Balance (h)','calc',r=>{const b=labBal(r);return b===null?'–':fmt(b)},r=>{const b=labBal(r);return b!==null&&Math.abs(b)>0.01}],['bc','Budget cost','ov',r=>costAuto('labour',r)],['cost','Cost','ov',r=>costAuto('labour',r)]]},
+ nonlabour:{name:'Non-labour',noun:'material',type:'Non-labour',cols:[['act','Activity','actc',optsAct],['res','Non-labour resource','sel',optsRes('Non-labour')],['n','Batches','number'],['qty','Quantity each','number'],['ot','Overtime','sel',optsOf(['No','Yes'])],['sp','Split','sel',optsOf(['Fill max','Even'])],['uom','Unit','sel',optsU],['u','Total quantity','calc',r=>fmt(units('nonlabour',r))],['bal','Balance','calc',r=>{const b=labBal(r,'nonlabour');return b===null?'–':fmt(b)},r=>{const b=labBal(r,'nonlabour');return b!==null&&Math.abs(b)>0.01}],['ref','Delivery ref','text'],['bc','Budget cost','ov',r=>costAuto('nonlabour',r)],['cost','Cost','ov',r=>costAuto('nonlabour',r)]]},
+ equipment:{name:'Equipment',noun:'machine',type:'Equipment',cols:[['act','Activity','actc',optsAct],['res','Equipment resource','sel',optsRes('Equipment')],['status','Status','sel',optsOf(STATUS)],['n','Machines','number'],['hrs','Duration each','number'],['per','Per','sel',optsOf(PER)],['ot','Overtime','sel',optsOf(['No','Yes'])],['sp','Split','sel',optsOf(['Fill 8h','Even'])],['uom','Unit','sel',optsU],['u','Units (h)','calc',r=>fmt(units('equipment',r))],['bal','Balance (h)','calc',r=>{const b=labBal(r,'equipment');return b===null?'–':fmt(b)},r=>{const b=labBal(r,'equipment');return b!==null&&Math.abs(b)>0.01}],['bc','Budget cost','ov',r=>costAuto('equipment',r)],['cost','Cost (working hrs)','ov',r=>costAuto('equipment',r)]]},
+ summary:{name:'Cost summary',summary:true,cols:[]},
+ expense:{name:'Expense',noun:'expense',type:'Expense',cols:[['act','Activity','actc',optsAct],['cat','Expense type','sel',optsOf(EXC)],['desc','Description','text'],['ref','Receipt / ref','text'],['bc','Budget cost','ov',r=>num(r.amt)],['amt','Amount (cost)','number']]},
+ rdaily:{name:'Daily site report',custom:()=>repPage('daily'),noCount:true,cols:[]},
+ rcost:{name:'Cost report',custom:()=>repPage('cost'),noCount:true,cols:[]},
+ history:{name:'Activity history',noAdd:true,noCount:true,emptyMsg:'No activity was logged in this period. Log Labour, Non-labour, Equipment or Expense lines against an activity and it appears here.',get cols(){return HC[HF.view]||HC.daily}},
+ rhist:{name:'Activity history',custom:()=>repPage('history'),noCount:true,cols:[]},
+ assignrole:{name:'Roles',noun:'role',cols:[['rid','Role','sel',()=>[['','Select role']].concat(ROLES.map(r=>[r.uid,r.id+' – '+r.name]))],['um','Unit','calc',t=>(roleOf(t.rid)||{}).uom||'–'],['units','Budgeted units','number'],['pr','Price / unit','calc',t=>roleOf(t.rid)?fmt(num(roleOf(t.rid).price)):'–'],['bc','Budgeted cost','ov',bcRoleAuto],['au','Actual units','ov',t=>roleActual(t).ru],['ac','Actual cost','ov',t=>roleActual(t).rc],['ru','Remaining units','calc',t=>fmt(num(t.units)-roleActual(t).u),t=>num(t.units)>0&&roleActual(t).u>num(t.units)]]},
+ roles:{name:'Roles',noun:'role',cols:[['id','Role ID','text'],['name','Role name','text'],['uom','Unit','sel',optsOf(UOM)],['price','Price / unit','number'],['cnt','Resources','calc',r=>R.filter(x=>x.role===r.uid).length],['asg','Activities assigned','calc',r=>ACT.filter(a=>(a.roles||[]).some(t=>t.rid===r.uid)).length]]},
+ cdash:{name:'Dashboard',custom:()=>controlTop('dash'),noCount:true,cols:[]},
+ calerts:{name:'Cost alerts',custom:()=>controlTop('alerts'),noCount:true,cols:[]},
+ control:{name:'Activity performance',noAdd:true,noCount:true,cols:[['id','Activity ID','calc',a=>a.id],['name','Activity name','calc',a=>a.name||''],['pc','% complete','number'],['bac','Budgeted cost (BAC)','calc',a=>fmt(pf(a).bac)],['pv','Planned value','calc',a=>fmt(pf(a).pv)],['ev','Earned value','calc',a=>fmt(pf(a).ev)],['ac','Actual cost','calc',a=>fmt(pf(a).ac)],['cv','Cost variance','calc',a=>fmt(pf(a).cv),a=>pf(a).cv<0],['sv','Schedule variance','calc',a=>fmt(pf(a).sv),a=>pf(a).pv>0&&pf(a).sv<0],['cpi','CPI','calc',a=>ix(pf(a).cpi),a=>pf(a).cpi!=null&&pf(a).cpi<1],['spi','SPI','calc',a=>ix(pf(a).spi),a=>pf(a).spi!=null&&pf(a).spi<1],['eac','Estimate at completion','calc',a=>fmt(pf(a).eac)],['etc','Estimate to complete','calc',a=>fmt(pf(a).etc)],['vac','Variance at completion','calc',a=>fmt(pf(a).vac),a=>pf(a).vac<0]]},
+ budget:{name:'Budget',noun:'budget line',cols:[['act','Activity name','text','dlAct'],['date','Date','date'],['lab','Budgeted labor cost','number'],['mat','Budgeted material cost','number'],['non','Budgeted nonlabor cost','number'],['tot','Budgeted total cost','calc',r=>fmt(btot(r))],['exp','Budgeted expense cost','number']]},
+ inventory:{name:'Inventory',noun:'stock item',cols:[['res','Material','sel',optsRes('Non-labour')],['uom','Unit','calc',r=>(res(r.res)||{}).uom||'–'],['open','Opening stock','number'],['rec','Received to date','number'],['used','Used to date','calc',r=>fmt(toDate(r.res))],['bal','Balance','calc',r=>r.res?fmt(bal(r)):'–',r=>needs(r)],['re','Reorder level','number'],['st','Status','calc',r=>stk(r),r=>needs(r)],['val','Stock value','calc',r=>{const x=res(r.res);return x?fmt(bal(r)*num(x.price)):'–'}],['loc','Store location','text']]},
+ risks:{name:'Risk register',noun:'risk',cols:[['rid','ID','calc',r=>'R-'+String(RISK.indexOf(r)+1).padStart(2,'0')],['desc','Risk description','text'],['cat','Category','sel',optsOf(['Safety','Schedule','Cost','Quality','Weather','Supply','Legal','Other'])],['lik','Likelihood 1–5','sel',optsOf(['1','2','3','4','5'])],['imp','Impact 1–5','sel',optsOf(['1','2','3','4','5'])],['sc','Score','calc',r=>score(r)],['rt','Rating','calc',r=>rating(r),r=>hot(r)],['own','Owner','text'],['mit','Mitigation / response','text'],['status','Status','sel',optsOf(['Open','Mitigating','Closed'])]]},
+ resources:{name:'Resources',noun:'resource',cols:[['id','Resource ID','text'],['name','Resource name','text'],['role','Role','sel',()=>[['','–']].concat(ROLES.map(r=>[r.uid,r.id+' – '+r.name]))],['type','Type','sel',optsOf(TYPES)],['uom','Unit of measure','sel',optsOf(UOM)],['price','Price / unit','number'],['max','Max units / day','number'],['budget','Budgeted units','number'],['bcost','Budget cost','calc',r=>fmt(bcost(r))],
+  ['t','Today','calc',r=>fmt(todayU(r.uid)),r=>overMax(r)],['d','To date','calc',r=>fmt(toDate(r.uid)),r=>overBud(r)],['rem','Remaining','calc',r=>fmt(num(r.budget)-toDate(r.uid)),r=>overBud(r)],['p','Used %','calc',r=>num(r.budget)?fmt(toDate(r.uid)/num(r.budget)*100)+'%':'–',r=>overBud(r)]]}
+};
+const FZ={activities:[56,150],assignres:[170],assignexp:[130],labour:[130],nonlabour:[130],equipment:[130],expense:[130],budget:[150],control:[56,150],inventory:[130],risks:[46,150],resources:[86,150]};
+Object.defineProperty(FZ,'history',{get:()=>HF.view==='activity'?[56,170]:HF.view==='day'?[92]:[92,170]});
+FZ.assignrole=[170];FZ.roles=[90,170];
+const VIEWS={log:['activities','schedule','history','labour','nonlabour','equipment','expense','resources','roles'],mgmt:['summary','budget','inventory','risks'],ctrl:['cdash','control','calerts'],rep:['rdaily','rcost','rhist']};let view='log';
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+
+const CUSTOM=t=>t==='activities'||t==='history';
+function FIXN(){return tab==='activities'?2:tab==='history'?(HF.view==='day'?1:2):0}
+function ckey(){return tab==='history'?'history:'+HF.view:tab}
+function colState(){const all=SP[tab].cols,fx=FIXN(),c=COLS[ckey()]||{},mov=all.slice(fx).map(x=>x[0]);let ord=(c.order||[]).filter(k=>mov.includes(k));mov.forEach(k=>{if(!ord.includes(k))ord.push(k)});return {ord,hide:(c.hide||[]).filter(k=>mov.includes(k))}}
+function TC(t){const s=SP[t];if(!CUSTOM(t)||t!==tab)return s.cols;const st=colState(),fx=FIXN();return s.cols.slice(0,fx).concat(st.ord.filter(k=>!st.hide.includes(k)).map(k=>s.cols.find(x=>x[0]===k)))}
+function setCol(ord,hide){COLS[ckey()]={order:ord,hide:hide};save();render()}
+function moveCol(from,to){const st=colState(),o=st.ord.slice(),f=o.indexOf(from),t=o.indexOf(to);if(f<0||t<0||f===t)return;o.splice(f,1);o.splice(t,0,from);setCol(o,st.hide)}
+function colUI(){const st=colState(),all=SP[tab].cols,fx=FIXN(),by=k=>all.find(x=>x[0]===k),sh=st.ord.filter(k=>!st.hide.includes(k)).length;
+  let h='<div class="bar flt"><button class="btn alt" data-colbtn="1" aria-expanded="'+CHOOSE+'">Columns '+(CHOOSE?'▴':'▾')+'</button><span class="hint" style="margin:0">'+(fx+sh)+' of '+all.length+' columns shown. Drag a column heading to move it.</span></div>';
+  if(CHOOSE)h+='<div class="apick" id="colbox"><div class="aph"><span>Show and arrange columns</span><span class="aps">'+all.slice(0,fx).map(c=>esc(c[1])).join(' and ')+' stay fixed. Budgeted non-labour cost is material plus equipment.</span><button class="chipb" data-colreset="1">Reset</button></div><div class="colbox">'+st.ord.map((k,i)=>'<div class="colrow"><label class="ck"><input type="checkbox" data-colshow="'+esc(k)+'" '+(st.hide.includes(k)?'':'checked')+'> '+esc(by(k)[1])+'</label><span><button class="chipb" data-colmv="'+esc(k)+'" data-d="-1"'+(i===0?' disabled':'')+' aria-label="Move up">▲</button> <button class="chipb" data-colmv="'+esc(k)+'" data-d="1"'+(i===st.ord.length-1?' disabled':'')+' aria-label="Move down">▼</button></span></div>').join('')+'</div></div>';
+  return h}
+function cfoot(){const cs=TC(tab),rows=rowsOf(tab),fx=FIXN(),n=rows.length,lbl=tab==='activities'?n+' activities':'Total, '+n+(HF.view==='activity'?' activities':HF.view==='day'?' days':' rows');
+  return '<tr class="tot"><td colspan="'+fx+'">'+lbl+'</td>'+cs.slice(fx).map(c=>'<td>'+(c[5]?c[5](rows):'')+'</td>').join('')+'<td></td></tr>'}
+function totals(){const T={w:0,mh:0,cost:0,ew:0,ei:0,lim:0,lc:0,ec:0,nc:0,xc:0};
+  D.rows.labour.forEach(r=>{T.w+=num(r.n);T.mh+=units('labour',r);T.lc+=cost('labour',r)});
+  D.rows.equipment.forEach(r=>{if((r.status||'Working')==='Working')T.ew+=eqH(r);else T.ei+=eqH(r);T.ec+=cost('equipment',r)});
+  D.rows.nonlabour.forEach(r=>{T.nc+=cost('nonlabour',r)});
+  D.rows.expense.forEach(r=>{T.xc+=num(r.amt)});
+  T.cost=T.lc+T.nc+T.ec+T.xc;T.lim=R.filter(x=>overMax(x)||overBud(x)).length;return T}
+function stats(){const T=totals();
+  $('stats').innerHTML=[['₦'+fmt(T.cost),'Total cost today'],['₦'+fmt(T.lc),'Labour cost'],['₦'+fmt(T.nc),'Non-labour cost'],['₦'+fmt(T.ec),'Equipment cost'],['₦'+fmt(T.xc),'Expense'],[fmt(T.mh),'Man-hours'],[T.lim,'Resources over max or budget',limList('stat')],[RISK.filter(hot).length,'Open high risks'],[INV.filter(needs).length,'Stock to reorder']]
+   .map(s=>'<div class="stat"><b>'+s[0]+'</b><span>'+s[1]+'</span>'+(s[2]||'')+'</div>').join('')}
+function tabs(){const keep=$('tabs').scrollLeft;$('tabs').innerHTML=VIEWS[view].map(k=>'<button role="tab" data-t="'+k+'" aria-selected="'+(k===tab||grpOf(tab)===k)+'">'+SP[k].name+(SP[k].summary||SP[k].noCount?'':' ('+rowsOf(k).length+')')+'</button>').join('');const act=$('tabs').querySelector('[aria-selected="true"]');if(act)$('tabs').scrollLeft=act.offsetLeft>$('tabs').clientWidth-act.offsetWidth-8?act.offsetLeft-12:0}
+const optsHtml=(c,r,v)=>c[3](r).map(o=>'<option value="'+esc(o[0])+'"'+((o[0]===(v||(DEF[c[0]]||''))||(c[0]==='act'&&v&&aid(v)===o[0]))?' selected':'')+'>'+esc(o[1])+'</option>').join('');
+function cell(c,r,i){const v=r[c[0]]??'';
+  if(c[2]==='actc'){if(r.act)return '<span class="actl" title="'+esc(actName(r.act))+'">'+esc(aid(r.act)+' – '+actName(r.act))+'</span>';c=[c[0],c[1],'sel',c[3]]}
+  if(c[2]==='ov')return '<input data-i="'+i+'" data-k="'+c[0]+'" data-ov="'+c[0]+'" type="number" min="0" step="any" inputmode="decimal" value="'+esc(v)+'" aria-label="'+c[1]+'">';
+  if(c[2]==='sel')return '<select data-i="'+i+'" data-k="'+c[0]+'" aria-label="'+c[1]+'">'+optsHtml(c,r,v)+'</select>';
+  if(c[2]==='date')return '<span class="dw"><span class="dt" aria-hidden="true"></span><input data-i="'+i+'" data-k="'+c[0]+'" type="date" value="'+esc(v)+'" aria-label="'+c[1]+'"></span>';
+  return '<input data-i="'+i+'" data-k="'+c[0]+'" type="'+c[2]+'"'+(c[2]==='text'&&c[3]?' list="'+c[3]+'"':'')+(c[2]==='number'?' min="0" step="any" inputmode="decimal" placeholder="0"':'')+' value="'+esc(v)+'" aria-label="'+c[1]+'">'}
+function foot(){const s=SP[tab];if(tab==='history'||tab==='activities')return cfoot();
+  if(tab==='history'){const L=getHR(),v=k=>L.reduce((x,o)=>x+(o[k]||0),0),f=k=>'<td>'+fmt(v(k))+'</td>';
+    if(HF.view==='activity')return '<tr class="tot"><td colspan="6">Total, '+L.length+' activities</td>'+['mh','lab','non','eq','exp','tot','bud'].map(f).join('')+'<td>'+fmt(v('bud')-v('tot'))+'</td><td></td></tr>';
+    if(HF.view==='day')return '<tr class="tot"><td colspan="3">Total, '+L.length+' days</td>'+['n','mh','lab','non','eq','exp','tot','bud'].map(f).join('')+'<td></td><td></td></tr>';
+    return '<tr class="tot"><td colspan="3">Total, '+L.length+' rows</td>'+['n','mh','lab','non','eh','eq','exp','tot','bud'].map(f).join('')+'<td>'+fmt(v('bud')-v('tot'))+'</td><td>'+fmt(v('lines'))+'</td><td></td></tr>'}
+  if(tab==='control'){const P=getPF(),v=k=>ACT.reduce((x,a)=>x+(pf(a)[k]||0),0),ev=v('ev'),ac=v('ac'),pv=v('pv');return '<tr class="tot"><td colspan="3">Total, '+ACT.length+' activities</td><td>'+fmt(v('bac'))+'</td><td>'+fmt(pv)+'</td><td>'+fmt(ev)+'</td><td>'+fmt(ac)+'</td><td>'+fmt(ev-ac)+'</td><td>'+fmt(ev-pv)+'</td><td>'+ix(ac>0?ev/ac:null)+'</td><td>'+ix(pv>0?ev/pv:null)+'</td><td>'+fmt(v('eac'))+'</td><td>'+fmt(v('etc'))+'</td><td>'+fmt(v('vac'))+'</td><td></td></tr><tr><td colspan="15">Cost not linked to an activity: ₦'+fmt(P.AC-P.acA)+'</td></tr>'}
+  if(tab==='activities')return '<tr class="tot"><td colspan="5">'+VA().length+' activities</td><td>'+fmt(VA().reduce((a,x)=>a+actBudget(x),0))+'</td><td>'+fmt(VA().reduce((a,x)=>a+(aact(x.id)),0))+'</td><td></td></tr>';
+  if(tab==='assignres'){const a=rowsOf(tab),b=a.reduce((x,t)=>x+(res(t.uid)?bcAssign(t):0),0),c=a.reduce((x,t)=>x+asgActual(t).c,0);return '<tr class="tot"><td colspan="5">Total</td><td>'+fmt(b)+'</td><td></td><td>'+fmt(c)+'</td><td></td><td></td></tr>'}
+  if(tab==='assignrole'){const a=rowsOf(tab);return '<tr class="tot"><td colspan="4">Total</td><td>'+fmt(a.reduce((x,t)=>x+bcRole(t),0))+'</td><td></td><td>'+fmt(a.reduce((x,t)=>x+roleActual(t).c,0))+'</td><td></td><td></td></tr>'}
+  if(tab==='assignexp'){const a=rowsOf(tab);return '<tr class="tot"><td colspan="2">Total</td><td>'+fmt(a.reduce((x,e)=>x+num(e.bc),0))+'</td><td>'+fmt(a.reduce((x,e)=>x+expActual(e),0))+'</td><td></td><td></td></tr>'}
+  if(tab==='budget'){const b=bud();return '<tr class="tot"><td colspan="2">Total ('+BUD.length+' lines)</td><td>'+fmt(b.lab)+'</td><td>'+fmt(b.mat)+'</td><td>'+fmt(b.non)+'</td><td>'+fmt(btot(b))+'</td><td>'+fmt(b.exp)+'</td><td></td></tr>'}
+  if(tab==='risks')return '<tr class="tot"><td colspan="11">'+RISK.filter(r=>r.status!=='Closed').length+' open risks, '+RISK.filter(hot).length+' high or extreme</td></tr>';
+  if(tab==='inventory'){const v=INV.reduce((a,r)=>{const x=res(r.res);return a+(x?bal(r)*num(x.price):0)},0);return '<tr class="tot"><td colspan="11">Total stock value ₦'+fmt(v)+' – '+INV.filter(needs).length+' items to reorder or out of stock</td></tr>'}
+  if(!s.type)return '';const T=totals(),n=s.cols.length,ty=s.type,bg=catBudget(ty),td=catToDate(ty);
+  const row=(l,v,t)=>'<tr'+(t?' class="tot"':'')+'><td colspan="'+(n-1)+'">'+l+'</td><td>'+v+'</td><td></td></tr>';
+  const L=rowsOf(tab),all=D.rows[tab].length,sel=L.length<all?' · selected activities only':'';
+  const info={labour:fmt(L.reduce((a,r)=>a+num(r.n),0))+' workers, '+fmt(L.reduce((a,r)=>a+units('labour',r),0))+' man-hours',equipment:fmt(L.filter(r=>(r.status||'Working')==='Working').reduce((a,r)=>a+eqH(r),0))+' h working, '+fmt(L.filter(r=>(r.status||'Working')!=='Working').reduce((a,r)=>a+eqH(r),0))+' h idle or down',nonlabour:L.length+' items',expense:L.length+' entries'}[tab]+sel;
+  const today=L.reduce((a,r)=>a+cost(tab,r),0);
+  const rw=(l,b,c,t)=>'<tr'+(t?' class="tot"':'')+'><td colspan="'+(n-2)+'">'+l+'</td><td>'+b+'</td><td>'+c+'</td><td></td></tr>';
+  const bt=L.reduce((a,r)=>a+bcEff(tab,r),0);
+  return rw('Budget cost',fmt(bt),'')+rw('Total cost today ('+info+')','',fmt(today),1)+'<tr><td colspan="'+(n+1)+'">Project: budget ₦'+fmt(bg)+' · cost to date ₦'+fmt(td)+' · remaining ₦'+fmt(bg-td)+'</td></tr>'}
+function refresh(){AM=null;PF=null;HD=null;const cd=$('cards');if(cd)cd.innerHTML=cards();const s=SP[tab],rows=rowsOf(tab);
+  $('panel').querySelectorAll('[data-calc]').forEach(td=>{const c=TC(tab)[+td.dataset.calc],r=rows[+td.dataset.i];td.textContent=c[3](r);td.classList.toggle('warn',!!(c[4]&&c[4](r)))});
+  $('panel').querySelectorAll('[data-ov]').forEach(inp=>{const c=TC(tab).find(x=>x[0]===inp.dataset.ov);inp.placeholder=fmt(c[3](rows[+inp.dataset.i]))});
+  const tf=$('panel').querySelector('tfoot');if(tf)tf.innerHTML=foot();stats();tabs()}
+function dayCosts(d){const o={lc:0,nc:0,ec:0,xc:0},g=d.rows||{};(g.expense||[]).forEach(r=>o.xc+=num(r.amt));(g.labour||[]).forEach(r=>o.lc+=cost('labour',r));(g.equipment||[]).forEach(r=>o.ec+=cost('equipment',r));(g.nonlabour||[]).forEach(r=>o.nc+=cost('nonlabour',r));return o}
+const kp=a=>'<div class="kpis">'+a.map(x=>'<div class="kpi"><b>'+neg(x[0])+'</b><span>'+x[1]+'</span></div>').join('')+'</div>';
+const meter=(p,w)=>'<div class="meter"><i class="'+(w?'over':'')+'" style="width:'+Math.min(100,Math.max(0,p))+'%"></i></div>';
+const pn=v=>num(String(v||'').replace(/[^0-9.\-]/g,''));
+function pdate(v){v=String(v||'').trim();if(!v)return '';let m=/^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(v);if(m)return m[1]+'-'+m[2].padStart(2,'0')+'-'+m[3].padStart(2,'0');
+  m=/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{2,4})$/.exec(v);if(m)return (m[3].length==2?'20'+m[3]:m[3])+'-'+m[2].padStart(2,'0')+'-'+m[1].padStart(2,'0');
+  const d=new Date(v);return isNaN(d)?'':d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function importBud(txt){let map=['act','date','lab','mat','non','tot','exp'],n=0;
+  const H=[['activity','act'],['date','date'],['nonlabo','non'],['labo','lab'],['material','mat'],['total','tot'],['expense','exp']];
+  txt.split(/\r?\n/).filter(l=>l.trim()).forEach((l,i)=>{const c=l.split('\t');
+    if(i===0&&/activity/i.test(c[0])){map=c.map(h=>{const k=h.toLowerCase();const f=H.find(x=>k.includes(x[0]));return f?f[1]:''});return}
+    const r={};c.forEach((v,j)=>{const k=map[j];if(!k||k==='tot')return;r[k]=k==='act'?v.trim():k==='date'?pdate(v):(pn(v)||'')});
+    if(r.act||btot(r)){BUD.push(r);n++}});return n}
+function pbox(){const names=[...new Set(ACT.map(a=>a.name).concat(BUD.map(r=>r.act)).filter(Boolean))];
+  return '<div id="pbox" hidden><p class="hint">Copy the rows from your Budget file in Excel (Activity Name, Date, Labor, Material, Nonlabor, Total, Expense; header row optional), then paste here. Dates are read day first (31-12-2026).</p><textarea id="ptxt" placeholder="Paste rows here"></textarea><div class="bar"><button class="btn" id="pimp">Import rows</button></div></div><datalist id="dlAct">'+names.map(n=>'<option value="'+esc(n)+'">').join('')+'</datalist>'}
+function renderSummary(){const cur=$('date').value,T=totals();
+  const B=bud(cur),has=lines().length>0;
+  let sb=0,sp=0,st=0,sd=0,sr='',cards='';
+  [['Labour',T.lc,'lab','Labour'],['Non-labour',T.nc,'mat','Non-labour (Material)'],['Equipment',T.ec,'non','Equipment'],['Expense',T.xc,'exp','Expense']].forEach(([ty,d,k,lb])=>{const b=catBudget(ty),pl=B[k],t=catToDate(ty),p=b?t/b*100:0;sb+=b;sp+=pl;st+=t;sd+=d;
+    sr+=tr([lb,fmt(b),has?fmt(pl):'–',fmt(t),has?W(fmt(pl-t),pl<t):'–',b?fmt(p)+'%':'–',fmt(d)]);
+    cards+='<div class="card"><h3>'+lb+'</h3>'+meter(p,b>0&&t>b)+'<small>₦'+fmt(t)+' of ₦'+fmt(b)+(b?' ('+fmt(p)+'%)':'')+'</small></div>'});
+  sr+=tr(['Total',fmt(sb),has?fmt(sp):'–',fmt(st),has?W(fmt(sp-st),sp<st):'–',sb?fmt(st/sb*100)+'%':'–',fmt(sd)],'tot');
+  const hist=[];try{for(let i=0;i<localStorage.length;i++){const m=/^sitelog5:(\d{4}-\d{2}-\d{2})$/.exec(localStorage.key(i));if(m&&m[1]<cur){const c=dayCosts(JSON.parse(localStorage.getItem(m[0])));hist.push([m[1],c.lc,c.nc,c.ec,c.xc])}}}catch(e){}
+  hist.push([cur,T.lc,T.nc,T.ec,T.xc]);hist.sort((a,b)=>a[0]<b[0]?1:-1);
+  const hr=hist.slice(0,30).map(h=>tr([fd(h[0]),fmt(h[1]),fmt(h[2]),fmt(h[3]),fmt(h[4]),fmt(h[1]+h[2]+h[3]+h[4])])).join('');
+  let ph='';
+  if(has){const m={};lines().forEach(r=>{if(r.date){m[r.date]=m[r.date]||{p:0,a:0};m[r.date].p+=btot(r)}});
+    hist.forEach(h=>{m[h[0]]=m[h[0]]||{p:0,a:0};m[h[0]].a=h[1]+h[2]+h[3]+h[4]});
+    const ds=Object.keys(m).sort();let cp=0,ca=0;const pts=[];
+    const rt=ds.slice(0,150).map(d=>{cp+=m[d].p;const on=d<=cur;if(on)ca+=m[d].a;pts.push([cp,on?ca:null]);return tr([fd(d),fmt(m[d].p),fmt(cp),on?fmt(m[d].a):'–',on?fmt(ca):'–',on?W(fmt(cp-ca),cp<ca):'–'])}).join('');
+    const mx=Math.max(1,...pts.map(p=>Math.max(p[0],p[1]||0))),n=pts.length;
+    const X=i=>n>1?30+i*560/(n-1):300,Y=v=>180-v/mx*160;
+    const ln=k=>pts.map((p,i)=>p[k]===null?'':X(i).toFixed(1)+','+Y(p[k]).toFixed(1)).filter(Boolean).join(' ');
+    ph='<h2 class="sec">Planned vs actual, cumulative (S-curve)</h2><svg viewBox="0 0 600 200" style="width:100%;max-height:240px" role="img" aria-label="Cumulative planned versus actual cost"><line x1="30" y1="180" x2="590" y2="180" stroke="var(--line)"/><polyline fill="none" stroke="var(--steel)" stroke-width="3" points="'+ln(0)+'"/><polyline fill="none" stroke="var(--bad)" stroke-width="3" stroke-dasharray="6 4" points="'+ln(1)+'"/></svg><p class="hint">Solid: planned. Dashed: actual. Top of chart is ₦'+fmt(mx)+'.</p>'+tb(['Date','Planned','Cum. planned','Actual','Cum. actual','Cum. planned − actual'],rt)}
+  const top=R.map(x=>[x,toDate(x.uid)*num(x.price)]).filter(a=>a[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  const tp=top.length?tb(['Resource','Type','Units to date','Unit','Cost to date'],top.map(([x,c])=>tr([esc(x.id+' – '+x.name),x.type,fmt(toDate(x.uid)),x.uom,fmt(c)])).join('')):'<p class="empty">No resource usage logged yet.</p>';
+  $('panel').innerHTML=kp([['₦'+(has?fmt(sp):'–'),'Planned to date'],['₦'+fmt(st),'Actual to date'],['₦'+(has?fmt(sp-st):'–'),'Planned − actual'],['₦'+fmt(sd),'Cost today']])+'<div class="cat">'+cards+'</div><p class="hint">Amounts in ₦, as at the selected date. '+(has?'Planned figures come from the Budget tab (Site Log lines plus manual lines).':'No budget lines yet; the budget falls back to the Resources tab.')+'</p><h2 class="sec">By category</h2>'+tb(['Category','Budget at completion','Planned to date','Actual to date','Planned − actual','Used','Cost today'],sr)+ph+'<h2 class="sec">Daily cost</h2>'+tb(['Date','Labour','Non-labour','Equipment','Expense','Total'],hr)+'<h2 class="sec">Top 10 resources by cost to date</h2>'+tp}
+const actOpts=sel=>ACT.map(a=>'<option value="'+esc(a.id)+'"'+(a.id===sel?' selected':'')+'>'+esc(a.id+' – '+a.name)+'</option>').join('');
+function loader(){
+  if(tab==='activities'){const on=dayIds(),off=ACT.filter(a=>!on.has(a.id));return '<div class="bar flt"><span class="sbl"><b>'+VA().length+'</b> on '+esc(fd($('date').value))+'</span>'+(off.length?'<select id="bring" aria-label="Existing activity" style="width:auto;max-width:240px"><option value="">Add existing activity…</option>'+off.map(a=>'<option value="'+esc(a.id)+'">'+esc(a.id+' – '+(a.name||'unnamed'))+'</option>').join('')+'</select><button class="btn alt" id="bringb">Add to this date</button>':'')+'<button class="btn alt" id="copyprev">Copy previous day</button></div>'+colUI()}
+  if(tab==='history')return histFilters()+colUI();
+  if(['assignres','assignexp','assignrole'].includes(tab))return apick()+(SEL.length>1?'<p class="hint">Add applies to all '+SEL.length+' selected activities. The list below shows the first selected activity.</p>':'');
+  if(LOGT.includes(tab))return apick()+'<div class="bar flt"><label class="ck"><input type="checkbox" data-flag="all" '+(ALLACT?'checked':'')+'> Show all activities</label><label class="ck"><input type="checkbox" data-set="autopull" '+(SET.autopull!==0?'checked':'')+'> Auto-pull assigned</label><button class="btn alt" id="lload">Pull assigned now</button><span class="hint" style="margin:0">'+rowsOf(tab).length+' of '+D.rows[tab].length+' lines shown</span></div>';
+  return ''}
+const neg=v=>String(v).replace('₦-','−₦');
+let LIMOPEN={};
+function limList(k){const L=R.filter(x=>overMax(x)||overBud(x));if(!L.length)return '';
+  return '<details class="lim" data-lim="'+k+'"'+(LIMOPEN[k]?' open':'')+'><summary>Show list ('+L.length+')</summary><ul>'+L.map(x=>'<li><b>'+esc(x.id+' – '+x.name)+'</b>'+(overMax(x)?'<span class="warn">Over max per day: '+fmt(todayU(x.uid))+' of '+fmt(num(x.max))+' '+esc(x.uom||'')+' today</span>':'')+(overBud(x)?'<span class="warn">Over budget: '+fmt(toDate(x.uid))+' of '+fmt(num(x.budget))+' '+esc(x.uom||'')+' to date</span>':'')+'</li>').join('')+'</ul></details>'}
+document.addEventListener('toggle',e=>{const d=e.target;if(d&&d.matches&&d.matches('details[data-lim]'))LIMOPEN[d.dataset.lim]=d.open},true);
+const pcard=(l,v,sub,pct,w,ex)=>(v=neg(v),'<div class="pc'+(w?' bad':'')+'"><span class="pl">'+l+'</span><b>'+v+'</b>'+(pct!=null?meter(pct,w):'')+(sub?'<small>'+sub+'</small>':'')+(ex||'')+'</div>');
+function catCards(ty,today){const b=catBudget(ty),t=catToDate(ty),rem=b-t,p=b?t/b*100:0;
+  return [pcard('Budgeted cost','₦'+fmt(b),'budget at completion'),pcard('Actual to date','₦'+fmt(t),b?fmt(p)+'% of budget':'no budget set',b?p:null,b>0&&t>b),pcard('Remaining cost','₦'+fmt(rem),b>0&&rem<0?'over budget':'budget less actual',null,b>0&&rem<0),pcard('Cost today','₦'+fmt(today),fd($('date').value))]}
+function cards(){if(view!=='log')return '';const T=totals();let a=[];
+  if(tab==='labour')a=catCards('Labour',T.lc).concat([pcard('Man-hours today',fmt(T.mh),T.w+' workers'),pcard('Average cost / man-hour',T.mh?'₦'+fmt(T.lc/T.mh):'–')]);
+  else if(tab==='nonlabour'){const sv=new Set(D.rows.nonlabour.map(r=>aid(r.act)).filter(Boolean));a=catCards('Non-labour',T.nc).concat([pcard('Material lines today',D.rows.nonlabour.length),pcard('Activities served',sv.size)])}
+  else if(tab==='equipment'){const u=T.ew+T.ei;a=catCards('Equipment',T.ec).concat([pcard('Working hours',fmt(T.ew)),pcard('Idle / breakdown hours',fmt(T.ei),null,null,T.ei>0&&T.ei>T.ew),pcard('Utilisation',u?fmt(T.ew/u*100)+'%':'–',null,u?T.ew/u*100:null)])}
+  else if(tab==='expense'){const m={};D.rows.expense.forEach(r=>{const k=r.cat||'Other';m[k]=(m[k]||0)+num(r.amt)});const top=Object.entries(m).sort((x,y)=>y[1]-x[1])[0];a=catCards('Expense',T.xc).concat([pcard('Entries today',D.rows.expense.length),pcard('Largest type today',top?top[0]:'–',top?'₦'+fmt(top[1]):null)])}
+  else if(tab==='activities'){const bs=VA().reduce((x,y)=>x+actBudget(y),0),ac=VA().reduce((x,y)=>x+(aact(y.id)),0),ov=VA().filter(y=>actBudget(y)>0&&(aact(y.id))>actBudget(y)).length,p=bs?ac/bs*100:0;
+    a=[pcard('Activities',VA().length,'on this date'),pcard('Budgeted cost','₦'+fmt(bs),'sum of assignments'),pcard('Actual to date','₦'+fmt(ac),bs?fmt(p)+'% of budget':'no budget set',bs?p:null,bs>0&&ac>bs),pcard('Remaining cost','₦'+fmt(bs-ac),null,null,bs>0&&ac>bs),pcard('Activities over budget',ov,null,null,ov>0)]}
+  else if(tab==='assignrole'){const ac=curAct();if(!ac)return '';const rows=asg('roles'),b=rows.reduce((x,t)=>x+bcRole(t),0),c=rows.reduce((x,t)=>x+roleActual(t).c,0),ov=rows.filter(t=>num(t.units)>0&&roleActual(t).u>num(t.units)).length,p=b?c/b*100:0;
+    a=[pcard('Activity',ac.id,esc(ac.name||'')),pcard('Budgeted cost','₦'+fmt(b),rows.length+' roles assigned'),pcard('Actual to date','₦'+fmt(c),b?fmt(p)+'% of budget':null,b?p:null,b>0&&c>b),pcard('Remaining cost','₦'+fmt(b-c),null,null,b>0&&c>b),pcard('Roles over assignment',ov,null,null,ov>0)]}
+  else if(tab==='assignres'||tab==='assignexp'){const ac=curAct();if(!ac)return '';const rows=asg(tab==='assignres'?'res':'exp');
+    const b=tab==='assignres'?rows.reduce((x,t)=>x+(res(t.uid)?bcAssign(t):0),0):rows.reduce((x,e)=>x+num(e.bc),0);
+    const c=tab==='assignres'?rows.reduce((x,t)=>x+asgActual(t).c,0):rows.reduce((x,e)=>x+expActual(e),0);
+    const ov=tab==='assignres'?rows.filter(t=>num(t.units)>0&&asgActual(t).u>num(t.units)).length:rows.filter(e=>num(e.bc)>0&&expActual(e)>num(e.bc)).length,p=b?c/b*100:0;
+    a=[pcard('Activity',ac.id,esc(ac.name||'')),pcard('Budgeted cost','₦'+fmt(b),rows.length+(tab==='assignres'?' resources':' expense items')+' assigned'),pcard('Actual to date','₦'+fmt(c),b?fmt(p)+'% of budget':null,b?p:null,b>0&&c>b),pcard('Remaining cost','₦'+fmt(b-c),null,null,b>0&&c>b),pcard('Lines over assignment',ov,null,null,ov>0)]}
+  else if(tab==='history'){const H=getHD(),dl=H.daily,sm=k=>dl.reduce((x,o)=>x+o[k],0),ds=new Set(dl.map(o=>o.date)),as=new Set(dl.map(o=>o.id).filter(Boolean));
+    a=[pcard('Period',H.from?fd(H.from)+' → '+fd(H.to):'All saved days',ds.size+' days with activity'),pcard('Activities worked',as.size),pcard('Man-hours',fmt(sm('mh')),'worker-days '+fmt(sm('n'))),pcard('Total cost','₦'+fmt(sm('tot'))),pcard('Budget cost','₦'+fmt(sm('bud'))),pcard('Budget − cost','₦'+fmt(sm('bud')-sm('tot')),null,null,sm('bud')-sm('tot')<0)]}
+  else if(tab==='resources'){const n=t=>R.filter(x=>x.type===t).length;a=[pcard('Resources',R.length,'in the resource dictionary'),pcard('Labour',n('Labour')),pcard('Equipment',n('Equipment')),pcard('Non-labour (Material)',n('Non-labour')),pcard('Budget cost, all resources','₦'+fmt(R.reduce((x,y)=>x+bcost(y),0)),'budgeted units × price'),pcard('Over max or budget',T.lim,'as at '+fd($('date').value),null,T.lim>0,limList('res'))]}
+  return a.length?'<div class="pcs">'+a.join('')+'</div>':''}
+const ix=v=>v==null?'–':v.toFixed(2);
+const pf=a=>getPF().m[a.id]||{bac:0,pv:0,ev:0,ac:0,cv:0,sv:0,cpi:null,spi:null,eac:0,etc:0,vac:0};
+function getPF(){if(PF)return PF;const cur=$('date').value,L=lines().filter(r=>r.date&&r.date<=cur),M=getAM(),m={};let bac=0,ev=0,acA=0;
+  ACT.forEach(a=>{const b=actBudget(a),pc=Math.min(100,Math.max(0,num(a.pc))),e=b*pc/100,ac=aact(a.id),pv=L.filter(r=>aid(r.act)===a.id).reduce((x,r)=>x+btot(r),0);
+    const cpi=ac>0?e/ac:null,spi=pv>0?e/pv:null,eac=cpi>0?b/cpi:Math.max(b,ac);
+    m[a.id]={bac:b,pc,ev:e,ac,pv,cv:e-ac,sv:e-pv,cpi,spi,eac,etc:eac-ac,vac:b-eac};bac+=b;ev+=e;acA+=ac});
+  const cats=['Labour','Non-labour','Equipment','Expense'],A=assignTotals();
+  const BAC=A.any?bac:cats.reduce((x,t)=>x+catBudget(t),0),AC=cats.reduce((x,t)=>x+catToDate(t),0),PV=btot(bud(cur));
+  const cpi=AC>0?ev/AC:null,spi=PV>0?ev/PV:null,EAC=cpi>0?BAC/cpi:Math.max(BAC,AC);
+  return PF={m,cats,BAC,PV,EV:ev,AC,acA,CV:ev-AC,SV:ev-PV,CPI:cpi,SPI:spi,EAC,ETC:EAC-AC,VAC:BAC-EAC,TCPI:BAC>AC?(BAC-ev)/(BAC-AC):null}}
+function histDays(){const cur=$('date').value,T=totals(),h=[];try{for(let i=0;i<localStorage.length;i++){const k=/^sitelog5:(\d{4}-\d{2}-\d{2})$/.exec(localStorage.key(i));if(k&&k[1]<cur){const c=dayCosts(JSON.parse(localStorage.getItem(k[0])));h.push([k[1],c.lc+c.nc+c.ec+c.xc])}}}catch(e){}h.push([cur,T.cost]);return h}
+function controlTop(part){const P=getPF(),cur=$('date').value,has=lines().length>0,A=assignTotals();
+  const st=(v,g,b,z)=>v>0?g:v<0?b:z;
+  const cards=[pcard('Budget at completion (BAC)','₦'+fmt(P.BAC),A.any?'from activity assignments':'from category budgets'),pcard('Planned value (PV)','₦'+fmt(P.PV),has?'budgeted cost of work scheduled':'no dated budget lines'),pcard('Earned value (EV)','₦'+fmt(P.EV),'budgeted cost of work performed'),
+   pcard('Actual cost (AC)','₦'+fmt(P.AC),P.BAC?fmt(P.AC/P.BAC*100)+'% of BAC':null,P.BAC?P.AC/P.BAC*100:null,P.BAC>0&&P.AC>P.BAC),
+   pcard('Cost variance (CV)','₦'+fmt(P.CV),'EV − AC · '+st(P.CV,'under budget','over budget','on budget'),null,P.CV<0),
+   pcard('Schedule variance (SV)','₦'+fmt(P.SV),'EV − PV · '+(P.PV>0?st(P.SV,'ahead of plan','behind plan','on plan'):'no plan yet'),null,P.PV>0&&P.SV<0),
+   pcard('Cost performance index','CPI '+ix(P.CPI),'EV ÷ AC',P.CPI==null?null:Math.min(100,P.CPI*100),P.CPI!=null&&P.CPI<1),
+   pcard('Schedule performance index','SPI '+ix(P.SPI),'EV ÷ PV',P.SPI==null?null:Math.min(100,P.SPI*100),P.SPI!=null&&P.SPI<1),
+   pcard('Estimate at completion (EAC)','₦'+fmt(P.EAC),'BAC ÷ CPI',null,P.BAC>0&&P.EAC>P.BAC),pcard('Estimate to complete (ETC)','₦'+fmt(P.ETC),'EAC − AC'),
+   pcard('Variance at completion (VAC)','₦'+fmt(P.VAC),'BAC − EAC',null,P.VAC<0),pcard('To-complete index','TCPI '+ix(P.TCPI),'efficiency needed to finish within BAC',null,P.TCPI!=null&&P.TCPI>1.1)];
+  if(part==='mini')return '<div class="pcs">'+[cards[2],cards[3],cards[4],cards[5],cards[6],cards[7]].join('')+'</div>';
+  const bad=P.CV<0||(P.PV>0&&P.SV<0);
+  let h='<div class="banner'+(bad?' bad':'')+'">'+(P.EV===0?'Enter the % complete of each activity in the Activity performance tab to calculate earned value.':'Cost status: '+st(P.CV,'under budget','over budget','on budget')+' · Schedule status: '+(P.PV>0?st(P.SV,'ahead of plan','behind plan','on plan'):'no plan loaded')+' · Forecast at completion ₦'+fmt(P.EAC)+' against a budget of ₦'+fmt(P.BAC))+'</div>';
+  h+='<div class="pcs">'+cards.join('')+'</div>';
+  h+='<label class="ck"><input type="checkbox" data-set="pull" '+(SET.pull?'checked':'')+'> Include Site Log budget lines in planned value (switch off and import your Primavera plan on the Budget tab for a true baseline)</label>';
+  let cr='',tb2=0,ta=0,te=0;P.cats.forEach(ty=>{const b=catBudget(ty),a=catToDate(ty),e=P.CPI>0?b/P.CPI:Math.max(b,a);tb2+=b;ta+=a;te+=e;cr+=tr([ty,fmt(b),fmt(a),fmt(b-a),fmt(e),W(fmt(b-e),b-e<0),b?fmt(a/b*100)+'%':'–'])});
+  cr+=tr(['Total',fmt(tb2),fmt(ta),fmt(tb2-ta),fmt(te),W(fmt(tb2-te),tb2-te<0),tb2?fmt(ta/tb2*100)+'%':'–'],'tot');
+  h+='<h2 class="sec">Forecast by cost category</h2>'+tb(['Category','Budget (BAC)','Actual to date','Remaining','Forecast (EAC)','Variance (VAC)','% spent'],cr);
+  const m={};lines().forEach(r=>{if(r.date){m[r.date]=m[r.date]||{p:0,a:0};m[r.date].p+=btot(r)}});histDays().forEach(d=>{m[d[0]]=m[d[0]]||{p:0,a:0};m[d[0]].a=d[1]});m[cur]=m[cur]||{p:0,a:0};
+  const ds=Object.keys(m).sort();let cp=0,ca=0;const pts=ds.map(d=>{cp+=m[d].p;const on=d<=cur;if(on)ca+=m[d].a;return [cp,on?ca:null]});
+  const mx=Math.max(1,P.BAC,...pts.map(p=>Math.max(p[0],p[1]||0))),n=pts.length,X=i=>n>1?30+i*560/(n-1):300,Y=v=>180-v/mx*160;
+  const ln=k=>pts.map((p,i)=>p[k]===null?'':X(i).toFixed(1)+','+Y(p[k]).toFixed(1)).filter(Boolean).join(' '),ci=ds.indexOf(cur);
+  h+='<h2 class="sec">Cost performance curve</h2><svg viewBox="0 0 600 200" style="width:100%;max-height:240px" role="img" aria-label="Planned value, actual cost and earned value"><line x1="30" y1="180" x2="590" y2="180" stroke="var(--line)"/><line x1="30" y1="'+Y(P.BAC).toFixed(1)+'" x2="590" y2="'+Y(P.BAC).toFixed(1)+'" stroke="var(--muted)" stroke-dasharray="2 4"/><polyline fill="none" stroke="var(--steel)" stroke-width="3" points="'+ln(0)+'"/><polyline fill="none" stroke="var(--bad)" stroke-width="3" stroke-dasharray="6 4" points="'+ln(1)+'"/><circle cx="'+X(ci).toFixed(1)+'" cy="'+Y(P.EV).toFixed(1)+'" r="6" fill="var(--hi)" stroke="var(--ink)" stroke-width="2"/></svg><p class="hint">Solid: planned value. Dashed: actual cost. Dot: earned value today. Dotted line: budget at completion (₦'+fmt(P.BAC)+').</p>';
+  if(part==='dash')return h;
+  const al=[];
+  ACT.forEach(a=>{const r=pf(a),nm=a.id+' '+(a.name||'');if(r.bac>0&&r.ac>r.bac)al.push(['High',nm,'Actual cost exceeds budget','₦'+fmt(r.ac-r.bac)+' over']);else if(r.cpi!=null&&r.cpi<0.9)al.push(['High',nm,'Cost efficiency below 0.90','CPI '+ix(r.cpi)]);else if(r.cpi!=null&&r.cpi<1)al.push(['Medium',nm,'Cost efficiency below 1.00','CPI '+ix(r.cpi)]);if(r.spi!=null&&r.spi<0.9)al.push(['Medium',nm,'Behind planned progress','SPI '+ix(r.spi)])});
+  P.cats.forEach(ty=>{const b=catBudget(ty),t=catToDate(ty);if(b>0&&t>b)al.push(['High',ty,'Category budget exceeded','₦'+fmt(t-b)+' over']);else if(b>0&&t/b>=0.9)al.push(['Medium',ty,'90% or more of budget spent',fmt(t/b*100)+'%'])});
+  R.forEach(x=>{if(overBud(x))al.push(['High',x.id+' '+x.name,'Resource budget exceeded',fmt(toDate(x.uid))+' of '+fmt(num(x.budget))+' '+x.uom]);if(overMax(x))al.push(['Medium',x.id+' '+x.name,'Over max units per day',fmt(todayU(x.uid))+' vs '+fmt(num(x.max))+' '+x.uom])});
+  al.sort((a,b)=>a[0]===b[0]?0:a[0]==='High'?-1:1);
+  return '<h2 class="sec">Cost alerts</h2>'+(al.length?tb(['Severity','Item','Issue','Detail'],al.slice(0,30).map(a=>tr([a[0]==='High'?'<span class="warn">High</span>':'Medium',esc(a[1]),a[2],a[3]])).join('')):'<p class="empty">No cost alerts. Everything is within budget and limits.</p>');
+  return h}
+const repKind=()=>tab==='rcost'?'cost':tab==='rhist'?'history':'daily';
+const NUMRE=/^([−-]?(₦)?[\d,]+(\.\d+)?%?|–)$/;
+function repData0(kind){const cur=$('date').value,T=totals(),A=D.rows,B=[];
+  const dt=new Date(cur+'T00:00:00'),wd=isNaN(dt)?fd(cur):dt.toLocaleDateString('en-GB',{weekday:'long'})+', '+fd(cur);
+  const nm=r=>{const x=res(r.res);return x?x.id+' – '+x.name:'(no resource)'};
+  const no=(kind==='daily'?'DSR-':'CR-')+cur.replace(/-/g,'');
+  if(kind==='daily'){
+    const g={},add=(k,r,c)=>{const a=aid(r.act)||'',o=g[a]=g[a]||{lab:0,non:0,eq:0,exp:0};o[k]+=c};
+    A.labour.filter(r=>live('labour',r)).forEach(r=>add('lab',r,cost('labour',r)));A.nonlabour.filter(r=>live('nonlabour',r)).forEach(r=>add('non',r,cost('nonlabour',r)));A.equipment.filter(r=>live('equipment',r)).forEach(r=>add('eq',r,cost('equipment',r)));A.expense.filter(r=>live('expense',r)).forEach(r=>add('exp',r,num(r.amt)));
+    const ar=Object.keys(g).map(k=>{const o=g[k],a=ACT.find(x=>x.id===k);return [k||'–',k?actName(k):'(no activity)',a?a.loc||'':'',fmt(o.lab),fmt(o.non),fmt(o.eq),fmt(o.exp),fmt(o.lab+o.non+o.eq+o.exp)]});
+    const cs=[['Labour',T.lc],['Non-labour',T.nc],['Equipment',T.ec],['Expense',T.xc]].map(([ty,d])=>{const b=catBudget(ty),t=catToDate(ty);return [ty,d,t,b,b-t]});
+    B.push({t:'strip',items:[['Workers on site',String(T.w)],['Man-hours',fmt(T.mh)],['Equipment hours working',fmt(T.ew)],['Total cost today','₦'+fmt(T.cost)]]});
+    B.push({t:'table',title:'Activities worked today (₦)',h:['ID','Activity','Location','Labour','Non-labour','Equipment','Expense','Total'],rows:ar});
+    B.push({t:'table',title:'Cost summary (₦)',h:['Category','Today','To date','Budget','Remaining'],rows:cs.map(r=>[r[0],fmt(r[1]),fmt(r[2]),fmt(r[3]),fmt(r[4])]),foot:['Total',fmt(T.cost),fmt(cs.reduce((a,r)=>a+r[2],0)),fmt(cs.reduce((a,r)=>a+r[3],0)),fmt(cs.reduce((a,r)=>a+r[4],0))]});
+    B.push({t:'table',title:'Manpower',h:['Resource','Activity','Workers','Duration each','Man-hours','Cost (₦)'],rows:A.labour.filter(r=>live('labour',r)).map(r=>[nm(r),actName(r.act),String(r.n||0),(r.hrs||0)+' '+(r.per||'Hours').toLowerCase(),fmt(units('labour',r)),fmt(cost('labour',r))]),foot:A.labour.length?['Total','',String(T.w),'',fmt(T.mh),fmt(T.lc)]:null});
+    B.push({t:'table',title:'Equipment',h:['Equipment','Activity','Status','Hours','Cost (₦)'],rows:A.equipment.filter(r=>live('equipment',r)).map(r=>[nm(r),actName(r.act),r.status||'Working',fmt(eqH(r)),fmt(cost('equipment',r))]),foot:A.equipment.length?['Total','','',fmt(T.ew+T.ei),fmt(T.ec)]:null});
+    B.push({t:'table',title:'Materials received and used',h:['Material','Activity','Quantity','Unit','Delivery ref','Cost (₦)'],rows:A.nonlabour.filter(r=>live('nonlabour',r)).map(r=>[nm(r),actName(r.act),fmt(units('nonlabour',r)),r.uom||'',r.ref||'',fmt(cost('nonlabour',r))]),foot:A.nonlabour.length?['Total','','','','',fmt(T.nc)]:null});
+    B.push({t:'table',title:'Expenses',h:['Type','Description','Activity','Receipt / ref','Amount (₦)'],rows:A.expense.filter(r=>live('expense',r)).map(r=>[r.cat||'',r.desc||'',actName(r.act),r.ref||'',fmt(num(r.amt))]),foot:A.expense.length?['Total','','','',fmt(T.xc)]:null});
+    B.push({t:'text',title:'Issues, delays and safety notes',lines:(D.notes||'').trim()?(D.notes||'').split(/\n/):['None recorded.']});
+    return {title:'Daily Site Report',no,meta:[['Report no.',no],['Date',wd],['Prepared by',D.sup||'–'],['Weather',D.weather+(D.lost?' ('+D.lost+' h lost)':'')]],blocks:B}}
+  if(kind==='history'){const H=getHD(),dl=H.daily,sm=k=>dl.reduce((x,o)=>x+o[k],0),ag=aggAct(dl),hn='AH-'+cur.replace(/-/g,'');
+    const per=H.from?fd(H.from)+' to '+fd(H.to):'All saved days',af=HF.act?HF.act+' – '+actName(HF.act):'All activities',sf=(L,k)=>L.reduce((x,o)=>x+(o[k]||0),0);
+    B.push({t:'strip',items:[['Days with activity',String(new Set(dl.map(o=>o.date)).size)],['Activities worked',String(new Set(dl.map(o=>o.id).filter(Boolean)).size)],['Worker-days',fmt(sm('n'))],['Man-hours',fmt(sm('mh'))],['Equipment hours',fmt(sm('eh'))],['Total cost','₦'+fmt(sm('tot'))],['Budget cost','₦'+fmt(sm('bud'))],['Budget − cost','₦'+fmt(sm('bud')-sm('tot'))]].map(x=>[x[0],neg(x[1])])});
+    B.push({t:'table',title:'Summary by activity (₦)',h:['ID','Activity','Days','First','Last','Man-hours','Labour','Non-labour','Equipment','Expense','Total','Budget'],rows:ag.map(o=>[o.id||'–',o.id?actName(o.id):'(no activity)',String(o.days),fd(o.first),fd(o.last),fmt(o.mh),fmt(o.lab),fmt(o.non),fmt(o.eq),fmt(o.exp),fmt(o.tot),fmt(o.bud)]),foot:ag.length?['Total','','','','',fmt(sf(ag,'mh')),fmt(sf(ag,'lab')),fmt(sf(ag,'non')),fmt(sf(ag,'eq')),fmt(sf(ag,'exp')),fmt(sf(ag,'tot')),fmt(sf(ag,'bud'))]:null});
+    B.push({t:'table',title:'Daily ledger (₦)',h:['Date','Activity','Workers','Man-hours','Labour','Non-labour','Equip. hrs','Equipment','Expense','Total','Budget'],rows:dl.map(o=>[fd(o.date),hv(o),fmt(o.n),fmt(o.mh),fmt(o.lab),fmt(o.non),fmt(o.eh),fmt(o.eq),fmt(o.exp),fmt(o.tot),fmt(o.bud)]),foot:dl.length?['Total','',fmt(sm('n')),fmt(sm('mh')),fmt(sm('lab')),fmt(sm('non')),fmt(sm('eh')),fmt(sm('eq')),fmt(sm('exp')),fmt(sm('tot')),fmt(sm('bud'))]:null});
+    B.push({t:'table',title:'Day register',h:['Date','Weather','Workers','Man-hours','Total (₦)','Notes'],rows:H.days.map(o=>[fd(o.date),o.w,fmt(o.n),fmt(o.mh),fmt(o.tot),o.notes.replace(/\s+/g,' ')])});
+    return {title:'Activity History Report',no:hn,land:true,meta:[['Report no.',hn],['Period',per],['Activity',af],['Prepared by',D.sup||'–']],blocks:B}}
+  const P=getPF(),Bd=bud(cur),has=lines().length>0,pct=P.BAC?P.AC/P.BAC*100:0,ah=controlTop('alerts');
+  const hi=(ah.match(/class="warn">High/g)||[]).length,me=(ah.match(/<td>Medium<\/td>/g)||[]).length;
+  const ex=['As at '+cur+', actual cost to date is ₦'+fmt(P.AC)+(P.BAC?' ('+fmt(pct)+'% of the ₦'+fmt(P.BAC)+' budget at completion).':'.')];
+  ex.push(P.EV>0?'Earned value is ₦'+fmt(P.EV)+(P.PV>0?' against a planned value of ₦'+fmt(P.PV):'')+'. The cost performance index (CPI) is '+ix(P.CPI)+(P.SPI!=null?' and the schedule performance index (SPI) is '+ix(P.SPI):'')+'. At this efficiency the forecast at completion is ₦'+fmt(P.EAC)+', '+(P.VAC>=0?'a saving':'an overrun')+' of ₦'+fmt(Math.abs(P.VAC))+' against budget.':'Earned value is not yet measured. Enter the % complete of each activity on the Cost Control page.');
+  ex.push(hi+' high and '+me+' medium cost alerts are open.');
+  B.push({t:'text',title:'Executive summary',lines:ex});
+  B.push({t:'strip',items:[['Budget at completion','₦'+fmt(P.BAC)],['Planned value','₦'+fmt(P.PV)],['Earned value','₦'+fmt(P.EV)],['Actual cost','₦'+fmt(P.AC)],['Cost variance (CV)','₦'+fmt(P.CV)],['Schedule variance (SV)','₦'+fmt(P.SV)],['CPI',ix(P.CPI)],['SPI',ix(P.SPI)],['Estimate at completion','₦'+fmt(P.EAC)],['Estimate to complete','₦'+fmt(P.ETC)],['Variance at completion','₦'+fmt(P.VAC)],['TCPI',ix(P.TCPI)]].map(x=>[x[0],neg(x[1])])});
+  let tb2=0,tp=0,ta=0,te=0;
+  const cr=P.cats.map(ty=>{const b=catBudget(ty),pl=Bd[BK[ty]],a=catToDate(ty),e=P.CPI>0?b/P.CPI:Math.max(b,a);tb2+=b;tp+=pl;ta+=a;te+=e;return [ty,fmt(b),has?fmt(pl):'–',fmt(a),fmt(b-a),fmt(e),fmt(b-e),b?fmt(a/b*100)+'%':'–']});
+  B.push({t:'table',title:'Cost by category (₦)',h:['Category','Budget (BAC)','Planned to date','Actual to date','Remaining','Forecast (EAC)','Variance (VAC)','% spent'],rows:cr,foot:['Total',fmt(tb2),has?fmt(tp):'–',fmt(ta),fmt(tb2-ta),fmt(te),fmt(tb2-te),tb2?fmt(ta/tb2*100)+'%':'–']});
+  const sm=k=>ACT.reduce((x,a)=>x+(pf(a)[k]||0),0);
+  B.push({t:'table',title:'Activity performance (₦)',h:['ID','Activity','% done','BAC','PV','EV','AC','CV','SV','CPI','SPI','EAC','VAC'],rows:ACT.map(a=>{const r=pf(a);return [a.id,a.name||'',String(num(a.pc)),fmt(r.bac),fmt(r.pv),fmt(r.ev),fmt(r.ac),fmt(r.cv),fmt(r.sv),ix(r.cpi),ix(r.spi),fmt(r.eac),fmt(r.vac)]}),foot:ACT.length?['Total','','',fmt(sm('bac')),fmt(sm('pv')),fmt(sm('ev')),fmt(sm('ac')),fmt(sm('ev')-sm('ac')),fmt(sm('ev')-sm('pv')),ix(sm('ac')>0?sm('ev')/sm('ac'):null),ix(sm('pv')>0?sm('ev')/sm('pv'):null),fmt(sm('eac')),fmt(sm('vac'))]:null});
+  const sv=/<svg[\s\S]*?<\/svg>/.exec(controlTop('dash'));
+  if(sv)B.push({t:'html',title:'Cost performance curve',html:!/points="[^"]*\s[^"]*"/.test(sv[0])?'<p class="none">Not enough dated history yet to draw the curve. It appears once costs or budget lines span two or more dates.</p>':sv[0]+'<p class="none">Solid: planned value. Dashed: actual cost. Dot: earned value today. Dotted line: budget at completion.</p>'});
+  const at=/<div class="scroll">[\s\S]*<\/table><\/div>/.exec(ah);
+  B.push({t:'html',title:'Cost alerts',html:at?at[0]:'<p class="none">No cost alerts. Everything is within budget and limits.</p>'});
+  return {title:'Cost Report',no,meta:[['Report no.',no],['As at',wd],['Prepared by',D.sup||'–'],['Status',P.CV<0||(P.PV>0&&P.SV<0)?'Attention needed':'On track']],blocks:B}}
+function dropCols(b,ix){b.h=b.h.filter((_,i)=>!ix.includes(i));b.rows=b.rows.map(r=>r.filter((_,i)=>!ix.includes(i)));if(b.foot)b.foot=b.foot.filter((_,i)=>!ix.includes(i))}
+const MONEYCOLS={'Activities worked today (₦)':[3,4,5,6,7],'Cost summary (₦)':'all','Manpower':[5],'Equipment':[4],'Materials received and used':[5],'Expenses':[4],'Summary by activity (₦)':[6,7,8,9,10,11],'Daily ledger (₦)':[4,5,7,8,9,10],'Day register':[4],'Cost by category (₦)':[1,2,3,4,5,6],'Activity performance (₦)':[3,4,5,6,7,8,11,12]};
+function stripMoney(d,kind){const B=[];
+  d.blocks.forEach(b=>{
+    if(b.t==='strip'){b.items=b.items.filter(x=>!/₦/.test(x[1]));if(b.items.length)B.push(b);return}
+    if(b.t==='html')return;
+    if(b.t==='text'&&kind==='cost'&&b.title==='Executive summary'){const P=getPF(),pct=P.BAC?P.AC/P.BAC*100:0,ah=controlTop('alerts'),hi=(ah.match(/class="warn">High/g)||[]).length,me=(ah.match(/<td>Medium<\/td>/g)||[]).length;
+      B.push({t:'text',title:b.title,lines:['As at '+fd($('date').value)+', '+(P.BAC?fmt(pct)+'% of the budget at completion has been spent.':'no budget at completion is set yet.'),P.EV>0?'The cost performance index (CPI) is '+ix(P.CPI)+(P.SPI!=null?' and the schedule performance index (SPI) is '+ix(P.SPI):'')+'. '+(P.VAC>=0?'The forecast is within budget.':'The forecast shows a budget overrun.'):'Earned value is not yet measured. Enter the % complete of each activity on the Cost Control page.',hi+' high and '+me+' medium cost alerts are open.']});return}
+    if(b.t==='table'){const m=MONEYCOLS[b.title];if(m==='all')return;if(m)dropCols(b,m);b.title=b.title.replace(' (₦)','')}
+    B.push(b)});
+  d.blocks=B;d.meta=d.meta.concat([['Amounts','Not included']]);return d}
+function repData(kind){const d=repData0(kind);return REP.nomoney?stripMoney(d,kind):d}
+function repBlock(b){
+  if(b.t==='strip')return '<div class="rk">'+b.items.map(x=>'<div><b>'+esc(x[1])+'</b><span>'+esc(x[0])+'</span></div>').join('')+'</div>';
+  if(b.t==='text')return '<h3>'+esc(b.title)+'</h3>'+b.lines.map(l=>'<p>'+esc(l)+'</p>').join('');
+  if(b.t==='html')return '<h3>'+esc(b.title)+'</h3>'+b.html;
+  if(!b.rows.length)return '<h3>'+esc(b.title)+'</h3><p class="none">None recorded.</p>';
+  const nu=b.h.map((_,i)=>{const c=b.rows.map(r=>String(r[i]??'')).filter(Boolean);return c.length>0&&c.every(x=>NUMRE.test(x))});
+  const cell=(t,r,ft)=>'<tr'+(ft?' class="ft"':'')+'>'+r.map((c,i)=>'<'+t+(nu[i]?' class="n"':'')+'>'+esc(c)+'</'+t+'>').join('')+'</tr>';
+  return '<h3>'+esc(b.title)+'</h3><div class="scroll"><table><thead>'+cell('th',b.h)+'</thead><tbody>'+b.rows.map(r=>cell('td',r)).join('')+(b.foot?cell('td',b.foot,1):'')+'</tbody></table></div>'}
+function repPaper(d){const sg=(n,l)=>'<div><div class="nm">'+esc(n||'')+'</div><span>'+l+' · Signature and date</span></div>';
+  return '<div class="rh"><div><h2>'+esc(d.title)+'</h2><p>'+esc(D.project||'Project name not set')+'</p></div><table class="kv">'+d.meta.map(m=>'<tr><th>'+esc(m[0])+'</th><td>'+esc(m[1])+'</td></tr>').join('')+'</table></div>'
+   +d.blocks.map(repBlock).join('')+'<div class="sign">'+sg(D.sup,'Prepared by')+sg(REP.checked,'Checked by')+sg(REP.approved,'Approved by')+'</div><div class="rf">Generated '+esc(fd(ymd(new Date()))+' '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}))+' · Site Control · Figures as at '+esc(fd($('date').value))+'</div>'}
+function repPage(kind){const d=repData(kind);
+  return '<div class="rtools"><button class="btn" id="rprint">Print / Save as PDF</button><button class="btn alt" id="rcsv">Copy CSV</button><button class="btn alt" id="rtxt">Copy as text</button><label class="ck" style="margin:0 0 0 6px"><input type="checkbox" data-repm="1" '+(REP.nomoney?'':'checked')+'> Include money (₦)</label></div><p class="hint">To save a PDF, choose Print, then Save as PDF as the destination. Printing can be blocked inside the published page, so use the downloaded file if the button does nothing.</p><div class="rsign"><div><label for="rchk">Checked by</label><input id="rchk" data-rep="checked" value="'+esc(REP.checked)+'" placeholder="Name"></div><div><label for="rapp">Approved by</label><input id="rapp" data-rep="approved" value="'+esc(REP.approved)+'" placeholder="Name"></div></div>'+(kind==='history'?histFilters():'')+'<div class="paper'+(d.land?' land':'')+'" id="paper">'+repPaper(d)+'</div>'}
+function repCsv(d){const q=v=>{v=String(v??'');if(NUMRE.test(v))v=v.replace(/[₦,]/g,'').replace('−','-');return '"'+v.replace(/"/g,'""')+'"'},L=[[d.title,d.no].map(q).join(',')];
+  d.meta.forEach(m=>L.push(q(m[0])+','+q(m[1])));
+  d.blocks.forEach(b=>{if(b.t==='strip'){L.push('');b.items.forEach(x=>L.push(q(x[0])+','+q(x[1])))}
+    else if(b.t==='table'){L.push('');L.push(q(b.title));L.push(b.h.map(q).join(','));b.rows.forEach(r=>L.push(r.map(q).join(',')));if(b.foot)L.push(b.foot.map(q).join(','))}
+    else if(b.t==='text'){L.push('');L.push(q(b.title));b.lines.forEach(x=>L.push(q(x)))}});return L.join('\n')}
+function repText(d){const L=[d.title+' – '+d.no].concat(d.meta.map(m=>m[0]+': '+m[1]));
+  d.blocks.forEach(b=>{if(b.t==='strip'){L.push('');b.items.forEach(x=>L.push(x[0]+': '+x[1]))}
+    else if(b.t==='table'){L.push('');L.push(b.title.toUpperCase());b.rows.forEach(r=>L.push(r.join(' | ')));if(b.foot)L.push(b.foot.join(' | '))}
+    else if(b.t==='text'){L.push('');L.push(b.title.toUpperCase());b.lines.forEach(x=>L.push(x))}});return L.join('\n')}
+async function copyOut(txt,ok){try{await navigator.clipboard.writeText(txt);$('msg').textContent=ok}catch(e){const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');$('msg').textContent=ok}catch(_){$('msg').textContent='Copy was blocked here'}ta.remove()}}
+const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+function histRange(){const cur=$('date').value,r=HF.range;let from='',to=cur;
+  if(r==='all')to='9999-12-31';else if(r==='month')from=cur.slice(0,8)+'01';else if(r==='custom'){from=HF.from||'';to=HF.to||cur}else{const d=new Date(cur+'T00:00:00');d.setDate(d.getDate()-(num(r)-1));from=ymd(d)}
+  return [from,to]}
+function getHD(){if(HD)return HD;const [from,to]=histRange(),daily=[],dayr=[],SF=['n','mh','lab','non','eq','exp','tot','bud','bl','bm','be','bx'];
+  days().forEach(d=>{if(d.date<from||d.date>to)return;const A=d.rows||{},g={};
+    const get=r=>{const k=aid(r.act)||'';return g[k]=g[k]||{date:d.date,id:k,n:0,mh:0,lab:0,non:0,eh:0,eq:0,exp:0,tot:0,bud:0,lines:0,bl:0,bm:0,be:0,bx:0}};
+    (A.labour||[]).filter(r=>live('labour',r)).forEach(r=>{const o=get(r);o.n+=num(r.n);o.mh+=units('labour',r);o.lab+=cost('labour',r);o.bud+=bcEff('labour',r);o.bl+=bcEff('labour',r);o.lines++});
+    (A.nonlabour||[]).filter(r=>live('nonlabour',r)).forEach(r=>{const o=get(r);o.non+=cost('nonlabour',r);o.bud+=bcEff('nonlabour',r);o.bm+=bcEff('nonlabour',r);o.lines++});
+    (A.equipment||[]).filter(r=>live('equipment',r)).forEach(r=>{const o=get(r);o.eh+=units('equipment',r);o.eq+=cost('equipment',r);o.bud+=bcEff('equipment',r);o.be+=bcEff('equipment',r);o.lines++});
+    (A.expense||[]).filter(r=>live('expense',r)).forEach(r=>{const o=get(r);o.exp+=num(r.amt);o.bud+=bcEff('expense',r);o.bx+=bcEff('expense',r);o.lines++});
+    (d.acts||[]).forEach(id=>{if(ACT.some(a=>a.id===id))get({act:id})});
+    const ks=Object.keys(g);ks.forEach(k=>{const o=g[k];o.tot=o.lab+o.non+o.eq+o.exp;daily.push(o)});
+    const nt=(d.notes||'').trim();
+    if(ks.length||nt){const t=SF.reduce((a,f)=>(a[f]=ks.reduce((x,k)=>x+g[k][f],0),a),{});dayr.push(Object.assign({date:d.date,w:d.w||'',notes:nt,acts:ks.filter(Boolean).length},t))}});
+  const f=HF.act?daily.filter(o=>o.id===HF.act):daily;
+  f.sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:(a.id<b.id?-1:1));dayr.sort((a,b)=>a.date<b.date?1:-1);
+  return HD={daily:f,days:dayr,from,to}}
+function aggAct(dl){const m={};dl.forEach(o=>{const a=m[o.id]=m[o.id]||{id:o.id,ds:new Set(),first:o.date,last:o.date,n:0,mh:0,lab:0,non:0,eh:0,eq:0,exp:0,tot:0,bud:0,bl:0,bm:0,be:0,bx:0};if(o.lines>0)a.ds.add(o.date);if(o.date<a.first)a.first=o.date;if(o.date>a.last)a.last=o.date;['n','mh','lab','non','eh','eq','exp','tot','bud','bl','bm','be','bx'].forEach(f=>a[f]+=o[f])});
+  return Object.values(m).map(a=>Object.assign(a,{days:a.ds.size})).sort((x,y)=>y.tot-x.tot)}
+function getHR(){const H=getHD();return HF.view==='day'?H.days:HF.view==='activity'?aggAct(H.daily):H.daily}
+const hv=o=>o.id?o.id+' – '+actName(o.id):'(no activity)';
+const hloc=o=>{const a=ACT.find(x=>x.id===o.id);return a?a.loc||'':''};
+const hvar=o=>o.bud-o.tot;
+const HC={
+ daily:[['date','Date','calc',o=>fd(o.date)],['act','Activity','calc',hv],['loc','Location','calc',hloc],['n','Workers','calc',o=>fmt(o.n)],['mh','Man-hours','calc',o=>fmt(o.mh)],['lab','Labour (₦)','calc',o=>fmt(o.lab)],['non','Non-labour (₦)','calc',o=>fmt(o.non)],['eh','Equip. hours','calc',o=>fmt(o.eh)],['eq','Equipment (₦)','calc',o=>fmt(o.eq)],['exp','Expense (₦)','calc',o=>fmt(o.exp)],['tot','Total cost (₦)','calc',o=>fmt(o.tot)],['bud','Budget cost (₦)','calc',o=>fmt(o.bud)],['var','Budget − cost (₦)','calc',o=>fmt(hvar(o)),o=>hvar(o)<0],['ln','Lines','calc',o=>o.lines]],
+ activity:[['id','ID','calc',o=>o.id||'–'],['act','Activity','calc',o=>o.id?actName(o.id):'(no activity)'],['loc','Location','calc',hloc],['days','Days worked','calc',o=>o.days],['first','First date','calc',o=>fd(o.first)],['last','Last date','calc',o=>fd(o.last)],['mh','Man-hours','calc',o=>fmt(o.mh)],['lab','Labour (₦)','calc',o=>fmt(o.lab)],['non','Non-labour (₦)','calc',o=>fmt(o.non)],['eq','Equipment (₦)','calc',o=>fmt(o.eq)],['exp','Expense (₦)','calc',o=>fmt(o.exp)],['tot','Total cost (₦)','calc',o=>fmt(o.tot)],['bud','Budget cost (₦)','calc',o=>fmt(o.bud)],['var','Budget − cost (₦)','calc',o=>fmt(hvar(o)),o=>hvar(o)<0]],
+ day:[['date','Date','calc',o=>fd(o.date)],['w','Weather','calc',o=>o.w],['acts','Activities','calc',o=>o.acts],['n','Workers','calc',o=>fmt(o.n)],['mh','Man-hours','calc',o=>fmt(o.mh)],['lab','Labour (₦)','calc',o=>fmt(o.lab)],['non','Non-labour (₦)','calc',o=>fmt(o.non)],['eq','Equipment (₦)','calc',o=>fmt(o.eq)],['exp','Expense (₦)','calc',o=>fmt(o.exp)],['tot','Total cost (₦)','calc',o=>fmt(o.tot)],['bud','Budget cost (₦)','calc',o=>fmt(o.bud)],['notes','Notes','calc',o=>{const t=o.notes.replace(/\s+/g,' ');return t.length>90?t.slice(0,90)+'…':t}]]};
+const HS=k=>rows=>fmt(rows.reduce((x,o)=>x+(o[k]||0),0)),HX=f=>rows=>fmt(rows.reduce((x,o)=>x+f(o),0));
+const HSUM={n:HS('n'),mh:HS('mh'),lab:HS('lab'),non:HS('non'),eh:HS('eh'),eq:HS('eq'),exp:HS('exp'),tot:HS('tot'),bud:HS('bud'),ln:HS('lines'),var:HX(o=>hvar(o))};
+Object.keys(HC).forEach(v=>{HC[v].forEach(c=>{if(HSUM[c[0]]){c[4]=c[4]||null;c[5]=HSUM[c[0]]}});
+  HC[v].push(['hbt','Total budgeted cost (₦)','calc',o=>fmt(o.bud),null,HS('bud')],['hbl','Budgeted labour cost (₦)','calc',o=>fmt(o.bl),null,HS('bl')],['hbn','Budgeted non-labour cost (₦)','calc',o=>fmt(o.bm+o.be),null,HX(o=>o.bm+o.be)],['hbm','Budgeted material cost (₦)','calc',o=>fmt(o.bm),null,HS('bm')],['hbe','Budgeted equipment cost (₦)','calc',o=>fmt(o.be),null,HS('be')],['hbx','Budgeted expenses cost (₦)','calc',o=>fmt(o.bx),null,HS('bx')])});
+function histFilters(){const o=(v,l)=>'<option value="'+v+'"'+(HF.range===v?' selected':'')+'>'+l+'</option>',vw=(v,l)=>'<option value="'+v+'"'+(HF.view===v?' selected':'')+'>'+l+'</option>';
+  return '<div class="hf"><div><label for="hf_r">Period</label><select id="hf_r" data-hf="range">'+o('7','Last 7 days')+o('14','Last 14 days')+o('30','Last 30 days')+o('month','This month')+o('all','All saved days')+o('custom','Custom range')+'</select></div>'
+   +(HF.range==='custom'?'<div><label for="hf_f">From</label><span class="dw"><span class="dt" aria-hidden="true"></span><input id="hf_f" type="date" data-hf="from" value="'+esc(HF.from)+'"></span></div><div><label for="hf_t">To</label><span class="dw"><span class="dt" aria-hidden="true"></span><input id="hf_t" type="date" data-hf="to" value="'+esc(HF.to)+'"></span></div>':'')
+   +'<div><label for="hf_a">Activity</label><select id="hf_a" data-hf="act"><option value="">All activities</option>'+actOpts(HF.act)+'</select></div>'
+   +(tab==='history'?'<div><label for="hf_v">View</label><select id="hf_v" data-hf="view">'+vw('daily','Daily ledger')+vw('activity','By activity')+vw('day','Day register')+'</select></div>':'')+'</div>'}
+const grpOf=t=>['activities','assignres','assignexp','assignrole'].includes(t)?'activities':'';
+function subTabs(){if(!grpOf(tab))return '';const a=curAct(),c=k=>a&&a[k]?a[k].length:0;
+  const it=[['activities','Activities ('+VA().length+')'],['assignres','Resources ('+c('res')+')'],['assignexp','Expenses ('+c('exp')+')'],['assignrole','Roles ('+c('roles')+')']];
+  return '<div class="adh">'+(tab==='activities'?'Activity list':'Activity details'+(a?' · '+esc(a.id+' – '+(a.name||'')):'')+(SEL.length>1?' (first of '+SEL.length+' selected)':''))+'</div><div class="subtabs">'+it.map(i=>'<button data-st="'+i[0]+'" aria-selected="'+(i[0]===tab)+'">'+i[1]+'</button>').join('')+'</div>'}
+function selBar(){const a=curAct();if(!a)return 'Add an activity, then assign resources, expenses and roles to it.';
+  const nm=SEL.length>1?SEL.slice(0,2).map(esc).join(', ')+(SEL.length>2?' +'+(SEL.length-2)+' more':''):esc(a.id+' – '+(a.name||'unnamed'));
+  return '<span class="sbl">'+(SEL.length>1?SEL.length+' activities selected':'Selected activity')+'</span> <b>'+nm+'</b><button class="btn alt" data-st="assignres">Resources</button><button class="btn alt" data-st="assignexp">Expenses</button><button class="btn alt" data-st="assignrole">Roles</button><button class="btn alt" id="rmdate">Remove from this date</button><span class="sbsp"></span><button class="chipb" data-aall="1">Select all</button><button class="chipb" data-aclr="1">Clear</button><button class="chipb" data-multi="1" aria-pressed="'+MULTI+'">Multi-select</button>'}
+function hlAct(){document.querySelectorAll('#panel tbody tr').forEach((tr,i)=>{const V=VA(),on=!!(V[i]&&SEL.includes(V[i].id));tr.classList.toggle('sel',on);tr.setAttribute('aria-selected',on)});const sb=$('selbar');if(sb)sb.innerHTML=selBar()}
+function apick(){if(!VA().length)return '<p class="empty">No activities on '+esc(fd($('date').value))+'. Add or bring one in on the Activities tab.</p>';
+  return '<div class="apick" id="apick"><div class="aph"><span>Activities</span><span class="aps">'+SEL.length+' selected</span><button class="chipb" data-aall="1">All</button><button class="chipb" data-aclr="1">Clear</button><button class="chipb" data-multi="1" aria-pressed="'+MULTI+'">Multi-select</button></div><div class="chips">'+VA().map(a=>'<button class="chip" data-aid="'+esc(a.id)+'" aria-pressed="'+SEL.includes(a.id)+'" title="'+esc(a.name||'')+'">'+esc(a.id)+' · '+esc(a.name||'unnamed')+'</button>').join('')+'</div><p class="hint" style="margin:6px 0 0">Click selects one activity. Ctrl or Cmd + click adds or removes. Shift + click selects a range. Lines belong to the activity they were added under.</p></div>'}
+function afterSel(){if(tab==='activities')hlAct();else render()}
+let IMP=null;
+const xlD=n=>{const d=new Date(Date.UTC(1899,11,30)+Math.round(n)*864e5);return d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0')};
+const cdate=(x,hint)=>{if(x===''||x==null)return '';if(typeof x==='number')return hint&&x>20000&&x<80000?xlD(x):'';const t=String(x).trim();if(/^\d+(\.\d+)?$/.test(t))return hint&&+t>20000&&+t<80000?xlD(+t):'';if(/^\d{4}-\d{2}-\d{2}/.test(t))return t.slice(0,10);return pdate(t)};
+const DHINT=/date|start|finish|end|begin|due|plan|actual|early|late/i;
+function csvRows(t){const first=t.split(/\r?\n/)[0]||'',d=first.includes('\t')?'\t':(first.split(';').length>first.split(',').length?';':','),R=[];let row=[],c='',q=false;
+  for(let i=0;i<t.length;i++){const ch=t[i];if(q){if(ch==='"'){if(t[i+1]==='"'){c+='"';i++}else q=false}else c+=ch}else if(ch==='"')q=true;else if(ch===d){row.push(c);c=''}else if(ch==='\n'||ch==='\r'){if(ch==='\r'&&t[i+1]==='\n')i++;row.push(c);R.push(row);row=[];c=''}else c+=ch}
+  if(c!==''||row.length){row.push(c);R.push(row)}return R}
+function xerTables(t){const T={};let cur=null;t.split(/\r?\n/).forEach(l=>{const c=l.split('\t');if(c[0]==='%T'){cur=T[(c[1]||'').trim()]={f:[],r:[]}}else if(c[0]==='%F'&&cur)cur.f=c.slice(1).map(x=>x.trim());else if(c[0]==='%R'&&cur){const o={};cur.f.forEach((k,i)=>o[k]=(c[i+1]??'').trim());cur.r.push(o)}});return T}
+const r2=v=>Math.round(v*100)/100;
+const etype=v=>/non[\s-]labou?r|mat/i.test(v)?'Non-labour':/equip|plant|machin|nonlab/i.test(v)?'Equipment':/lab|manpower|crew|worker/i.test(v)?'Labour':'';
+function fromXER(text){const T=xerTables(text),tk=T.TASK;if(!tk||!tk.r.length)throw new Error('No activities (TASK table) were found in this XER file.');
+  const wbs={},prj={},cal={},unit={},rs={},rate={},byTask={},code={},pred={},succ={},hd=SET.hd||8;
+  ((T.PROJWBS||{}).r||[]).forEach(w=>wbs[w.wbs_id]=w.wbs_name||w.wbs_short_name||'');((T.PROJECT||{}).r||[]).forEach(p=>prj[p.proj_id]=p.proj_short_name||p.proj_id);
+  ((T.CALENDAR||{}).r||[]).forEach(c=>cal[c.clndr_id]=c.clndr_name||'');((T.UNIT||{}).r||[]).forEach(u=>unit[u.unit_id]=u.unit_abbrev||u.unit_name||'');
+  ((T.RSRCRATE||{}).r||[]).forEach(r=>{if(!(r.rsrc_id in rate)&&num(r.cost_per_qty))rate[r.rsrc_id]=num(r.cost_per_qty)});
+  ((T.RSRC||{}).r||[]).forEach(r=>rs[r.rsrc_id]={id:r.rsrc_short_name||r.rsrc_id,name:r.rsrc_name||r.rsrc_short_name||'',type:etype(r.rsrc_type)||'Non-labour',uom:unit[r.unit_id]||'',price:rate[r.rsrc_id]||0});
+  let nres=0;((T.TASKRSRC||{}).r||[]).forEach(a=>{const r=rs[a.rsrc_id];if(!r)return;const q=num(a.target_qty),c=num(a.target_cost);(byTask[a.task_id]=byTask[a.task_id]||[]).push({rid:r.id,name:r.name,type:r.type,uom:r.uom,price:r.price||num(a.cost_per_qty)||(q?c/q:0),units:q,cost:c});nres++});
+  tk.r.forEach(t=>code[t.task_id]=t.task_code);
+  ((T.TASKPRED||{}).r||[]).forEach(p=>{const a=code[p.task_id],b=code[p.pred_task_id];if(!a||!b)return;const ty=({PR_FS:'FS',PR_SS:'SS',PR_FF:'FF',PR_SF:'SF'})[p.pred_type]||'FS',lg=num(p.lag_hr_cnt)/hd,tx=ty+(lg?(lg>0?'+':'')+r2(lg):'');(pred[p.task_id]=pred[p.task_id]||[]).push(b+' '+tx);(succ[p.pred_task_id]=succ[p.pred_task_id]||[]).push(a+' '+tx)});
+  const dp=v=>cdate(v||''),items=tk.r.filter(t=>t.task_code).map(t=>({id:t.task_code,name:t.task_name||'',loc:wbs[t.wbs_id]||'',proj:t.proj_id||'',res:byTask[t.task_id]||[],d:{ps:dp(t.target_start_date),pf:dp(t.target_end_date),as:dp(t.act_start_date),af:dp(t.act_end_date),es:dp(t.early_start_date),ef:dp(t.early_end_date)}}));
+  const all=[['ps','Planned start (target)'],['pf','Planned finish (target)'],['as','Actual start'],['af','Actual finish'],['es','Early start'],['ef','Early finish']],srcs=all.filter(c=>items.some(i=>i.d[c[0]]));
+  if(!srcs.length)throw new Error('This XER file has no activity dates.');
+  const projs=[...new Set(items.map(i=>i.proj))].map(p=>[p,prj[p]||p]);
+  const dsrc=(srcs.find(c=>c[0]==='ps')||srcs[0])[0];
+  const dys=v=>v===''||v==null?'':String(r2(num(v)/hd)),ST={TK_NotStart:'Not started',TK_Active:'In progress',TK_Complete:'Completed'},TY={TT_Task:'Task dependent',TT_Rsrc:'Resource dependent',TT_Mile:'Start milestone',TT_FinMile:'Finish milestone',TT_LOE:'Level of effort',TT_WBS:'WBS summary'};
+  const C=[['id','Activity ID',t=>t.task_code],['name','Activity name',t=>t.task_name],['wbs','WBS',t=>wbs[t.wbs_id]||''],['type','Activity type',t=>TY[t.task_type]||t.task_type||''],['status','Status',t=>ST[t.status_code]||t.status_code||''],['dur','Original duration (days)',t=>dys(t.target_drtn_hr_cnt)],['rem','Remaining duration (days)',t=>dys(t.remain_drtn_hr_cnt)],['pct','% complete',t=>t.phys_complete_pct||t.complete_pct||''],['ps','Planned start',t=>dp(t.target_start_date)],['pf','Planned finish',t=>dp(t.target_end_date)],['as','Actual start',t=>dp(t.act_start_date)],['af','Actual finish',t=>dp(t.act_end_date)],['es','Early start',t=>dp(t.early_start_date)],['ef','Early finish',t=>dp(t.early_end_date)],['ls','Late start',t=>dp(t.late_start_date)],['lf','Late finish',t=>dp(t.late_end_date)],['tf','Total float (days)',t=>dys(t.total_float_hr_cnt)],['cal','Calendar',t=>cal[t.clndr_id]||''],['pred','Predecessors',t=>(pred[t.task_id]||[]).join(', ')],['succ','Successors',t=>(succ[t.task_id]||[]).join(', ')],['res','Resources (units)',t=>(byTask[t.task_id]||[]).map(q=>q.rid+(q.units?' ('+r2(q.units)+(q.uom?' '+q.uom:'')+')':'')).join(', ')],['bcost','Budgeted cost',t=>{const z=(byTask[t.task_id]||[]).reduce((n,q)=>n+q.cost,0);return z?String(r2(z)):''}]];
+  const T2=tk.r.filter(t=>t.task_code),used=['task_code','task_name','wbs_id','task_type','status_code','target_drtn_hr_cnt','remain_drtn_hr_cnt','phys_complete_pct','target_start_date','target_end_date','act_start_date','act_end_date','early_start_date','early_end_date','late_start_date','late_end_date','total_float_hr_cnt','clndr_id'];
+  const cols=C.filter(c=>T2.some(t=>c[2](t)!=='')).map(c=>({k:c[0],l:c[1]})).concat(tk.f.filter(f=>!used.includes(f)&&T2.some(t=>(t[f]??'')!=='')).map(f=>({k:'x_'+f,l:f.replace(/_/g,' '),raw:true})));
+  const rows=T2.map(t=>{const o={_id:t.task_code,_proj:t.proj_id||''};cols.forEach(c=>{if(c.raw){const f=c.k.slice(2),v=t[f]??'';o[c.k]=/_date$/.test(f)?cdate(v):v}else o[c.k]=C.find(x=>x[0]===c.k)[2](t)});return o});
+  return {kind:'XER',items,srcs,fsrcs:[['','None']].concat(srcs),dsrc,fsrc:{ps:'pf',as:'af',es:'ef',pf:'pf',af:'af',ef:'ef'}[dsrc]||'',projs:projs.length>1?projs:[],sch:{cols,rows},nres}}
+function fromTable(rows){let h=rows.findIndex(r=>r.filter(x=>String(x??'').trim()!=='').length>=2);if(h<0)throw new Error('No table was found in this file.');
+  const head=rows[h].map(x=>String(x??'').trim()),body=rows.slice(h+1).filter(r=>r.some(x=>String(x??'').trim()!==''));
+  const find=(re,not)=>head.findIndex((x,i)=>re.test(x)&&!(not||[]).includes(i));
+  let ci=find(/^(activity\s*)?(id|code|no\.?|number)$|activity id|task code/i);if(ci<0)ci=0;
+  let ni=find(/activity name|task name|description|^name$|^activity$|title/i,[ci]);if(ni<0)ni=head.findIndex((x,i)=>i!==ci&&x!=='');
+  const li=find(/location|zone|wbs|area|block|level/i,[ci,ni]),qi=find(/^(budget\s*)?(qty|quantity)$/i,[ci,ni]),ui=find(/^(budget\s*)?(unit|uom)/i,[ci,ni]);
+  const dcols=head.map((x,i)=>i).filter(i=>{if([ci,ni,li,qi,ui].includes(i))return false;const hint=DHINT.test(head[i]),v=body.map(r=>r[i]).filter(x=>x!==undefined&&String(x).trim()!=='');return v.length&&(hint?v.filter(x=>cdate(x,true)).length:v.filter(x=>cdate(x,false)).length)/v.length>=0.6});
+  if(!dcols.length)throw new Error('No date column was found. Add a column such as Start Date or Planned Start.');
+  const srcs=dcols.map(i=>['c'+i,head[i]||('Column '+(i+1))]),pick=re=>{const k=dcols.find(i=>re.test(head[i]));return k===undefined?null:'c'+k};
+  const dsrc=pick(/planned start|target start|start date|^start|early start/i)||pick(/date/i)||srcs[0][0],fsrc=pick(/finish|end/i)||'';
+  const idf=v=>String(v??'').trim().replace(/\.0+$/,'');
+  const ri=find(/resource\s*(id|code)|^resource$|^rsrc/i,[ci,ni]),rn=find(/resource\s*name/i,[ci,ni,ri]),rt=find(/resource\s*type|^type$/i,[ci,ni,ri,rn]),ru=find(/(units|qty|quantity|hours)$/i,[ci,ni,ri,rn,rt,qi]),rc=find(/(budget(ed)?|planned|target)\s*cost|^cost$/i,[ci,ni,ri,rn,rt,ru]);
+  const keep=head.map((x,i)=>i).filter(i=>head[i]!==''),seenL={},cols=keep.map(i=>{const l=head[i],n=seenL[l]=(seenL[l]||0)+1;return {k:'c'+i,l:n>1?l+' ('+n+')':l}});
+  const items=[],by={},srows=[];let last='',nres=0;
+  body.forEach(r=>{let id=idf(r[ci]);const rid=ri>=0?String(r[ri]??'').trim():'';if(!id&&rid)id=last;if(id)last=id;
+    const o={_id:id,_proj:''};keep.forEach(i=>{o['c'+i]=dcols.includes(i)?cdate(r[i],true):String(r[i]??'').trim()});srows.push(o);if(!id)return;
+    let it=by[id];if(!it){const d={};dcols.forEach(i=>d['c'+i]=cdate(r[i],true));const bu=ui>=0?UOM.find(u=>u.toLowerCase()===String(r[ui]||'').trim().toLowerCase())||'':'';
+      it={id,name:String(r[ni]??'').trim(),loc:li>=0?String(r[li]??'').trim():'',bq:qi>=0&&num(r[qi])?String(num(r[qi])):'',bu,proj:'',d,res:[]};by[id]=it;items.push(it)}
+    if(rid){const q=ru>=0?num(r[ru]):0,c=rc>=0?num(r[rc]):0;it.res.push({rid,name:rn>=0?String(r[rn]??'').trim():'',type:rt>=0?etype(String(r[rt]??'')):'',units:q,cost:c,uom:'',price:q&&c?c/q:0});nres++}});
+  if(!items.length)throw new Error('No activity IDs were found in the first column.');
+  return {kind:'Excel',items,srcs,fsrcs:[['','None']].concat(srcs),dsrc,fsrc:fsrc===dsrc?'':fsrc,projs:[],sch:{cols,rows:srows},nres}}
+async function inflate(u8){const ds=new DecompressionStream('deflate-raw'),w=ds.writable.getWriter();w.write(u8);w.close();return new Uint8Array(await new Response(ds.readable).arrayBuffer())}
+async function unzip(buf){const u=new Uint8Array(buf),dv=new DataView(buf);let e=u.length-22;while(e>=0&&dv.getUint32(e,true)!==0x06054b50)e--;if(e<0)throw new Error('This is not a valid .xlsx file.');
+  const n=dv.getUint16(e+10,true);let p=dv.getUint32(e+16,true);const F={};
+  for(let i=0;i<n;i++){if(dv.getUint32(p,true)!==0x02014b50)break;const m=dv.getUint16(p+10,true),cs=dv.getUint32(p+20,true),nl=dv.getUint16(p+28,true),xl=dv.getUint16(p+30,true),cl=dv.getUint16(p+32,true),off=dv.getUint32(p+42,true);F[new TextDecoder().decode(u.subarray(p+46,p+46+nl))]={m,cs,off};p+=46+nl+xl+cl}
+  return {get:async nm=>{const f=F[nm];if(!f)return null;const ln=dv.getUint16(f.off+26,true),lx=dv.getUint16(f.off+28,true),st=f.off+30+ln+lx,d=u.subarray(st,st+f.cs);return new TextDecoder().decode(f.m===0?d:await inflate(d))}}}
+const colIdx=ref=>{const m=/^([A-Z]+)/.exec(ref||'');if(!m)return 0;let n=0;for(const ch of m[1])n=n*26+ch.charCodeAt(0)-64;return n-1};
+async function fromXLSX(buf){if(typeof DecompressionStream==='undefined')throw new Error('This browser cannot open .xlsx files here. Save the sheet as CSV and import that.');
+  const z=await unzip(buf),dp=new DOMParser(),X=t=>dp.parseFromString(t,'application/xml'),ss=[],sst=await z.get('xl/sharedStrings.xml');
+  if(sst)[...X(sst).getElementsByTagName('si')].forEach(si=>ss.push([...si.getElementsByTagName('t')].map(t=>t.textContent).join('')));
+  let path='xl/worksheets/sheet1.xml';const wb=await z.get('xl/workbook.xml'),rl=await z.get('xl/_rels/workbook.xml.rels');
+  if(wb&&rl){const sh=X(wb).getElementsByTagName('sheet')[0],rid=sh&&sh.getAttribute('r:id'),rel=[...X(rl).getElementsByTagName('Relationship')].find(r=>r.getAttribute('Id')===rid);if(rel){const t=rel.getAttribute('Target');path=t.startsWith('/')?t.slice(1):'xl/'+t.replace(/^\.\//,'')}}
+  const sx=await z.get(path);if(!sx)throw new Error('Could not find the first sheet in this file.');
+  const rows=[];[...X(sx).getElementsByTagName('row')].forEach(r=>{const out=[];[...r.getElementsByTagName('c')].forEach(c=>{const t=c.getAttribute('t'),v=c.getElementsByTagName('v')[0],is=c.getElementsByTagName('is')[0];let val='';
+    if(t==='s'&&v)val=ss[+v.textContent]??'';else if(t==='inlineStr'&&is)val=[...is.getElementsByTagName('t')].map(x=>x.textContent).join('');else if(v)val=(t==='str'||t==='b'||t==='e'||isNaN(+v.textContent))?v.textContent:+v.textContent;out[colIdx(c.getAttribute('r'))]=val});rows.push(Array.from(out,x=>x===undefined?'':x))});
+  return fromTable(rows)}
+async function impLoad(f){if(!f)return;try{const buf=await f.arrayBuffer(),n=f.name.toLowerCase(),top=new TextDecoder('windows-1252').decode(new Uint8Array(buf.slice(0,6)));let r;
+  if(n.endsWith('.xer')||top.startsWith('ERMHDR'))r=fromXER(new TextDecoder('windows-1252').decode(buf));
+  else if(n.endsWith('.xlsx')||n.endsWith('.xlsm'))r=await fromXLSX(buf);
+  else if(n.endsWith('.xls'))throw new Error('Old .xls files are not supported. Save it as .xlsx or CSV and try again.');
+  else r=fromTable(csvRows(new TextDecoder('utf-8').decode(buf)));
+  IMP=Object.assign({file:f.name,span:false,proj:'',done:null},r);tab='activities';render();$('msg').textContent=IMP.items.length+' activities read from '+f.name}
+  catch(e){IMP=null;render();$('msg').textContent=e.message||'Could not read that file'}}
+const impItems=()=>IMP.items.filter(x=>!IMP.proj||x.proj===IMP.proj);
+function impDates(x){const s=x.d[IMP.dsrc]||'';if(!s)return [];const e=IMP.fsrc&&x.d[IMP.fsrc];if(!IMP.span||!e||e<=s)return [s];const out=[];const E=new Date(e+'T00:00:00');let d=new Date(s+'T00:00:00');while(d<=E&&out.length<366){out.push(ymd(d));d.setDate(d.getDate()+1)}return out}
+function addActToDate(date,id){if(date===$('date').value){D.acts=D.acts||[];if(!D.acts.includes(id))D.acts.push(id);return}
+  const k='sitelog5:'+date;let d=null;try{d=JSON.parse(localStorage.getItem(k))}catch(e){}if(!d)d=Object.assign(blank(),{project:meta.project,sup:meta.sup});
+  d.rows=Object.assign({activities:[],labour:[],equipment:[],nonlabour:[],expense:[]},d.rows);d.acts=d.acts||[];if(!d.acts.includes(id))d.acts.push(id);try{localStorage.setItem(k,JSON.stringify(d))}catch(e){}}
+function impRes(a,x,st){(x.res||[]).forEach(q=>{let r=R.find(z=>(z.id||'').toLowerCase()===q.rid.toLowerCase())||(q.name&&R.find(z=>(z.name||'').toLowerCase()===q.name.toLowerCase()));
+    if(!r){const ty=q.type||'Labour',um=UOM.find(u=>u.toLowerCase()===(q.uom||'').toLowerCase())||(ty==='Non-labour'?'ea':'h');r={uid:uid(),id:q.rid,name:q.name||q.rid,role:'',type:ty,uom:um,price:q.price?String(r2(q.price)):'',max:'',budget:''};R.push(r);st.nr++}
+    else if(!num(r.price)&&q.price)r.price=String(r2(q.price));
+    a.res=a.res||[];if(a.res.some(s=>s.uid===r.uid))return;
+    const s={uid:r.uid,units:q.units?String(q.units):'',bc:''},auto=num(q.units)*num(r.price);if(q.cost>0&&Math.abs(auto-q.cost)>Math.max(.5,q.cost*.005))s.bc=String(q.cost);a.res.push(s);st.na++})}
+function doImport(){const its=impItems(),by={},st={nr:0,na:0};let nNew=0,nUp=0,tot=0,nd=0;
+  its.forEach(x=>{let a=ACT.find(z=>z.id.toLowerCase()===x.id.toLowerCase());
+    if(!a){a={id:x.id,name:x.name||'',loc:x.loc||'',bq:x.bq||'',bu:x.bu||'',res:[],exp:[],roles:[]};ACT.push(a);nNew++}
+    else{nUp++;if(!a.name&&x.name)a.name=x.name;if(!a.loc&&x.loc)a.loc=x.loc;if(!a.bq&&x.bq)a.bq=x.bq;if(!a.bu&&x.bu)a.bu=x.bu}
+    impRes(a,x,st);
+    const ds=impDates(x);if(!ds.length)nd++;ds.forEach(d=>{addActToDate(d,a.id);by[d]=(by[d]||0)+1;tot++})});
+  if(IMP.sch){const rows=IMP.sch.rows.filter(r=>!IMP.proj||r._proj===IMP.proj);SCH=(SCH||[]).filter(z=>z.file!==IMP.file);SCH.push({file:IMP.file,kind:IMP.kind,at:new Date().toISOString().slice(0,16).replace('T',' '),cols:IMP.sch.cols,rows});SCHSEL=SCH.length-1}
+  IMP.done={nNew,nUp,tot,nd,by,nr:st.nr,na:st.na};save();AM=null;render();$('msg').textContent='Imported '+its.length+' activities ('+nNew+' new) with '+st.na+' resource assignments'}
+const schCnt=S=>'Showing '+Math.min(S.n,3000)+' of '+S.n+' rows'+(S.cap?' (the first 3000)':'');
+const schCols=I=>SCHALL?I.cols:I.cols.filter(c=>!c.raw);
+function schRows(I){const cs=schCols(I),q=SCHQ.trim().toLowerCase(),L=q?I.rows.filter(r=>String(r._id).toLowerCase().includes(q)||cs.some(c=>String(r[c.k]??'').toLowerCase().includes(q))):I.rows,wide={pred:1,succ:1,res:1,name:1};
+  const html=L.slice(0,3000).map(r=>{const a=ACT.find(x=>x.id.toLowerCase()===String(r._id).toLowerCase());return '<tr>'+cs.map(c=>{const v=String(r[c.k]??'');return '<td class="calc"'+(wide[c.k]?' style="white-space:normal;min-width:180px"':'')+'>'+esc(/^\d{4}-\d{2}-\d{2}$/.test(v)?fd(v):v)+'</td>'}).join('')+'<td class="calc">'+(a?'Yes'+((a.res||[]).length?' · '+(a.res||[]).length+' resources':''):'–')+'</td></tr>'}).join('');
+  return {html,n:L.length,cap:L.length>3000}}
+function schBody(){const I=SCH[SCHSEL];if(!I||!$('schbody'))return;const S=schRows(I);$('schbody').innerHTML=S.html;$('schcnt').textContent=schCnt(S)}
+function schedPanel(){const I=SCH[SCHSEL],fin='<input type="file" id="impfile" accept=".xlsx,.xlsm,.xer,.csv,.tsv,.txt" hidden>';
+  if(!I)return '<p class="hint">The Schedule tab lists every activity from the files you import, in the layout of the file. Import a Primavera XER file or an Excel / CSV schedule. Activities that have resources assigned in the file are imported together with those resources.</p><div class="bar"><button class="btn" id="impbtn">Import from Excel / XER</button>'+fin+'</div><p class="empty">No schedule has been imported yet.</p>';
+  const cs=schCols(I),ids=new Set(I.rows.map(r=>String(r._id).toLowerCase()).filter(Boolean)),inlog=[...ids].filter(i=>ACT.some(a=>a.id.toLowerCase()===i)),withr=inlog.filter(i=>(ACT.find(a=>a.id.toLowerCase()===i).res||[]).length).length,S=schRows(I);
+  return '<div class="bar flt">'+(SCH.length>1?'<select data-schf aria-label="Imported file" style="width:auto;max-width:300px">'+SCH.map((z,i)=>'<option value="'+i+'"'+(i===SCHSEL?' selected':'')+'>'+esc(z.file)+'</option>').join('')+'</select>':'')+'<input type="search" data-schq placeholder="Search the schedule" aria-label="Search the schedule" value="'+esc(SCHQ)+'" style="width:auto;min-width:200px;flex:1">'+(I.cols.some(c=>c.raw)?'<label class="ck"><input type="checkbox" data-schall '+(SCHALL?'checked':'')+'> Show all file fields</label>':'')+'<button class="btn alt" id="impbtn">Import another file</button><button class="chipb" id="schrm">Remove this import</button>'+fin+'</div>'
+   +'<div class="kpis"><div class="kpi"><b>'+ids.size+'</b><span>Activities in file</span></div><div class="kpi"><b>'+inlog.length+'</b><span>In the site log</span></div><div class="kpi"><b>'+withr+'</b><span>With resources assigned</span></div><div class="kpi"><b>'+esc(I.kind)+'</b><span>'+esc(I.file)+' · '+esc(I.at)+'</span></div></div>'
+   +'<div class="scroll"><table><thead><tr>'+cs.map(c=>'<th>'+esc(c.l)+'</th>').join('')+'<th>In site log</th></tr></thead><tbody id="schbody">'+S.html+'</tbody></table></div><p class="hint" id="schcnt" style="margin:6px 0 0">'+schCnt(S)+'</p>'}
+function impPanel(){const I=IMP,sel=(k,L,v,none)=>'<select data-imp="'+k+'">'+L.map(o=>'<option value="'+esc(o[0])+'"'+(o[0]===v?' selected':'')+'>'+esc(o[1])+'</option>').join('')+'</select>';
+  if(I.done){const d=I.done,ks=Object.keys(d.by).sort();return '<div class="apick"><div class="aph"><span>Import complete · '+esc(I.file)+'</span><span class="aps"></span><button class="chipb" id="impcancel">Close</button></div><p style="margin:0 0 8px"><b>'+(d.nNew+d.nUp)+' activities</b> imported ('+d.nNew+' new, '+d.nUp+' already existed and were completed). <b>'+d.tot+'</b> day entries were added across <b>'+ks.length+' dates</b>'+(d.nd?'; '+d.nd+' had no date and were not placed on a day':'')+'.</p><p style="margin:0 0 8px"><b>'+d.na+'</b> resource assignments were added to the activities ('+d.nr+' new resources were created in the Resources tab). <button class="chipb" data-st="schedule">Open Schedule</button></p>'+(ks.length?'<div class="chips">'+ks.slice(0,16).map(k=>'<button class="chip" data-gotodate="'+k+'">'+esc(fd(k))+' · '+d.by[k]+'</button>').join('')+'</div><p class="hint" style="margin:6px 0 0">Tap a date to open it. '+(ks.length>16?'Showing the first 16 dates.':'')+'</p>':'')+'</div>'}
+  const its=impItems(),ex=x=>ACT.some(z=>z.id.toLowerCase()===x.id.toLowerCase()),dd=new Set();its.forEach(x=>impDates(x).forEach(d=>dd.add(d)));const nd=its.filter(x=>!impDates(x).length).length;
+  const rows=its.slice(0,60).map(x=>{const ds=impDates(x);return '<tr><td class="calc">'+esc(x.id)+'</td><td class="calc">'+esc(x.name)+'</td><td class="calc">'+(ds.length?(ds.length>1?fd(ds[0])+' → '+fd(ds[ds.length-1])+' ('+ds.length+' days)':fd(ds[0])):'<span class="warn">No date</span>')+'</td><td class="calc">'+((x.res||[]).length||'–')+'</td><td class="calc">'+(ex(x)?'Exists':'New')+'</td></tr>'}).join('');
+  return '<div class="apick"><div class="aph"><span>Import activities · '+esc(I.kind)+' · '+esc(I.file)+'</span><span class="aps"></span></div>'
+   +'<div class="hf"><div><label>Date to use</label>'+sel('dsrc',I.srcs,I.dsrc)+'</div><div><label>Finish date (for spreading)</label>'+sel('fsrc',I.fsrcs,I.fsrc)+'</div>'+(I.projs.length?'<div><label>Project</label>'+sel('proj',[['','All projects']].concat(I.projs),I.proj)+'</div>':'')+'</div>'
+   +'<label class="ck"><input type="checkbox" data-imp="span" '+(I.span?'checked':'')+(I.fsrc?'':' disabled')+'> Add each activity to every day from start to finish</label>'
+   +'<div class="kpis"><div class="kpi"><b>'+its.length+'</b><span>Activities in file</span></div><div class="kpi"><b>'+its.filter(x=>!ex(x)).length+'</b><span>New</span></div><div class="kpi"><b>'+dd.size+'</b><span>Dates covered</span></div><div class="kpi"><b>'+nd+'</b><span>Without a date</span></div><div class="kpi"><b>'+its.reduce((n,x)=>n+(x.res||[]).length,0)+'</b><span>Resource assignments</span></div></div>'
+   +'<div class="scroll" style="max-height:260px"><table><thead><tr><th>Activity ID</th><th>Activity name</th><th>Goes on date</th><th>Resources</th><th>Status</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+(its.length>60?'<p class="hint" style="margin:6px 0 0">Showing the first 60 of '+its.length+'.</p>':'')
+   +'<div class="bar"><button class="btn" id="impgo">Import '+its.length+' activities</button><button class="btn alt" id="impcancel">Cancel</button></div></div>'}
+function mtop(){
+  if(tab==='activities'&&IMP)return impPanel();
+  if(tab==='control')return '<div id="ctop">'+controlTop('mini')+'</div><h2 class="sec">Activity performance</h2><p class="hint">Enter the physical % complete of each activity. Earned value = budgeted cost × % complete. CPI = EV ÷ actual cost. SPI = EV ÷ planned value. EAC = BAC ÷ CPI. Cost not linked to any activity still counts in the project actual cost above.</p>';
+  if(tab==='budget'){const b=bud(),sl=SET.pull?siteLines():[];
+    const st=sl.reduce((a,r)=>({lab:a.lab+r.lab,mat:a.mat+r.mat,non:a.non+r.non,exp:a.exp+r.exp}),{lab:0,mat:0,non:0,exp:0});
+    let h=kp([['₦'+fmt(catBudget('Labour')),'Labour'],['₦'+fmt(catBudget('Non-labour')),'Non-labour (Material)'],['₦'+fmt(catBudget('Equipment')),'Equipment'],['₦'+fmt(catBudget('Expense')),'Expense']]);
+    h+='<label class="ck"><input type="checkbox" data-set="pull" '+(SET.pull?'checked':'')+'> Pull budget lines from the Site Log</label>';
+    const al=assignLines();if(al.length){const sa={lab:0,mat:0,non:0,exp:0};al.forEach(o=>{for(const k in sa)sa[k]+=o[k]});h+='<h2 class="sec">Activity assignments (budget at completion)</h2><p class="hint">Budgeted cost of the resources and expenses assigned to each activity. When assignments exist, the cards above and the Cost summary budget use them.</p>'+tb(['Activity ID','Activity name','Budgeted labor cost','Budgeted material cost','Budgeted nonlabor cost','Budgeted total cost','Budgeted expense cost'],al.map(o=>tr([o.id,esc(o.name),fmt(o.lab),fmt(o.mat),fmt(o.non),fmt(btot(o)),fmt(o.exp)])).join('')+tr(['Total','',fmt(sa.lab),fmt(sa.mat),fmt(sa.non),fmt(btot(sa)),fmt(sa.exp)],'tot'))}
+    if(SET.pull)h+='<h2 class="sec">From the Site Log</h2><p class="hint">Built automatically from the Budget cost of every Labour, Non-labour, Equipment and Expense line, grouped by activity and date.</p>'+(sl.length?tb(['Activity name','Date','Budgeted labor cost','Budgeted material cost','Budgeted nonlabor cost','Budgeted total cost','Budgeted expense cost'],sl.slice(0,200).map(r=>tr([esc(r.act),fd(r.date),fmt(r.lab),fmt(r.mat),fmt(r.non),fmt(btot(r)),fmt(r.exp)])).join('')+tr(['Total','',fmt(st.lab),fmt(st.mat),fmt(st.non),fmt(btot(st)),fmt(st.exp)],'tot')):'<p class="empty">Nothing logged yet. Add Labour, Non-labour, Equipment or Expense lines in the Site Log.</p>');
+    return h+'<h2 class="sec">Manual lines</h2>'}
+  if(tab==='inventory'){const v=INV.reduce((a,r)=>{const x=res(r.res);return a+(x?bal(r)*num(x.price):0)},0);return kp([[INV.length,'Stock items'],[INV.filter(needs).length,'Reorder or out of stock'],['₦'+fmt(v),'Stock value']])}
+  if(tab==='risks'){const op=RISK.filter(r=>r.status!=='Closed');let h=kp([[op.length,'Open risks'],[RISK.filter(hot).length,'High or extreme'],[RISK.length-op.length,'Closed']]);
+    h+='<h2 class="sec">Risk heat map (open risks)</h2><div class="heat"><div></div>';for(let i=1;i<=5;i++)h+='<div class="ax">Impact '+i+'</div>';
+    for(let l=5;l>=1;l--){h+='<div class="ax">Likelihood '+l+'</div>';for(let i=1;i<=5;i++){const n=op.filter(r=>num(r.lik)===l&&num(r.imp)===i).length,sc=l*i;h+='<div class="hm '+(sc>=15?'x':sc>=10?'h':sc>=5?'m':'l')+'">'+(n||'')+'</div>'}}
+    return h+'</div><h2 class="sec">Register</h2>'}
+  return ''}
+function panel(){const s=SP[tab],rows=rowsOf(tab),cs=TC(tab);if(s.summary){renderSummary();return}
+  if(s.custom){$('panel').innerHTML=s.custom();return}
+  const fz=(FZ[tab]||[]).map(w=>innerWidth<600?Math.round(w*.78):w);const fa=ci=>{if(ci>=fz.length)return '';return ' data-fz style="left:'+fz.slice(0,ci).reduce((a,b)=>a+b,0)+'px;min-width:'+fz[ci]+'px;max-width:'+fz[ci]+'px"'};
+  let h=tab==='resources'?'<p class="hint">Loaded from your Resource for App file; labour and equipment rates are converted from ₦/day to ₦/hour (÷ 8). Set up each resource once, like P6’s resource dictionary: type, unit of measure, price, max units per day and budgeted units. Labour, Non-labour and Equipment rows pick from this list.</p>':
+    (s.type&&!R.some(x=>x.type===s.type)?'<p class="hint">No '+s.type+' resources yet. Add some in the Resources tab.</p>':'');
+  const OVH='<p class="hint">Budget cost and Cost fill in automatically from the Resources tab (grey figures). Type a value to override them; the unit is a dropdown. Each line’s budget cost goes to the Budget tab under its activity and date. With Auto-pull on, Quantity (Non-labour) and Hours (Equipment) fill with the budgeted units still remaining on the activity assignment.</p>';
+  h+=({labour:'<p class="hint">Duration converts to hours: 1 day = <input class="sm" type="number" min="0" data-set="hd" value="'+SET.hd+'"> h, 1 week = <input class="sm" type="number" min="0" data-set="dw" value="'+SET.dw+'"> days, 1 month = <input class="sm" type="number" min="0" data-set="dm" value="'+SET.dm+'"> days. Budget cost and Cost fill in automatically (grey figures); type a value to override. Each line’s budget cost goes to the Budget tab under its activity and date.</p>',activities:'',assignres:'<p class="hint">Assign resources to the activity with budgeted units. Budgeted cost is units × price unless you type a value. Actual figures come from what you log against the activity.</p>',assignrole:'<p class="hint">Assign roles to the activity with budgeted units and price. Actual units and cost come from logged resources whose role matches.</p>',roles:'<p class="hint">The role dictionary. Give each resource a role in the Resources tab, then assign roles to activities for role-based budgeting.</p>',assignexp:'<p class="hint">Assign budgeted expenses to the activity. Actual cost is what you log in the Expense tab for the same activity and expense type.</p>',nonlabour:'<p class="hint">Total quantity = batches × quantity each. Leave Batches blank for 1. With Auto-pull on, the remaining assigned quantity is split into batches of the resource max units per day (Fill max) or spread evenly (Even). Overtime Yes ignores that daily maximum and keeps your batch count. Balance is the assigned quantity not yet logged. Budget cost and Cost fill in automatically from the Resources tab (grey figures); type a value to override.</p>',equipment:'<p class="hint">Hours = machines × duration, converted to hours: 1 day = <input class="sm" type="number" min="0" data-set="hd" value="'+SET.hd+'"> h, 1 week = <input class="sm" type="number" min="0" data-set="dw" value="'+SET.dw+'"> days, 1 month = <input class="sm" type="number" min="0" data-set="dm" value="'+SET.dm+'"> days. Leave Machines blank for 1. Only Working hours are costed. Overtime Yes keeps the machine count and stretches the duration; Split fills 8-hour days or spreads evenly. Balance is the assigned hours not yet logged. Budget cost and Cost fill in automatically (grey figures); type a value to override.</p>',expense:'<p class="hint">Each expense is sent to the Budget tab as Budgeted Expense Cost for its activity and date. Budget cost defaults to the amount; type a value to override.</p>',budget:'<p class="hint">Manual lines in the format of your Budget file (activity, date, budgeted costs). Use Paste from Excel to import them. They add to the Site Log lines above.</p>',inventory:'<p class="hint">Balance = opening stock + received − used to date (from the Non-labour tab). Reorder flags when balance reaches the reorder level.</p>',risks:'<p class="hint">Score = likelihood × impact. Extreme 15 or more, High 10–14, Medium 5–9, Low 1–4.</p>'}[tab]||'');
+  h=subTabs()+'<div id="cards">'+cards()+'</div>'+mtop()+h+loader();
+  h+='<div class="scroll"><table><thead><tr>'+cs.map((c,ci)=>'<th'+fa(ci)+(CUSTOM(tab)&&ci>=FIXN()?' draggable="true" data-dcol="'+esc(c[0])+'" title="Drag to move this column"':'')+'>'+c[1]+'</th>').join('')+'<th></th></tr></thead><tbody>';
+  rows.forEach((r,i)=>{h+='<tr>'+cs.map((c,ci)=>c[2]==='calc'?'<td class="calc" data-calc="'+ci+'" data-i="'+i+'"'+fa(ci)+'></td>':'<td'+fa(ci)+'>'+cell(c,r,i)+'</td>').join('')+(s.noAdd?'<td></td>':'<td><button class="x" data-del="'+i+'" aria-label="Remove row">×</button></td>')+'</tr>'});
+  h+='</tbody><tfoot></tfoot></table></div>';
+  if(!rows.length)h+=s.noAdd?'<p class="empty">'+(s.emptyMsg||'Create activities and assign resources in the Site Log first.')+'</p>':'<p class="empty">No '+s.name.toLowerCase()+' yet. Add the first '+s.noun+' below.</p>';
+  h+=s.noAdd?'':'<div class="bar addrow"><button class="btn" id="add">Add '+s.noun+'</button>'+(tab==='inventory'?'<button class="btn alt" id="addall">Add all materials</button>':'')+(tab==='budget'?'<button class="btn alt" id="paste">Paste from Excel</button>':'')+(tab==='activities'?'<button class="btn alt" id="impbtn">Import from Excel / XER</button><input type="file" id="impfile" accept=".xlsx,.xlsm,.xer,.csv,.tsv,.txt" hidden>':'')+'</div>'+(tab==='budget'?pbox():'')+(tab==='activities'?'<div class="bar" id="selbar">'+selBar()+'</div>':'');
+  $('panel').innerHTML=h;refresh();if(tab==='activities')hlAct()}
+const render=()=>{AM=null;PF=null;HD=null;ensureSel();autoPull();tabs();panel();stats();syncDates()};
+document.addEventListener('input',e=>{if(e.target.type==='date')syncDates()});
+document.addEventListener('click',e=>{const i=e.target;if(i&&i.type==='date'&&i.showPicker){try{i.showPicker()}catch(x){}}});
+
+$('tabs').addEventListener('click',e=>{const b=e.target.closest('[data-t]');if(b){tab=b.dataset.t;render()}});
+$('panel').addEventListener('click',e=>{
+  if(e.target.closest('[data-colbtn]')){CHOOSE=!CHOOSE;render();return}
+  const cm=e.target.closest('[data-colmv]');if(cm){const st=colState(),o=st.ord.slice(),i=o.indexOf(cm.dataset.colmv),j=i+(+cm.dataset.d);if(i>=0&&j>=0&&j<o.length){o.splice(j,0,o.splice(i,1)[0]);setCol(o,st.hide)}return}
+  if(e.target.closest('[data-colreset]')){delete COLS[ckey()];save();render();return}
+  const st=e.target.closest('[data-st]');if(st){tab=st.dataset.st;render();return}
+  const ai=e.target.closest('[data-aid]');if(ai){selectAct(ai.dataset.aid,e);afterSel();return}
+  if(e.target.closest('[data-aall]')){SEL=VA().map(a=>a.id);CLR=false;if(!SEL.includes(selAct))selAct=SEL[0]||'';afterSel();return}
+  if(e.target.closest('[data-aclr]')){SEL=[];CLR=true;afterSel();return}
+  if(e.target.closest('[data-multi]')){MULTI=!MULTI;afterSel();return}
+  if(tab==='activities'&&!e.target.closest('button')){const tr=e.target.closest('tbody tr');if(tr){const i=[...tr.parentNode.children].indexOf(tr);const V=VA();if(V[i]){selectAct(V[i].id,e);hlAct()}}}
+  if(e.target.id==='add'){let r={};
+    if(tab==='resources')r={uid:uid(),id:'',name:'',type:'Labour',role:'',uom:'h',price:'',max:'',budget:''};
+    else{if(tab==='equipment'){r.status='Working';r.per='Hours'}if(tab==='labour'){r.hrs='8';r.per='Hours'}if(tab==='budget')r.date=$('date').value;if(tab==='risks')r={cat:'Safety',lik:'3',imp:'3',status:'Open'}}
+    if(tab==='activities'){r={id:nextId(),name:'',loc:'',bq:'',bu:'',res:[],exp:[]};ACT.push(r);(D.acts=D.acts||[]).push(r.id);selAct=r.id;SEL=[r.id];ANCH=r.id;CLR=false}
+    if(tab==='assignres')r={uid:'',units:'',bc:''};if(tab==='assignrole')r={rid:'',units:'',bc:''};if(tab==='roles')r={uid:uid(),id:'',name:'',uom:'h',price:''};if(tab==='assignexp')r={cat:'Other',desc:'',bc:''};
+    if((tab==='assignres'||tab==='assignexp'||tab==='assignrole')&&!curAct()){$('msg').textContent='Create an activity first';return}
+    if(LOGT.includes(tab))(SEL.length?SEL:['']).forEach(id=>D.rows[tab].push(Object.assign({},r,{act:id})));
+    else if(['assignres','assignexp','assignrole'].includes(tab)){const key={assignres:'res',assignexp:'exp',assignrole:'roles'}[tab],tg=ACT.filter(a=>SEL.includes(a.id));(tg.length?tg:[curAct()]).forEach(a=>(a[key]=a[key]||[]).push(Object.assign({},r)))}
+    else if(tab!=='activities')rowsOf(tab).push(r);
+    save();render();const ins=$('panel').querySelectorAll('tbody tr:last-child input');if(ins[0])ins[0].focus()}
+  if(e.target.id==='bringb'){const v=$('bring').value;if(v)addToDay([v],true);else $('msg').textContent='Choose an activity first';return}
+  if(e.target.id==='copyprev'){copyPrev();return}
+  if(e.target.id==='rmdate'){const b=e.target;if(!b.dataset.arm){b.dataset.arm=1;b.textContent='Tap again to confirm';setTimeout(()=>{if(b.isConnected){delete b.dataset.arm;b.textContent='Remove from this date'}},3000);return}
+    const ids=SEL.slice();D.acts=(D.acts||[]).filter(x=>!ids.includes(x));LOGT.forEach(t=>{D.rows[t]=D.rows[t].filter(r=>!ids.includes(aid(r.act)))});D.skip=(D.skip||[]).filter(k=>!ids.some(i=>k.includes('|'+i+'|')));SEL=[];selAct='';CLR=false;save();render();$('msg').textContent='Removed from '+fd($('date').value)+' with its lines on this date';return}
+  if(e.target.id==='impbtn'){$('impfile').click();return}
+  if(e.target.id==='impgo'){doImport();return}
+  if(e.target.id==='impcancel'){IMP=null;render();return}
+  if(e.target.id==='schrm'){const b=e.target;if(!b.dataset.arm){b.dataset.arm=1;b.textContent='Tap again to remove';setTimeout(()=>{if(b.isConnected){delete b.dataset.arm;b.textContent='Remove this import'}},3000);return}SCH.splice(SCHSEL,1);SCHSEL=Math.max(0,SCH.length-1);save();render();$('msg').textContent='Import removed from Schedule. Activities already imported stay in the site log';return}
+  const gd=e.target.closest('[data-gotodate]');if(gd){$('date').value=gd.dataset.gotodate;$('date').dispatchEvent(new Event('change'));syncDates();return}
+  if(e.target.id==='rprint'){try{window.print()}catch(x){$('msg').textContent='Printing is blocked here. Use the downloaded file.'}}
+  if(e.target.id==='rcsv')copyOut(repCsv(repData(repKind())),'CSV copied. Paste it into Excel.');
+  if(e.target.id==='rtxt')copyOut(repText(repData(repKind())),'Report text copied');
+  if(e.target.id==='lload'){D.skip=(D.skip||[]).filter(k=>!SEL.some(id=>k.includes('|'+id+'|')));const cnt=()=>LOGT.reduce((a,t)=>a+D.rows[t].length,0),b0=cnt();autoPull(true);$('msg').textContent=(cnt()-b0)+' assigned lines pulled';save();render()}
+  if(e.target.id==='paste'){$('pbox').hidden=!$('pbox').hidden}
+  if(e.target.id==='pimp'){const n=importBud($('ptxt').value);$('msg').textContent=n+' budget lines imported';save();render()}
+  if(e.target.id==='addall'){R.filter(x=>x.type==='Non-labour'&&!INV.some(i=>i.res===x.uid)).forEach(x=>INV.push({res:x.uid,open:'',rec:'',re:'',loc:''}));save();render()}
+  const d=e.target.closest('[data-del]');if(d){const i=+d.dataset.del;
+    if(tab==='activities'){delAct(d,VA()[i]);return}
+    if(LOGT.includes(tab)){const o=rowsOf(tab)[i],arr=D.rows[tab],x=arr.indexOf(o);if(x>=0){D.skip=D.skip||[];D.skip.push(tab==='expense'?'expense|'+aid(o.act)+'|'+o.cat+'|'+(o.desc||''):tab+'|'+aid(o.act)+'|'+(o.res||''));arr.splice(x,1)}}
+    else rowsOf(tab).splice(i,1);save();render()}});
+$('panel').addEventListener('input',e=>{const el=e.target;if(el.dataset.schq!==undefined){SCHQ=el.value;schBody();return}if(el.dataset.repm){REP.nomoney=!el.checked;try{localStorage.setItem('sitelog5:rep',JSON.stringify(REP))}catch(x){}const pp=$('paper');if(pp)pp.innerHTML=repPaper(repData(repKind()));return}
+  if(el.dataset.rep){REP[el.dataset.rep]=el.value;try{localStorage.setItem('sitelog5:rep',JSON.stringify(REP))}catch(x){}const pp=$('paper');if(pp)pp.innerHTML=repPaper(repData(repKind()));return}
+  if(el.dataset.set){SET[el.dataset.set]=el.type==='checkbox'?(el.checked?1:0):num(el.value);if(tab==='budget'||tab==='cdash'||el.dataset.set==='autopull'){save();render()}else{refresh();later()}return}if(el.dataset.i===undefined)return;
+  const r=rowsOf(tab)[+el.dataset.i];r[el.dataset.k]=el.value;if((el.dataset.k==='qty'||el.dataset.k==='hrs')&&(tab==='nonlabour'||tab==='equipment'))r.qset=1;
+  if(tab==='labour'||tab==='equipment'||tab==='nonlabour'){const k=el.dataset.k,F=tab==='nonlabour'?'qty':'hrs',m=r.of?D.rows[tab].find(x=>x.gid===r.of):r;
+    if(k==='ot'||k==='sp'){if(m&&m!==r)m[k]=r[k];const q=m?labQ(m,tab):0;if(q>0){labApply(m,q,tab);m.qset=0;save();render();return}}
+    else if(k==='n'&&r.ot==='Yes'&&!r.of&&num(r.bud)>0&&num(r.n)>0){r[F]=r4(num(r.bud)/num(r.n));r.qset=0;const h2=$('panel').querySelector('input[data-k="'+F+'"][data-i="'+el.dataset.i+'"]');if(h2)h2.value=r[F]}
+    else if(k==='n'||k===F)r.qset=1}
+  if(['labour','equipment','nonlabour'].includes(tab)&&el.dataset.k==='res'){const x=res(el.value);if(x){r.uom=x.uom;const u=$('panel').querySelector('select[data-k="uom"][data-i="'+el.dataset.i+'"]');if(u)u.value=x.uom}}
+  if(el.dataset.k==='act'&&['labour','equipment','nonlabour'].includes(tab)){const c=SP[tab].cols.find(x=>x[0]==='res'),rs=$('panel').querySelector('select[data-k="res"][data-i="'+el.dataset.i+'"]');if(rs)rs.innerHTML=optsHtml(c,r,r.res)}
+  if(['activities','assignres','assignexp'].includes(tab))autoPull();
+  refresh();if(tab==='control'&&$('ctop'))$('ctop').innerHTML=controlTop('mini');later()});
+$('panel').addEventListener('change',e=>{
+  if(e.target.id==='impfile'){const f=e.target.files[0];e.target.value='';impLoad(f);return}
+  if(IMP&&e.target.dataset&&e.target.dataset.imp){const k=e.target.dataset.imp;IMP[k]=k==='span'?e.target.checked:e.target.value;if(k==='dsrc'&&IMP.kind==='XER')IMP.fsrc={ps:'pf',as:'af',es:'ef',pf:'pf',af:'af',ef:'ef'}[e.target.value]||'';if(!IMP.fsrc)IMP.span=false;render();return}if(e.target.dataset&&e.target.dataset.flag==='all'){ALLACT=e.target.checked;render()}if(e.target.dataset&&e.target.dataset.hf){HF[e.target.dataset.hf]=e.target.value;HD=null;render()}});
+$('panel').addEventListener('change',e=>{const d=e.target.dataset||{};if(d.schf!==undefined){SCHSEL=+e.target.value;render();return}if(d.schall!==undefined){SCHALL=e.target.checked;render();return}});
+$('panel').addEventListener('change',e=>{const k=e.target.dataset&&e.target.dataset.colshow;if(k){const st=colState();setCol(st.ord,e.target.checked?st.hide.filter(x=>x!==k):st.hide.concat(k))}});
+$('panel').addEventListener('dragstart',e=>{const th=e.target.closest&&e.target.closest('th[data-dcol]');if(!th)return;DRAG=th.dataset.dcol;try{e.dataTransfer.setData('text/plain',DRAG);e.dataTransfer.effectAllowed='move'}catch(x){}});
+$('panel').addEventListener('dragover',e=>{if(DRAG&&e.target.closest('th[data-dcol]'))e.preventDefault()});
+$('panel').addEventListener('drop',e=>{const th=e.target.closest('th[data-dcol]');if(!DRAG||!th)return;e.preventDefault();const f=DRAG;DRAG=null;moveCol(f,th.dataset.dcol)});
+document.querySelectorAll('[data-h]').forEach(el=>el.addEventListener('input',()=>{D[el.dataset.h]=el.value;later()}));
+$('date').addEventListener('change',()=>{if($('date').value){clearTimeout(tm);if(LD&&D){try{localStorage.setItem('sitelog5:'+LD,JSON.stringify(D))}catch(e){}}load($('date').value);render()}});
+
+function summary(){const T=totals(),A=D.rows;
+  const nm=r=>{const x=res(r.res);return x?x.id+' '+x.name:'(no resource)'};
+  let o='DAILY SITE LOG – '+fd($('date').value)+'\n'+(D.project||'(no project)')+' | Supervisor: '+(D.sup||'-')+' | Weather: '+D.weather+(D.lost?' ('+D.lost+' hrs lost)':'')+'\n\n';
+  o+='ACTIVITIES\n'+VA().map(r=>'- '+r.id+' '+(r.name||'')+' @ '+(r.loc||'-')+(r.bq?' (budget '+r.bq+' '+(r.bu||'')+')':'')).join('\n')+'\n\n';
+  o+='LABOUR: '+T.w+' workers, '+fmt(T.mh)+' man-hours, cost '+fmt(T.lc)+'\n'+A.labour.map(r=>'- '+nm(r)+': '+(r.n||0)+' x '+(r.hrs||0)+' '+(r.per||'Hours').toLowerCase()+' – '+actName(r.act)).join('\n')+'\n\n';
+  o+='NON-LABOUR (cost '+fmt(T.nc)+')\n'+A.nonlabour.map(r=>'- '+nm(r)+': '+fmt(units('nonlabour',r))+' '+(r.uom||'')+(r.ref?' ['+r.ref+']':'')).join('\n')+'\n\n';
+  o+='EQUIPMENT: '+fmt(T.ew)+' h working, '+fmt(T.ei)+' h idle/down, cost '+fmt(T.ec)+'\n'+A.equipment.map(r=>'- '+nm(r)+': '+(r.status||'Working')+', '+fmt(eqH(r))+' h').join('\n')+'\n\n';
+  o+='EXPENSES (cost '+fmt(T.xc)+')\n'+A.expense.map(r=>'- '+(r.cat||'')+' '+(r.desc||'')+': '+fmt(num(r.amt))).join('\n')+'\n\n';
+  o+='TOTAL COST TODAY: '+fmt(T.cost)+'\n';
+  const lim=R.filter(x=>overMax(x)||overBud(x));
+  if(lim.length)o+='OVER LIMIT: '+lim.map(x=>x.id+(overMax(x)?' (max/day)':'')+(overBud(x)?' (budget)':'')).join(', ')+'\n';
+  const hh=RISK.filter(hot);if(hh.length)o+='OPEN HIGH RISKS: '+hh.map(r=>(r.desc||'?')+' ('+rating(r)+')').join('; ')+'\n';
+  const ro=INV.filter(needs);if(ro.length)o+='STOCK TO REORDER: '+ro.map(r=>((res(r.res)||{}).id||'?')+' ('+stk(r)+')').join(', ')+'\n';
+  return o+'\nNOTES\n'+(D.notes||'-')}
+$('copy').addEventListener('click',async()=>{const txt=summary();
+  try{await navigator.clipboard.writeText(txt);$('msg').textContent='Summary copied'}
+  catch(e){const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy');$('msg').textContent='Summary copied'}catch(_){$('msg').textContent='Copy was blocked here'}ta.remove()}});
+$('print').addEventListener('click',()=>{try{window.print()}catch(e){$('msg').textContent='Printing is blocked here'}});
+$('clear').addEventListener('click',()=>{const b=$('clear');
+  if(b.dataset.arm){D=blank();D.project=meta.project;D.sup=meta.sup;save();load($('date').value);render();delete b.dataset.arm;b.textContent='Clear this day'}
+  else{b.dataset.arm=1;b.textContent='Tap again to confirm';setTimeout(()=>{delete b.dataset.arm;b.textContent='Clear this day'},3000)}});
+
+try{const m=localStorage.getItem('sitelog5:meta');if(m)meta=JSON.parse(m)}catch(e){}
+const LAST={log:'activities',mgmt:'summary',ctrl:'cdash',rep:'rdaily'};
+$('views').addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(!b||b.dataset.v===view)return;LAST[view]=tab;view=b.dataset.v;tab=LAST[view];document.body.dataset.view=view;
+  document.querySelectorAll('#views button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  document.querySelector('h1').textContent=({log:'Daily Site Log',mgmt:'Site Management',ctrl:'Cost Control',rep:'Reports'})[view];document.querySelector('.top small').textContent=({log:'Resources, budgets and daily usage for one site',mgmt:'Cost summary, budget, inventory and risk register',ctrl:'Earned value, forecasts and cost alerts',rep:'Print-ready daily and cost reports'})[view];render()});
+const bkKeys=()=>{const k=[];try{for(let i=0;i<localStorage.length;i++){const n=localStorage.key(i);if(n&&n.startsWith('sitelog5:')&&n!=='sitelog5:theme')k.push(n)}}catch(e){}return k};
+function bkMake(){clearTimeout(tm);save();const data={};bkKeys().forEach(k=>{data[k]=localStorage.getItem(k)});return JSON.stringify({app:'daily-site-log',v:30,at:new Date().toISOString(),data})}
+function bkInfo(txt){let o;try{o=JSON.parse(txt)}catch(e){throw new Error('That is not a backup file.')}
+  if(!o||o.app!=='daily-site-log'||!o.data||typeof o.data!=='object')throw new Error('That is not a Daily Site Log backup.');
+  const ks=Object.keys(o.data).filter(k=>k.startsWith('sitelog5:')&&k!=='sitelog5:theme'),days=ks.filter(k=>/^sitelog5:\d{4}-\d{2}-\d{2}$/.test(k)).length;let acts=0;try{acts=JSON.parse(o.data['sitelog5:act']||'[]').length}catch(e){}
+  if(!ks.length)throw new Error('This backup is empty.');return {o,ks,days,acts}}
+function bkApply(txt){const I=bkInfo(txt);I.ks.forEach(k=>localStorage.setItem(k,String(I.o.data[k])));bkKeys().filter(k=>!I.ks.includes(k)).forEach(k=>localStorage.removeItem(k));location.reload()}
+let BKT='',BKA=0;
+const bkMsg=t=>{$('bkmsg').textContent=t};
+$('backup').addEventListener('click',()=>{BKT='';BKA=0;$('bkta').value='';$('bkin').value='';$('bkrestore').textContent='Restore';bkMsg('');const d=$('bkd');if(d.showModal)d.showModal();else d.setAttribute('open','')});
+$('bkclose').addEventListener('click',()=>{const d=$('bkd');if(d.close)d.close();else d.removeAttribute('open')});
+$('bkfile').addEventListener('click',()=>{try{const txt=bkMake(),b=new Blob([txt],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='daily-site-log-backup-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);bkMsg('Backup file created. If nothing was saved on this device, use Copy backup text instead.')}catch(e){bkMsg('Could not create a file here. Use Copy backup text instead.')}});
+$('bkcopy').addEventListener('click',async()=>{const txt=bkMake();try{await navigator.clipboard.writeText(txt);bkMsg('Backup copied. Paste it into a note, email or message to yourself.')}catch(e){$('bkta').value=txt;$('bkta').focus();$('bkta').select();bkMsg('Copying was blocked. The backup text is in the box below: select all and copy it.')}});
+$('bkin').addEventListener('change',async()=>{const f=$('bkin').files[0];if(!f)return;try{BKT=await f.text();$('bkta').value='';BKA=0;$('bkrestore').textContent='Restore';bkMsg('File ready: '+f.name+'. Tap Restore.')}catch(e){BKT='';bkMsg('Could not read that file.')}});
+$('bkta').addEventListener('input',()=>{BKT='';BKA=0;$('bkrestore').textContent='Restore'});
+$('bkrestore').addEventListener('click',()=>{const b=$('bkrestore'),txt=BKT||$('bkta').value.trim();if(!txt){bkMsg('Choose a backup file or paste backup text first.');return}
+  try{const I=bkInfo(txt);if(!BKA){BKA=1;b.textContent='Tap again to replace data';bkMsg('Backup from '+String(I.o.at||'').slice(0,16).replace('T',' ')+': '+I.days+' days, '+I.acts+' activities. Restoring replaces everything now on this device.');setTimeout(()=>{BKA=0;b.textContent='Restore'},8000);return}
+    bkApply(txt)}catch(e){BKA=0;b.textContent='Restore';bkMsg(e.message||'Could not restore that backup.')}});
+function migrateActs(){if(ACT.length||gl('act'))return;const seen={},keys=[];
+  try{for(let i=0;i<localStorage.length;i++){if(/^sitelog5:\d{4}-\d{2}-\d{2}$/.test(localStorage.key(i)))keys.push(localStorage.key(i))}}catch(e){}
+  const dl=keys.map(k=>{try{return [k,JSON.parse(localStorage.getItem(k))]}catch(e){return null}}).filter(Boolean);
+  const all=dl.map(x=>x[1]).concat([D]);
+  all.forEach(d=>((d.rows||{}).activities||[]).forEach(a=>{const n=(a.desc||'').trim();if(n&&!seen[n]){const id=nextId();ACT.push({id,name:n,loc:a.loc||'',bq:a.bq||'',bu:a.bu||'',res:[],exp:[]});seen[n]=id}}));
+  if(!ACT.length)return;
+  const map=d=>['labour','equipment','nonlabour','expense'].forEach(t=>((d.rows||{})[t]||[]).forEach(r=>{if(seen[r.act])r.act=seen[r.act]}));
+  dl.forEach(([k,d])=>{map(d);try{localStorage.setItem(k,JSON.stringify(d))}catch(e){}});map(D);save()}
+function migDay(){let f=null;try{f=localStorage.getItem('sitelog5:v21')}catch(e){}if(f)return;if(!(D.acts||[]).length)D.acts=ACT.map(a=>a.id);try{localStorage.setItem('sitelog5:v21','1')}catch(e){}save()}
+loadRes();$('date').value=today();load(today());const EXTRA=[{id:'MT.CEM',name:'Cement',type:'Non-labour',uom:'bag',price:13500},{id:'MT.SD',name:'Sand',type:'Non-labour',uom:'t',price:7000},{id:'MT.ST',name:'Stone',type:'Non-labour',uom:'t',price:14500}];
+function ensureRes(){let ch=false;EXTRA.forEach(e=>{if(!R.some(x=>x.id===e.id)){R.push(Object.assign({uid:uid(),role:'',max:'',budget:''},e));ch=true}});if(ch)save()}
+migrateActs();migrateRoles();ensureRes();migDay();render();
+(function(){const root=document.documentElement,btn=$('theme'),modes=['auto','light','dark'];let m='auto';
+  try{m=localStorage.getItem('sitelog5:theme')||'auto'}catch(e){}
+  const apply=()=>{if(m==='auto')root.removeAttribute('data-theme');else root.setAttribute('data-theme',m);const n=m==='auto'?'Auto':m==='light'?'Light':'Dark';btn.textContent=n;btn.setAttribute('aria-label','Colour theme: '+n+'. Tap to change')};
+  btn.addEventListener('click',()=>{m=modes[(modes.indexOf(m)+1)%3];try{localStorage.setItem('sitelog5:theme',m)}catch(e){}apply()});apply()})();
+</script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:'&&!window.Capacitor){navigator.serviceWorker.register('sw.js').catch(function(){})}</script>
+</body>
+</html>
